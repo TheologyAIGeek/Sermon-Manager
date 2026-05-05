@@ -18,24 +18,20 @@
 
 global $post;
 
-if ( ! empty( $GLOBALS['wpfc_partial_args'] ) ) {
-	extract( $GLOBALS['wpfc_partial_args'] ); // phpcs:ignore
-}
+$_partial_args = ! empty( $GLOBALS['wpfc_partial_args'] ) ? $GLOBALS['wpfc_partial_args'] : array();
 
-foreach (
-	array(
-		'action',
-		'filters',
-		'visibility_mapping',
-		'args',
-	) as $required_variable
-) {
-	if ( ! isset( $$required_variable ) ) {
-		echo '<p><b>Sermon Manager</b>: Partial "<i>' . str_replace( '.php', '', basename( __FILE__ ) ) . '</i>" loaded incorrectly.</p>';
+foreach ( array( 'action', 'filters', 'visibility_mapping', 'args' ) as $_required_key ) {
+	if ( ! isset( $_partial_args[ $_required_key ] ) ) {
+		echo '<p><b>Sermon Manager</b>: Partial "<i>' . esc_html( str_replace( '.php', '', basename( __FILE__ ) ) ) . '</i>" loaded incorrectly.</p>';
 
 		return;
 	}
 }
+
+$action             = $_partial_args['action'];
+$filters            = $_partial_args['filters'];
+$visibility_mapping = $_partial_args['visibility_mapping'];
+$args               = $_partial_args['args'];
 
 ?>
 <div id="<?php echo $args['id']; ?>" class="<?php echo $args['classes']; ?>">

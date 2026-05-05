@@ -40,11 +40,11 @@ class SM_Admin_Settings {
 	 * @return void
 	 */
 	public static function show_messages() {
-		if ( sizeof( self::$errors ) > 0 ) {
+		if ( count( self::$errors ) > 0 ) {
 			foreach ( self::$errors as $error ) {
 				echo '<div id="message" class="error inline"><p><strong>' . esc_html( $error ) . '</strong></p></div>';
 			}
-		} elseif ( sizeof( self::$messages ) > 0 ) {
+		} elseif ( count( self::$messages ) > 0 ) {
 			foreach ( self::$messages as $message ) {
 				echo '<div id="message" class="updated inline"><p><strong>' . esc_html( $message ) . '</strong></p></div>';
 			}
@@ -75,6 +75,7 @@ class SM_Admin_Settings {
 			'i18n_nav_warning'        => __( 'The changes you made will be lost if you navigate away from this page.', 'sermon-manager-for-wordpress' ),
 			'i18n_bible_spanish_note' => __( 'Note: WordPress is not set to any Spanish variant. Reverted to ESV.', 'sermon-manager-for-wordpress' ),
 			'is_wp_spanish'           => strpos( get_locale(), 'es_' ) !== false,
+			'ajax_nonce'              => wp_create_nonce( 'sm_settings_ajax' ),
 		) );
 
 		// Include settings pages.

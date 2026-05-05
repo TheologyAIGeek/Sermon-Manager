@@ -1,4 +1,4 @@
-jQuery(document).ready(function () {
+jQuery(function () {
     var smImportForm = jQuery('#sm-import-upload-form');
     if (smImportForm.length) {
         var fileField = smImportForm.find('#upload');

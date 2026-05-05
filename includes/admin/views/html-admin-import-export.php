@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) or die;
 								<?php else : ?>
 									<form enctype="multipart/form-data" id="sm-import-upload-form" method="post"
 											class="wp-upload-form"
-											action="<?php echo esc_url( wp_nonce_url( $_SERVER['REQUEST_URI'] . '&doimport=sm', 'sm' ) ); ?>">
+											action="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sm', 'sm-import' ) ); ?>">
 										<p>
 											<input type="file" id="upload" name="import" size="25"/>
 											<input type="hidden" name="action" value="save"/>
@@ -87,7 +87,7 @@ defined( 'ABSPATH' ) or die;
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
 							<li>
-								<a href="<?php echo $_SERVER['REQUEST_URI']; ?>&doimport=exsm"
+								<a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=exsm', 'sm-import' ) ); ?>"
 										class="button activate-now" id="sm-export-content"
 										aria-label="<?php esc_attr_e( 'Export to file', 'sermon-manager-for-wordpress' ); ?>">
 									<?php _e( 'Export', 'sermon-manager-for-wordpress' ); ?>
@@ -121,7 +121,7 @@ defined( 'ABSPATH' ) or die;
 					</div>
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
-							<li><a href="<?php echo $_SERVER['REQUEST_URI']; ?>&doimport=sb"
+							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sb', 'sm-import' ) ); ?>"
 										class="button activate-now <?php echo SM_Import_SB::is_installed() ? '' : 'disabled'; ?>"
 										aria-label="<?php esc_attr_e( 'Import from Sermon Browser', 'sermon-manager-for-wordpress' ); ?>">
 									<?php _e( 'Import', 'sermon-manager-for-wordpress' ); ?></a>
@@ -162,7 +162,7 @@ defined( 'ABSPATH' ) or die;
 					</div>
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
-							<li><a href="<?php echo $_SERVER['REQUEST_URI']; ?>&doimport=se"
+							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=se', 'sm-import' ) ); ?>"
 										class="button activate-now <?php echo SM_Import_SE::is_installed() ? '' : 'disabled'; ?>"
 										aria-label="<?php esc_attr_e( 'Import from Series Engine', 'sermon-manager-for-wordpress' ); ?>">
 									<?php _e( 'Import', 'sermon-manager-for-wordpress' ); ?></a>

@@ -1,7 +1,7 @@
 /**
  * Media Chooser
  */
-jQuery(document).ready(function($){
+jQuery(function($){
     var custom_uploader;
     $('#upload_default_image').click(function(e) {
         e.preventDefault();
@@ -39,7 +39,7 @@ jQuery('#enable_podcast_redirection').change(function () {
 /**
  * Hide or show the fields on document load
  */
-jQuery(document).ready(function () {
+jQuery(function () {
     var check = jQuery('#enable_podcast_redirection');
     if (check.length) {
         podcast_redirect(check.is(':checked'));

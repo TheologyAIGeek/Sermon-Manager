@@ -6,8 +6,9 @@
  * Version: 2.15.16
  * Author: WP for Church
  * Author URI: https://www.wpforchurch.com/
- * Requires at least: 4.5
- * Tested up to: 5.1
+ * Requires at least: 6.0
+ * Tested up to: 6.8
+ * Requires PHP: 7.4
  *
  * Text Domain: sermon-manager-for-wordpress
  * Domain Path: /languages/
@@ -15,15 +16,14 @@
  * @package SM/Core
  */
 
-// All files must be PHP 5.3 compatible!
 defined( 'ABSPATH' ) or die;
 
 // Check the PHP version.
-if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+if ( version_compare( PHP_VERSION, '7.4.0', '<' ) ) {
 	add_action( 'admin_notices', 'sm_render_php_version_error' );
 
 	/**
-	 * Renders the error notice when PHP is less than 5.3
+	 * Renders the error notice when PHP is less than 7.4.
 	 *
 	 * @since 2.8
 	 */
@@ -34,7 +34,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 				<?php
 				// translators: %1$s current PHP version, see msgid "PHP %s", effectively <strong>PHP %s</strong>.
 				// translators: %2$s required PHP version, see msgid "PHP %s", effectively <strong>PHP %s</strong>.
-				echo wp_sprintf( esc_html__( 'You are running %1$s, but Sermon Manager requires at least %2$s.', 'sermon-manager-for-wordpress' ), '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), PHP_VERSION ) . '</strong>', '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), '5.3.0' ) . '</strong>' );
+				echo wp_sprintf( esc_html__( 'You are running %1$s, but Sermon Manager requires at least %2$s.', 'sermon-manager-for-wordpress' ), '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), PHP_VERSION ) . '</strong>', '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), '7.4.0' ) . '</strong>' );
 				?>
 			</p>
 		</div>
@@ -144,7 +144,7 @@ class SermonManager { // phpcs:ignore
 	 * @return SermonManager A single instance of this class.
 	 */
 	public static function get_instance() {
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
 
@@ -535,7 +535,6 @@ class SermonManager { // phpcs:ignore
 		// Register & enqueue scripts & styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ) );
-		add_action( 'wp_footer', array( $this, 'register_scripts_styles' ) );
 		add_action( 'wp_footer', array( $this, 'enqueue_scripts_styles' ) );
 		// Append custom classes to individual sermons.
 		add_filter( 'post_class', array( $this, 'add_additional_sermon_classes' ), 10, 3 );
@@ -609,11 +608,18 @@ class SermonManager { // phpcs:ignore
 		add_action(
 			'admin_init',
 			function () {
-				if ( isset( $_GET['page'] ) && 'sm-import-export' === $_GET['page'] ) {
+				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
 					if ( isset( $_GET['doimport'] ) ) {
-						$class = null;
+						if ( ! current_user_can( 'import' ) ) {
+							wp_die( esc_html__( 'You do not have permission to import data.', 'sermon-manager-for-wordpress' ), 403 );
+						}
 
-						switch ( $_GET['doimport'] ) {
+						check_admin_referer( 'sm-import' );
+
+						$class      = null;
+						$do_import  = sanitize_key( wp_unslash( $_GET['doimport'] ) );
+
+						switch ( $do_import ) {
 							case 'sb':
 								$class = new SM_Import_SB();
 								break;
@@ -639,12 +645,12 @@ class SermonManager { // phpcs:ignore
 										?>
 										<div class="notice notice-info">
 											<p>Debug info:</p>
-											<pre><?php echo get_option( 'sm_last_import_info' ) ?: 'No data available.'; ?></pre>
+											<pre><?php echo esc_html( get_option( 'sm_last_import_info' ) ?: 'No data available.' ); ?></pre>
 										</div>
 									<?php endif; ?>
 
 									<div class="notice notice-success">
-										<p><?php _e( 'Import done!', 'sermon-manager-for-wordpress' ); ?></p>
+										<p><?php esc_html_e( 'Import done!', 'sermon-manager-for-wordpress' ); ?></p>
 									</div>
 									<?php
 								}
@@ -684,8 +690,8 @@ class SermonManager { // phpcs:ignore
 				if ( '' !== $value ) {
 					global $wpdb;
 
-					$sql = 'DELETE FROM ' . $wpdb->options . ' WHERE ( `option_name` LIKE "_transient_%" OR `option_name` LIKE "transient_%")';
-					$wpdb->query( $sql );
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- No user input; table name cannot be parameterized.
+					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" );
 
 					?>
 					<div class="notice notice-success">
@@ -774,12 +780,16 @@ class SermonManager { // phpcs:ignore
 		add_action(
 			'save_post_wpfc_sermon',
 			function ( $post_ID, $post, $update ) {
+				if ( ! current_user_can( 'edit_post', $post_ID ) ) {
+					return;
+				}
+
 				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) {
 					return;
 				}
 
-				$audio_id  = &$_POST['sermon_audio_id'];
-				$audio_url = $_POST['sermon_audio'];
+				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) );
+				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) );
 
 				// Attempt to get remote file size.
 				if ( $audio_url && ! $audio_id ) {
@@ -871,9 +881,17 @@ class SermonManager { // phpcs:ignore
 		add_action(
 			'wp_ajax_sm_settings_get_select_data',
 			function () {
-				echo json_encode( apply_filters( 'sm_settings_get_select_data', array(), $_POST['category'], $_POST['podcast_id'], $_POST['option_id'] ) );
+				check_ajax_referer( 'sm_settings_ajax', 'nonce' );
 
-				wp_die();
+				if ( ! current_user_can( 'manage_options' ) ) {
+					wp_die( -1, 403 );
+				}
+
+				$category   = sanitize_key( wp_unslash( $_POST['category'] ?? '' ) );
+				$podcast_id = absint( $_POST['podcast_id'] ?? 0 );
+				$option_id  = sanitize_key( wp_unslash( $_POST['option_id'] ?? '' ) );
+
+				wp_send_json( apply_filters( 'sm_settings_get_select_data', array(), $category, $podcast_id, $option_id ) );
 			}
 		);
 	}
