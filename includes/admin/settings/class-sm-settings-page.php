@@ -77,7 +77,7 @@ abstract class SM_Settings_Page {
 
 		$sections = $this->get_sections();
 
-		if ( empty( $sections ) || 1 === sizeof( $sections ) ) {
+		if ( empty( $sections ) || 1 === count( $sections ) ) {
 			return;
 		}
 

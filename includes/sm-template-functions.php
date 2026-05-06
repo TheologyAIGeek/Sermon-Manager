@@ -29,7 +29,7 @@ if ( ! SermonManager::getOption( 'disable_layouts', false ) ) {
 	 * @return string The modified content if it's Sermon related data.
 	 */
 	function add_wpfc_sermon_content( $content ) {
-		if ( 'wpfc_sermon' === get_post_type() && in_the_loop() == true ) {
+		if ( 'wpfc_sermon' === get_post_type() && in_the_loop() ) {
 			if ( ! is_feed() && ( is_archive() || is_search() ) ) {
 				$content = wpfc_sermon_excerpt_v2( true );
 			} elseif ( is_singular() && is_main_query() ) {

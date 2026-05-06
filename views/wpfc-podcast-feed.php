@@ -40,7 +40,7 @@ $default_settings = array(
 // If there is no default.
 $wordpress_settings = array(
 	'podcasts_per_page' => 10,
-	'title'             => get_wp_title_rss(),
+	'title'             => esc_html( get_bloginfo( 'name' ) ),
 	'website_link'      => get_bloginfo_rss( 'url' ),
 	'description'       => get_bloginfo_rss( 'description' ),
 	'language'          => get_bloginfo_rss( 'language' ),
