@@ -43,7 +43,7 @@ The **"master"** branch is a stable branch, and gets updated only on releases. W
 downloaded the latest version on WordPress)
 
 ### dev branch
-The **"dev"** branch, is where commits during development are integrated into. It is where the WP For Church team
+The **"dev"** branch, is where commits during development are integrated into. It is where the maintainer
 pushes or merges their actual changes together and where contributions from the community (Pull requests) are
 integrated into the development version of the plugin. Anyone who wish to try the cutting edge version of Sermon Manager Revival
 can download the develop branch and install it on their website.
@@ -72,7 +72,7 @@ changes easily.
 - Big features get developed on **feature branches**, either in your local repository or pushed to GitHub. Feature branches
 can be rebased.
 - Once ready, **feature branches** are PR'd to **dev**.
-- When the WPFC team wants to make a release, **dev** is branched into a **release branch**. Version gets bumped, necessary
+- When the maintainer wants to make a release, **dev** is branched into a **release branch**. Version gets bumped, necessary
 stabilization work happens, including final changes and testing, on that branch. (**dev** is never frozen, and efforts to PR 
 in **feature branches** should not stop just because a release is happening)
 - When a release is ready to be released, the **release branch** is merged into **dev** & **master**, **master** is tagged 
