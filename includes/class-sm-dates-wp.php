@@ -131,12 +131,18 @@ class SM_Dates_WP extends SM_Dates {
 	 * @since 2.15.11
 	 */
 	public static function save_terms_dates( $post_ID, $post, $update ) {
+		// Verify WordPress post nonce before accessing POST data.
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'update-post_' . $post_ID ) ) {
+			return;
+		}
+
 		if ( ! isset( $_POST['tax_input'] ) ) {
 			return;
 		}
 
 		$original_terms = $GLOBALS['sm_original_terms'];
-		$updated_terms  = isset( $_POST['tax_input'] ) ? $_POST['tax_input'] : null;
+		$tax_input      = isset( $_POST['tax_input'] ) ? wp_unslash( $_POST['tax_input'] ) : array();
+		$updated_terms  = $tax_input;
 
 		// Convert terms to term array of term IDs if it's not already that way.
 		foreach ( $updated_terms as $taxonomy => $terms ) {
@@ -322,7 +328,8 @@ class SM_Dates_WP extends SM_Dates {
 						break;
 				}
 
-				$dt      = DateTime::createFromFormat( $date_format, $_POST['sermon_date'] );
+				$sermon_date_raw = isset( $_POST['sermon_date'] ) ? sanitize_text_field( wp_unslash( $_POST['sermon_date'] ) ) : '';
+				$dt      = DateTime::createFromFormat( $date_format, $sermon_date_raw );
 				$dt_post = DateTime::createFromFormat( 'U', mysql2date( 'U', $post->post_date ) );
 
 				$time = array(

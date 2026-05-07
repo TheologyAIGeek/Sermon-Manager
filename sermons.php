@@ -72,7 +72,7 @@ class SermonManager { // phpcs:ignore
 		define( 'SM_PATH', dirname( SM_PLUGIN_FILE ) . '/' );
 		define( 'SM_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'SM_URL', plugin_dir_url( __FILE__ ) );
-		define( 'SM_VERSION', preg_match( '/^.*Version: (.*)$/m', file_get_contents( __FILE__ ), $version ) ? trim( $version[1] ) : 'N/A' );
+		define( 'SM_VERSION', get_file_data( SM_PLUGIN_FILE, array( 'Version' => 'Version' ) )['Version'] ?: 'N/A' );
 
 		// Easy way to get if output buffering is enabled. @todo - fix it, causes issues to many users.
 		define( 'SM_OB_ENABLED', true );

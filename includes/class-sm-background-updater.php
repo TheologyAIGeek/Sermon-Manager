@@ -81,6 +81,9 @@ class SM_Background_Updater extends SM_WP_Background_Process {
 		include_once 'sm-update-functions.php';
 
 		if ( is_callable( $callback ) ) {
+			if ( ! is_string( $callback ) || strpos( $callback, 'sm_update_' ) !== 0 || ! function_exists( $callback ) ) {
+				return false;
+			}
 			call_user_func( $callback );
 		}
 

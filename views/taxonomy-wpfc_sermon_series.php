@@ -12,7 +12,7 @@ get_header();
 <?php echo wpfc_get_partial( 'content-sermon-wrapper-start' ); ?>
 
 <?php
-echo render_wpfc_sorting();
+echo wp_kses_post( render_wpfc_sorting() );
 
 if ( have_posts() ) :
 

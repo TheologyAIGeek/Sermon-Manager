@@ -23,7 +23,7 @@ $_partial_args = ! empty( $GLOBALS['wpfc_partial_args'] ) ? $GLOBALS['wpfc_parti
 
 foreach ( array( 'action', 'filters', 'visibility_mapping', 'args' ) as $_required_key ) {
 	if ( ! isset( $_partial_args[ $_required_key ] ) ) {
-		echo '<p><b>Sermon Manager</b>: Partial "<i>' . esc_html( str_replace( '.php', '', basename( __FILE__ ) ) ) . '</i>" loaded incorrectly.</p>';
+		echo '<p><b>Sermon Manager Revival</b>: Partial "<i>' . esc_html( str_replace( '.php', '', basename( __FILE__ ) ) ) . '</i>" loaded incorrectly.</p>';
 
 		return;
 	}

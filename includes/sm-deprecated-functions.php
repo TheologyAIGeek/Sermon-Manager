@@ -80,7 +80,7 @@ function render_wpfc_sermon_archive() {
 
 	global $post;
 	// translators: Sermon Title.
-	$title = printf( esc_attr__( 'Permalink to %s', 'sermon-manager-for-wordpress' ), the_title_attribute( 'echo=0' ) );
+	$title = sprintf( esc_attr__( 'Permalink to %s', 'sermon-manager-for-wordpress' ), the_title_attribute( 'echo=0' ) );
 	?>
 	<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<h2 class="sermon-title"><a href="<?php the_permalink(); ?>"

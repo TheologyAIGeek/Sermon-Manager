@@ -26,10 +26,6 @@ class SM_Autoloader {
 	 * The Constructor.
 	 */
 	public function __construct() {
-		if ( function_exists( '__autoload' ) ) {
-			spl_autoload_register( '__autoload' );
-		}
-
 		spl_autoload_register( array( $this, 'autoload' ) );
 
 		$this->include_path = untrailingslashit( plugin_dir_path( SM_PLUGIN_FILE ) ) . '/includes/';

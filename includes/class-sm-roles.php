@@ -54,4 +54,7 @@ class SM_Roles {
 	}
 }
 
-SM_Roles::init();
+// Only add roles on install/update, not on every page load.
+if ( defined( 'SM_VERSION' ) && get_option( 'sm_version' ) !== SM_VERSION ) {
+	SM_Roles::init();
+}

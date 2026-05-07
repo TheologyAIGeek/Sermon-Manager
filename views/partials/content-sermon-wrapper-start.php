@@ -20,7 +20,7 @@ $template = get_option( 'template' );
  * @since 2.15.0
  */
 $additional_classes = apply_filters( 'sm_templates_additional_classes', array(), $template );
-$additional_classes = implode( ' ', $additional_classes );
+$additional_classes = esc_attr( implode( ' ', $additional_classes ) );
 
 switch ( $template ) {
 	case 'twentyeleven':

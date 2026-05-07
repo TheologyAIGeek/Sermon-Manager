@@ -715,7 +715,7 @@ function wpfc_get_partial( $name = '', $args = array() ) {
 				if ( file_exists( SM_PATH . 'views/partials/' . $name ) ) {
 					load_template( SM_PATH . 'views/partials/' . $name, false );
 				} else {
-					echo '<p><b>Sermon Manager</b>: Failed loading partial "<i>' . str_replace( '.php', '', $name ) . '</i>", file does not exist.</p>';
+					echo '<p><b>Sermon Manager Revival</b>: Failed loading partial "<i>' . esc_html( str_replace( '.php', '', $name ) ) . '</i>", file does not exist.</p>';
 				}
 			}
 
