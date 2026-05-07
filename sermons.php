@@ -3,7 +3,7 @@
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
  * Description: Add audio and video sermons, manage speakers, series, and more.
- * Version: 2026.5.1
+ * Version: 2026.5.2
  * Author: Jerry Purvis
  * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0

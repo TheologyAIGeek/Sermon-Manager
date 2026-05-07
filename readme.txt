@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2026.5.1
+Stable tag: 2026.5.2
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,30 @@ Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issue
 2. Sermon Files
 
 ## Changelog ##
+### 2026.5.2 ###
+* Security: Add $wpdb->prepare() placeholders to all raw SQL queries (SQL injection prevention)
+* Security: Add output escaping (esc_html, esc_attr, esc_url, wp_kses_post) throughout admin and frontend views
+* Security: Add nonce verification and current_user_can() checks to all form-handling functions
+* Security: Replace unserialize(base64_decode()) with is_serialized() + maybe_unserialize() (object injection prevention)
+* Security: Add wp_die() in place of die() with proper escaping in settings handler
+* Security: Sanitize all $_GET, $_POST, and $_REQUEST inputs with sanitize_text_field(wp_unslash()) or absint()
+* Fix: Replace deprecated utf8_encode() with mb_convert_encoding() (PHP 8.2 compatibility)
+* Fix: Replace deprecated wp_get_http() with wp_remote_get() + WP_Filesystem
+* Fix: Replace date() with wp_date() throughout for timezone-safe output
+* Fix: Change printf() to sprintf() in deprecated functions to prevent premature output
+* Fix: Wrap render_wpfc_sorting() output with wp_kses_post() in all archive and taxonomy views
+* Fix: Escape $additional_classes with esc_attr() in sermon wrapper template
+* Fix: Replace strip_tags() with sanitize_text_field() for widget title sanitization
+* Fix: Sanitize sermon date input and add nonce check in dates save handler
+* Fix: Replace file_get_contents(__FILE__) version parsing with get_file_data() for efficiency
+* Fix: Remove dead PHP 4 __autoload compatibility block (removed in PHP 8.0)
+* Fix: Gate SM_Roles::init() behind version check to prevent redundant add_cap() calls on every page load
+* Fix: Add callback whitelist guard in background updater before call_user_func()
+* Fix: Add missing text domain to translated strings in admin post types
+* Fix: Replace _e() with esc_html_e() throughout import/export admin view
+* Dev: Convert all var property declarations to public (PHP 4 syntax removal)
+* Dev: Refactor goto statements into standard if/else control flow
+
 ### 2026.5.1 ###
 * Fork: Project forked and maintained by Jerry Purvis <jlpurvis1982@outlook.com>
 * New: Add GPLv2 @copyright headers for Jerry Purvis to all first-party PHP files
