@@ -26,7 +26,7 @@ global $post;
 		<?php if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_single' ) ) : ?>
 			<div class="wpfc-sermon-single-image">
 				<img class="wpfc-sermon-single-image-img" alt="<?php the_title(); ?>"
-						src="<?php echo get_sermon_image_url(); ?>">
+						src="<?php echo esc_url( get_sermon_image_url() ); ?>">
 			</div>
 		<?php endif; ?>
 		<div class="wpfc-sermon-single-main">
@@ -93,9 +93,9 @@ global $post;
 					<div class="wpfc-sermon-single-audio player-<?php echo strtolower( \SermonManager::getOption( 'player', 'plyr' ) ); ?>">
 						<?php echo wpfc_render_audio( $sermon_audio_url ); ?>
 						<a class="wpfc-sermon-single-audio-download"
-								href="<?php echo $sermon_audio_url; ?>"
-								download="<?php echo basename( $sermon_audio_url ); ?>"
-								title="<?php echo __( 'Download Audio File', 'sermon-manager-for-wordpress' ); ?>">
+								href="<?php echo esc_url( $sermon_audio_url ); ?>"
+								download="<?php echo esc_attr( basename( $sermon_audio_url ) ); ?>"
+								title="<?php echo esc_attr__( 'Download Audio File', 'sermon-manager-for-wordpress' ); ?>">
 							<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
 									xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 0h24v24H0z" fill="none"></path>
@@ -130,12 +130,12 @@ global $post;
 						$next_attr     = apply_filters( 'next_posts_link_attributes', 'class="next-sermon"' );
 						if ( null !== $previous_sermon ) :
 							?>
-							<a href="<?php echo get_the_permalink( $previous_sermon ); ?>" <?php echo $previous_attr; ?>><?php echo preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', '&laquo; ' . get_the_title( $previous_sermon ) ); ?></a>
+							<a href="<?php echo esc_url( get_the_permalink( $previous_sermon ) ); ?>" <?php echo $previous_attr; ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', '&laquo; ' . get_the_title( $previous_sermon ) ) ); ?></a>
 						<?php else : ?>
 							<div></div>
 						<?php endif; ?>
 						<?php if ( null !== $next_sermon ) : ?>
-							<a href="<?php echo get_the_permalink( $next_sermon ); ?>" <?php echo $next_attr; ?>><?php echo preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', get_the_title( $next_sermon ) . ' &raquo;' ); ?></a>
+							<a href="<?php echo esc_url( get_the_permalink( $next_sermon ) ); ?>" <?php echo $next_attr; ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', get_the_title( $next_sermon ) . ' &raquo;' ) ); ?></a>
 						<?php else : ?>
 							<div></div>
 						<?php endif; ?>

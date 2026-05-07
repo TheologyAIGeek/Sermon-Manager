@@ -108,20 +108,20 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 										class="title-link">
 									<span class="dashicons dashicons-microphone"></span>
 									<span class="title">
-									<?php echo get_the_title(); ?>
+									<?php echo esc_html( get_the_title() ); ?>
 								</span>
 								</a>
 								<div class="meta">
 									<?php if ( $preacher_links ) : ?>
-										<span class="preachers"><?php echo join( ', ', $preacher_links ); ?></span><span
+										<span class="preachers"><?php echo esc_html( join( ', ', $preacher_links ) ); ?></span><span
 												class="separator">, </span>
 									<?php endif; ?>
 									<span class="date">
-									<?php echo sm_get_the_date(); ?>
+									<?php echo esc_html( sm_get_the_date() ); ?>
 								</span>
 
 									<?php if ( \SermonManager::getOption( 'widget_show_key_verse' ) ) : ?>
-										<span class="bible-passage"><br><?php echo __( 'Bible Text: ', 'sermon-manager-for-wordpress' ), get_wpfc_sermon_meta( 'bible_passage' ); ?></span>
+										<span class="bible-passage"><br><?php echo esc_html__( 'Bible Text: ', 'sermon-manager-for-wordpress' ) . esc_html( get_wpfc_sermon_meta( 'bible_passage' ) ); ?></span>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -202,25 +202,25 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 		$after_widget  = isset( $instance['after_widget'] ) ? wp_kses_post( $instance['after_widget'] ) : '';
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sermon-manager-for-wordpress' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
-					name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'sermon-manager-for-wordpress' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
+					name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php esc_html_e( 'Number of sermons to show:', 'sermon-manager-for-wordpress' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'number' ); ?>"
-					name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>"
+			<label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php esc_html_e( 'Number of sermons to show:', 'sermon-manager-for-wordpress' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"
+					name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="text" value="<?php echo esc_attr( $number ); ?>"
 					size="3"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'before_widget' ); ?>"><?php esc_html_e( 'HTML to show before the widget:', 'sermon-manager-for-wordpress' ); ?></label>
-			<textarea id="<?php echo $this->get_field_id( 'before_widget' ); ?>"
-					name="<?php echo $this->get_field_name( 'before_widget' ); ?>"><?php echo $before_widget; ?></textarea>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'before_widget' ) ); ?>"><?php esc_html_e( 'HTML to show before the widget:', 'sermon-manager-for-wordpress' ); ?></label>
+			<textarea id="<?php echo esc_attr( $this->get_field_id( 'before_widget' ) ); ?>"
+					name="<?php echo esc_attr( $this->get_field_name( 'before_widget' ) ); ?>"><?php echo esc_textarea( $before_widget ); ?></textarea>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'after_widget' ); ?>"><?php esc_html_e( 'HTML to show after the widget:', 'sermon-manager-for-wordpress' ); ?></label>
-			<textarea id="<?php echo $this->get_field_id( 'after_widget' ); ?>"
-					name="<?php echo $this->get_field_name( 'after_widget' ); ?>"><?php echo $after_widget; ?></textarea>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'after_widget' ) ); ?>"><?php esc_html_e( 'HTML to show after the widget:', 'sermon-manager-for-wordpress' ); ?></label>
+			<textarea id="<?php echo esc_attr( $this->get_field_id( 'after_widget' ) ); ?>"
+					name="<?php echo esc_attr( $this->get_field_name( 'after_widget' ) ); ?>"><?php echo esc_textarea( $after_widget ); ?></textarea>
 		</p>
 		<?php
 	}

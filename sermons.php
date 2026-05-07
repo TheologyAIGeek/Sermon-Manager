@@ -9,6 +9,8 @@
  * Requires at least: 6.0
  * Tested up to: 6.8
  * Requires PHP: 7.4
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  *
  * Text Domain: sermon-manager-for-wordpress
  * Domain Path: /languages/
@@ -488,7 +490,7 @@ class SermonManager { // phpcs:ignore
 		}
 
 		foreach ( $GLOBALS['sm_plyr_scripts'] as $script ) {
-			echo '<script type="text/javascript" data-cfasync="false" src="' . $script->src . '"></script>';
+			echo '<script type="text/javascript" data-cfasync="false" src="' . esc_url( $script->src ) . '"></script>';
 
 			if ( ! empty( $script->extra ) ) {
 				/* @noinspection BadExpressionStatementJS */
@@ -675,7 +677,7 @@ class SermonManager { // phpcs:ignore
 
 					?>
 					<div class="notice notice-success">
-						<p><code><?php echo $value; ?></code> executed.</p>
+						<p><code><?php echo esc_html( $value ); ?></code> executed.</p>
 					</div>
 					<?php
 				}
@@ -696,7 +698,7 @@ class SermonManager { // phpcs:ignore
 
 					?>
 					<div class="notice notice-success">
-						<p>Removed <?php echo $wpdb->rows_affected; ?> transient fields.</p>
+						<p>Removed <?php echo absint( $wpdb->rows_affected ); ?> transient fields.</p>
 					</div>
 					<?php
 				}
@@ -723,7 +725,7 @@ class SermonManager { // phpcs:ignore
 
 								?>
 								<div class="notice notice-success">
-									<p><code><?php echo $function; ?></code> executed.</p>
+									<p><code><?php echo esc_html( $function ); ?></code> executed.</p>
 								</div>
 								<?php
 							}

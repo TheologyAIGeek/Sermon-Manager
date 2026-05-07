@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) or die;
 
 $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 ?>
-<div class="wrap sm sm_settings_<?php echo $current_tab; ?>">
+<div class="wrap sm sm_settings_<?php echo esc_attr( $current_tab ); ?>">
 	<div class="intro">
 		<h1 class="wp-heading-inline">Sermon Manager Revival Settings</h1>
 	</div>
@@ -22,7 +22,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 				<nav class="nav-tab-wrapper sm-nav-tab-wrapper">
 					<?php
 					foreach ( $tabs as $name => $label ) {
-						echo '<a href="' . admin_url( 'edit.php?post_type=wpfc_sermon&page=sm-settings&tab=' . $name ) . '" class="nav-tab ' . ( $current_tab == $name ? 'nav-tab-active' : '' ) . '">' . $label . '</a>';
+						echo '<a href="' . esc_url( admin_url( 'edit.php?post_type=wpfc_sermon&page=sm-settings&tab=' . sanitize_key( $name ) ) ) . '" class="nav-tab ' . ( $current_tab == $name ? 'nav-tab-active' : '' ) . '">' . esc_html( $label ) . '</a>';
 					}
 					do_action( 'sm_settings_tabs' );
 					?>
@@ -97,7 +97,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 				</div>
 			</div>
 		   <?php  
-			echo apply_filters( 'settings_page_sidebar_extra_boxs', $arg='' );
+			echo wp_kses_post( apply_filters( 'settings_page_sidebar_extra_boxs', '' ) );
 			?>
 		</div>
 	</div>

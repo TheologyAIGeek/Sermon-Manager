@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) or die;
 		<div id="the-list">
 			<div class="plugin-card card-import-sm">
 				<div class="plugin-card-top">
-					<img src="<?php echo SM_URL; ?>assets/images/import-sm.jpg" class="plugin-icon"
+					<img src="<?php echo esc_url( SM_URL ); ?>assets/images/import-sm.jpg" class="plugin-icon"
 							alt="<?php esc_attr_e( 'Import from file', 'sermon-manager-for-wordpress' ); ?>">
 					<div class="name column-name">
 						<h3>
@@ -39,7 +39,7 @@ defined( 'ABSPATH' ) or die;
 										</p>
 										<p>
 											<strong>
-												<?php echo $upload_dir['error']; ?>
+												<?php echo esc_html( $upload_dir['error'] ); ?>
 											</strong>
 										</p>
 									</div>
@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) or die;
 										<p>
 											<input type="file" id="upload" name="import" size="25"/>
 											<input type="hidden" name="action" value="save"/>
-											<input type="hidden" name="max_file_size" value="<?php echo $bytes; ?>"/>
+											<input type="hidden" name="max_file_size" value="<?php echo esc_attr( $bytes ); ?>"/>
 										</p>
 										<input class="button" id="submit" type="submit" name="submit"
 												value="<?php esc_attr_e( 'Import from file', 'sermon-manager-for-wordpress' ); ?>"/>
@@ -78,7 +78,7 @@ defined( 'ABSPATH' ) or die;
 			</div>
 			<div class="plugin-card card-export-sm">
 				<div class="plugin-card-top">
-					<img src="<?php echo SM_URL; ?>assets/images/export-sm.jpg" class="plugin-icon"
+					<img src="<?php echo esc_url( SM_URL ); ?>assets/images/export-sm.jpg" class="plugin-icon"
 							alt="<?php esc_attr_e( 'Export to file', 'sermon-manager-for-wordpress' ); ?>">
 					<div class="name column-name">
 						<h3>
@@ -113,7 +113,7 @@ defined( 'ABSPATH' ) or die;
 			<div class="plugin-card <?php echo SM_Import_SB::is_installed() ? '' : 'not-available'; ?>">
 				<h2>Plugin not installed</h2>
 				<div class="plugin-card-top">
-					<img src="<?php echo SM_URL; ?>assets/images/import-sb.jpg" class="plugin-icon"
+					<img src="<?php echo esc_url( SM_URL ); ?>assets/images/import-sb.jpg" class="plugin-icon"
 							alt="<?php esc_attr_e( 'Sermon Browser', 'sermon-manager-for-wordpress' ); ?>">
 					<div class="name column-name">
 						<h3>
@@ -154,7 +154,7 @@ defined( 'ABSPATH' ) or die;
 			<div class="plugin-card <?php echo SM_Import_SE::is_installed() ? '' : 'not-available'; ?>">
 				<h2>Plugin not installed</h2>
 				<div class="plugin-card-top">
-					<img src="<?php echo SM_URL; ?>assets/images/import-se.jpg" class="plugin-icon"
+					<img src="<?php echo esc_url( SM_URL ); ?>assets/images/import-se.jpg" class="plugin-icon"
 							alt="<?php esc_attr_e( 'Series Engine', 'sermon-manager-for-wordpress' ); ?>">
 					<div class="name column-name">
 						<h3>

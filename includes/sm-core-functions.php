@@ -855,8 +855,21 @@ function sm_get_next_sermon( $post = null ) {
  * @param int $post_ID The sermon ID.
  */
 function sm_set_service_type( $post_ID ) {
+	// Verify nonce and capability.
+	if ( ! isset( $_POST['wpfc_sermon_service_type_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wpfc_sermon_service_type_nonce'] ), 'sm_service_type_' . $post_ID ) ) {
+		// Fall back to checking the standard WordPress post nonce for REST/quick-edit contexts.
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'update-post_' . $post_ID ) ) {
+			return;
+		}
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_ID ) ) {
+		return;
+	}
+
 	if ( isset( $_POST['wpfc_service_type'] ) ) {
-		$term = get_term_by( 'id', $_POST['wpfc_service_type'], 'wpfc_service_type' );
+		$service_type_id = absint( wp_unslash( $_POST['wpfc_service_type'] ) );
+		$term            = get_term_by( 'id', $service_type_id, 'wpfc_service_type' );
 
 		if ( $term ) {
 			$service_type = $term->slug;
@@ -867,11 +880,13 @@ function sm_set_service_type( $post_ID ) {
 		return;
 	}
 
-	$get  = isset( $_GET['tax_input'] ) && isset( $_GET['tax_input']['wpfc_service_type'] ) && $_GET['tax_input']['wpfc_service_type'];
+	$tax_input = isset( $_GET['tax_input'] ) ? array_map( 'absint', (array) $_GET['tax_input'] ) : array();
+
+	$get  = ! empty( $tax_input['wpfc_service_type'] );
 	$post = isset( $_POST['tax_input'] ) && isset( $_POST['tax_input']['wpfc_service_type'] ) && $_POST['tax_input']['wpfc_service_type'];
 
 	if ( $get || $post ) {
-		$field = $get ? $_GET['tax_input']['wpfc_service_type'] : $_POST['tax_input']['wpfc_service_type'];
+		$field = $get ? $tax_input['wpfc_service_type'] : sanitize_text_field( wp_unslash( $_POST['tax_input']['wpfc_service_type'] ) );
 		$terms = explode( ',', $field );
 
 		if ( $terms ) {

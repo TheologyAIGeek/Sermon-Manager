@@ -96,14 +96,16 @@ class SM_Export_SM {
 		 *
 		 * @return string
 		 */
-		function wxr_cdata( $str ) {
-			if ( seems_utf8( $str ) == false ) {
-				$str = utf8_encode( $str );
+		if ( ! function_exists( 'wxr_cdata' ) ) {
+			function wxr_cdata( $str ) {
+				if ( seems_utf8( $str ) == false ) {
+					$str = utf8_encode( $str );
+				}
+
+				$str = '<![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $str ) . ']]>';
+
+				return $str;
 			}
-
-			$str = '<![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $str ) . ']]>';
-
-			return $str;
 		}
 
 		/**
@@ -253,9 +255,9 @@ class SM_Export_SM {
 
 			foreach ( $authors as $author ) {
 				echo "\t<wp:author>";
-				echo '<wp:author_id>' . $author->ID . '</wp:author_id>';
-				echo '<wp:author_login>' . $author->user_login . '</wp:author_login>';
-				echo '<wp:author_email>' . $author->user_email . '</wp:author_email>';
+				echo '<wp:author_id>' . absint( $author->ID ) . '</wp:author_id>';
+				echo '<wp:author_login>' . esc_xml( $author->user_login ) . '</wp:author_login>';
+				echo '<wp:author_email>' . esc_xml( $author->user_email ) . '</wp:author_email>';
 				echo '<wp:author_display_name>' . wxr_cdata( $author->display_name ) . '</wp:author_display_name>';
 				echo '<wp:author_first_name>' . wxr_cdata( $author->user_firstname ) . '</wp:author_first_name>';
 				echo '<wp:author_last_name>' . wxr_cdata( $author->user_lastname ) . '</wp:author_last_name>';
@@ -373,7 +375,7 @@ class SM_Export_SM {
 							}
 							?>
 							<wp:termmeta>
-								<wp:meta_key><?php echo $meta->meta_key; ?></wp:meta_key>
+								<wp:meta_key><?php echo esc_xml( $meta->meta_key ); ?></wp:meta_key>
 								<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
 							</wp:termmeta>
 						<?php endforeach; ?>
@@ -436,8 +438,8 @@ class SM_Export_SM {
 
 					// fetch 20 posts at a time rather than loading the entire table into memory.
 					while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
-						$where = 'WHERE ID IN (' . join( ',', $next_posts ) . ')';
-						$posts = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} $where" );
+						$placeholders = implode( ',', array_fill( 0, count( $next_posts ), '%d' ) );
+						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 
 						// Begin Loop.
 						foreach ( $posts as $post ) {
@@ -476,17 +478,17 @@ class SM_Export_SM {
 									echo wxr_cdata( apply_filters( 'the_excerpt_export', $post->post_excerpt ) );
 									?>
 								</excerpt:encoded>
-								<wp:post_id><?php echo $post->ID; ?></wp:post_id>
-								<wp:post_date><?php echo $post->post_date; ?></wp:post_date>
-								<wp:post_date_gmt><?php echo $post->post_date_gmt; ?></wp:post_date_gmt>
-								<wp:comment_status><?php echo $post->comment_status; ?></wp:comment_status>
-								<wp:ping_status><?php echo $post->ping_status; ?></wp:ping_status>
-								<wp:post_name><?php echo $post->post_name; ?></wp:post_name>
-								<wp:status><?php echo $post->post_status; ?></wp:status>
-								<wp:post_parent><?php echo $post->post_parent; ?></wp:post_parent>
-								<wp:menu_order><?php echo $post->menu_order; ?></wp:menu_order>
-								<wp:post_type><?php echo $post->post_type; ?></wp:post_type>
-								<wp:post_password><?php echo $post->post_password; ?></wp:post_password>
+								<wp:post_id><?php echo absint( $post->ID ); ?></wp:post_id>
+								<wp:post_date><?php echo esc_xml( $post->post_date ); ?></wp:post_date>
+								<wp:post_date_gmt><?php echo esc_xml( $post->post_date_gmt ); ?></wp:post_date_gmt>
+								<wp:comment_status><?php echo esc_xml( $post->comment_status ); ?></wp:comment_status>
+								<wp:ping_status><?php echo esc_xml( $post->ping_status ); ?></wp:ping_status>
+								<wp:post_name><?php echo esc_xml( $post->post_name ); ?></wp:post_name>
+								<wp:status><?php echo esc_xml( $post->post_status ); ?></wp:status>
+								<wp:post_parent><?php echo absint( $post->post_parent ); ?></wp:post_parent>
+								<wp:menu_order><?php echo absint( $post->menu_order ); ?></wp:menu_order>
+								<wp:post_type><?php echo esc_xml( $post->post_type ); ?></wp:post_type>
+								<wp:post_password><?php echo esc_xml( $post->post_password ); ?></wp:post_password>
 								<wp:is_sticky><?php echo $is_sticky; ?></wp:is_sticky>
 								<?php wxr_post_taxonomy( $post->ID ); ?>
 								<?php if ( 'attachment' == $post->post_type ) : ?>
@@ -512,7 +514,7 @@ class SM_Export_SM {
 									}
 									?>
 									<wp:postmeta>
-										<wp:meta_key><?php echo $meta->meta_key; ?></wp:meta_key>
+										<wp:meta_key><?php echo esc_xml( $meta->meta_key ); ?></wp:meta_key>
 										<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
 									</wp:postmeta>
 								<?php endforeach; ?>
@@ -538,7 +540,7 @@ class SM_Export_SM {
 										foreach ( $c_meta as $meta ) :
 											?>
 											<wp:commentmeta>
-												<wp:meta_key><?php echo $meta->meta_key; ?></wp:meta_key>
+												<wp:meta_key><?php echo esc_xml( $meta->meta_key ); ?></wp:meta_key>
 												<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
 											</wp:commentmeta>
 										<?php endforeach; ?>

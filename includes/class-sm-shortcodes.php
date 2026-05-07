@@ -197,7 +197,7 @@ class SM_Shortcodes {
 		if ( $this->convert_taxonomy_name( $args['display'], true ) ) {
 			$args['display'] = $this->convert_taxonomy_name( $args['display'], false );
 		} elseif ( ! $this->convert_taxonomy_name( $args['display'], false ) ) {
-			return '<strong>Error: Invalid "list" parameter.</strong><br> Possible values are: "series", "preachers", "topics" and "books".<br> You entered: "<em>' . $args['display'] . '</em>"';
+			return '<strong>Error: Invalid "list" parameter.</strong><br> Possible values are: "series", "preachers", "topics" and "books".<br> You entered: "<em>' . esc_html( $args['display'] ) . '</em>"';
 		}
 
 		$query_args = array(
@@ -303,7 +303,7 @@ class SM_Shortcodes {
 
 			$list = '<ul id="list-sermons">';
 			foreach ( $terms as $term ) {
-				$list .= '<li><a href="' . esc_url( get_term_link( $term, $term->taxonomy ) ) . '" title="' . $term->name . '">' . $term->name . '</a></li>';
+				$list .= '<li><a href="' . esc_url( get_term_link( $term, $term->taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . esc_html( $term->name ) . '</a></li>';
 			}
 			$list .= '</ul>';
 
@@ -457,7 +457,7 @@ class SM_Shortcodes {
 		if ( $this->convert_taxonomy_name( $args['display'], true ) ) {
 			$args['display'] = $this->convert_taxonomy_name( $args['display'], false );
 		} elseif ( ! $this->convert_taxonomy_name( $args['display'], false ) ) {
-			return '<strong>Error: Invalid "list" parameter.</strong><br> Possible values are: "series", "preachers", "topics" and "books".<br> You entered: "<em>' . $args['display'] . '</em>"';
+			return '<strong>Error: Invalid "list" parameter.</strong><br> Possible values are: "series", "preachers", "topics" and "books".<br> You entered: "<em>' . esc_html( $args['display'] ) . '</em>"';
 		}
 
 		// Format args.

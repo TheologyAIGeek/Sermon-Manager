@@ -368,7 +368,13 @@ class SM_Import_SB {
 		$options = get_option( 'sermonbrowser_options', array(
 			'upload_dir' => 'wp-content/uploads/sermons/',
 		) );
-		$options = is_array( $options ) ? $options : unserialize( base64_decode( $options ) );
+		if ( ! is_array( $options ) ) {
+			$decoded = base64_decode( $options ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+			$options = is_serialized( $decoded ) ? maybe_unserialize( $decoded ) : array();
+			if ( ! is_array( $options ) ) {
+				$options = array();
+			}
+		}
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();

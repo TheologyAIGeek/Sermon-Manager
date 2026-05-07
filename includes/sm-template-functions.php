@@ -216,7 +216,7 @@ function render_wpfc_sorting( $args = array() ) {
  * @param string $after    Content after key value.
  */
 function wpfc_sermon_meta( $meta_key = '', $before = '', $after = '' ) {
-	echo $before . get_wpfc_sermon_meta( $meta_key ) . $after;
+	echo $before . esc_html( get_wpfc_sermon_meta( $meta_key ) ) . $after;
 }
 
 /**

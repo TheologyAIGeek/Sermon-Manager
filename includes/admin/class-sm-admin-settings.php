@@ -84,7 +84,7 @@ class SM_Admin_Settings {
 
 		// Get current tab/section.
 		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( $_GET['tab'] );
-		$current_section = empty( $_REQUEST['section'] ) ? '' : sanitize_title( $_REQUEST['section'] );
+		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : '';
 
 		// Save settings if data has been posted.
 		if ( ! empty( $_POST ) ) {
@@ -93,11 +93,11 @@ class SM_Admin_Settings {
 
 		// Add any posted messages.
 		if ( ! empty( $_GET['sm_error'] ) ) {
-			self::add_error( stripslashes( $_GET['sm_error'] ) );
+			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) );
 		}
 
 		if ( ! empty( $_GET['sm_message'] ) ) {
-			self::add_message( stripslashes( $_GET['sm_message'] ) );
+			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) );
 		}
 
 		switch ( $current_tab ) {
@@ -145,7 +145,7 @@ class SM_Admin_Settings {
 		global $current_tab, $wpdb;
 
 		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'sm-settings' ) ) {
-			die( __( 'Action failed. Please refresh the page and retry.', 'sermon-manager-for-wordpress' ) );
+			wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'sermon-manager-for-wordpress' ) );
 		}
 
 		/**
@@ -423,7 +423,7 @@ class SM_Admin_Settings {
 										}
 
 										?>
-									><?php echo $val; ?></option>
+									><?php echo esc_html( $val ); ?></option>
 									<?php
 								}
 								?>
@@ -456,13 +456,13 @@ class SM_Admin_Settings {
 											<label>
 												<input
 														name="<?php echo esc_attr( $option['id'] ); ?>"
-														value="<?php echo $key; ?>"
+														value="<?php echo esc_attr( $key ); ?>"
 														type="radio"
 														style="<?php echo esc_attr( $option['css'] ); ?>"
 														class="<?php echo esc_attr( $option['class'] ); ?>"
 													<?php echo implode( ' ', $custom_attributes ); ?>
 													<?php checked( $key, $option_value ); ?>
-												/> <?php echo $val; ?>
+												/> <?php echo esc_html( $val ); ?>
 											</label>
 										</li>
 										<?php
@@ -515,7 +515,7 @@ class SM_Admin_Settings {
 									<?php
 								}
 								?>
-								<label for="<?php echo $option['id']; ?>">
+								<label for="<?php echo esc_attr( $option['id'] ); ?>">
 									<input
 											name="<?php echo esc_attr( $option['id'] ); ?>"
 											id="<?php echo esc_attr( $option['id'] ); ?>"
@@ -589,7 +589,7 @@ class SM_Admin_Settings {
 					?>
 					<tr valign="top">
 						<td class="forminp forminp-<?php echo sanitize_title( $option['type'] ); ?>" colspan="2">
-							<p><?php echo $option['desc']; ?></p>
+							<p><?php echo wp_kses_post( $option['desc'] ); ?></p>
 						</td>
 					</tr>
 					<?php
@@ -663,7 +663,7 @@ class SM_Admin_Settings {
 		} elseif ( $description && in_array( $option['type'], array( 'checkbox' ) ) ) {
 			$description = wp_kses_post( $description );
 		} elseif ( $description && in_array( $option['type'], array( 'select', 'multiselect' ) ) ) {
-			$description = '<p class="description">' . $description . '</p>';
+			$description = '<p class="description">' . wp_kses_post( $description ) . '</p>';
 		} elseif ( $description ) {
 			$description = '<p class="description">' . wp_kses_post( $description ) . '</p>';
 		}

@@ -22,18 +22,18 @@ global $post;
 	<p>
 		<strong><?php echo __( 'Download Files', 'sermon-manager-for-wordpress' ); ?></strong>
 		<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) ) : ?>
-			<a href="<?php echo get_wpfc_sermon_meta( 'sermon_notes' ); ?>"
+			<a href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>"
 				class="sermon-attachments"
-				download="<?php echo basename( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>">
+				download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_notes' ) ) ); ?>">
 				<span class="dashicons dashicons-media-document"></span>
 				<?php echo __( 'Notes', 'sermon-manager-for-wordpress' ); ?>
 			</a>
 		<?php endif; ?>
 
 		<?php if ( get_wpfc_sermon_meta( 'sermon_bulletin' ) ) : ?>
-			<a href="<?php echo get_wpfc_sermon_meta( 'sermon_bulletin' ); ?>"
+			<a href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_bulletin' ) ); ?>"
 				class="sermon-attachments"
-				download="<?php echo basename( get_wpfc_sermon_meta( 'sermon_bulletin' ) ); ?>">
+				download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_bulletin' ) ) ); ?>">
 				<span class="dashicons dashicons-media-document"></span>
 				<?php echo __( 'Bulletin', 'sermon-manager-for-wordpress' ); ?>
 			</a>

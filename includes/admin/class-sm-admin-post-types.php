@@ -141,7 +141,7 @@ class SM_Admin_Post_Types {
 					$data = date( 'Y/m/d', $unix_preached );
 				}
 
-				$data = '<abbr title="' . date( 'Y/m/d g:i:s a', $unix_preached ) . '">' . $data . '</abbr>';
+				$data = '<abbr title="' . esc_attr( date( 'Y/m/d g:i:s a', $unix_preached ) ) . '">' . esc_html( $data ) . '</abbr>';
 
 				break;
 			default:
@@ -153,7 +153,7 @@ class SM_Admin_Post_Types {
 			$data = __( 'Error' );
 		}
 
-		echo $data;
+		echo wp_kses_post( $data );
 	}
 
 	/**
@@ -314,7 +314,7 @@ class SM_Admin_Post_Types {
 		$output .= '<option value="">' . wp_sprintf( __( 'Filter by %s', 'sermon-manager-for-wordpress' ), sm_get_taxonomy_field( 'wpfc_service_type', 'singular_name' ) ) . '</option>';
 
 		foreach ( $terms as $term ) {
-			$output .= '<option value="' . $term->slug . '" ';
+			$output .= '<option value="' . esc_attr( $term->slug ) . '" ';
 
 			if ( isset( $wp_query->query['wpfc_service_type'] ) ) {
 				$output .= selected( $term->slug, $wp_query->query['wpfc_service_type'], false );
@@ -329,7 +329,7 @@ class SM_Admin_Post_Types {
 
 		$output .= '</select>';
 
-		echo apply_filters( 'sm_sermon_filters', $output );
+		echo wp_kses_post( apply_filters( 'sm_sermon_filters', $output ) );
 	}
 }
 

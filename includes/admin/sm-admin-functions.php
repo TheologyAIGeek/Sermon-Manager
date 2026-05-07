@@ -39,7 +39,8 @@ function wpfc_maybe_change_downloads_upload_dir() {
 	global $pagenow;
 
 	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) {
-		if ( 'wpfc_sermon' == get_post_type( $_REQUEST['post_id'] ) ) {
+		$post_id = absint( wp_unslash( $_REQUEST['post_id'] ?? 0 ) );
+		if ( 'wpfc_sermon' == get_post_type( $post_id ) ) {
 			add_filter( 'upload_dir', 'wpfc_change_downloads_upload_dir' );
 		}
 	}

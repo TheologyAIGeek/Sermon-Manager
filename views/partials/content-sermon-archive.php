@@ -76,20 +76,20 @@ if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_archi
 					<div class="wpfc-sermon-header-aside">
 						<?php if ( get_wpfc_sermon_meta( 'sermon_audio' ) ) : ?>
 							<a class="wpfc-sermon-att-audio dashicons dashicons-media-audio"
-									href="<?php echo get_wpfc_sermon_meta( 'sermon_audio' ); ?>"
-									download="<?php echo basename( get_wpfc_sermon_meta( 'sermon_audio' ) ); ?>"
+									href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_audio' ) ); ?>"
+									download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_audio' ) ) ); ?>"
 									title="Audio"></a>
 						<?php endif; ?>
 						<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) ) : ?>
 							<a class="wpfc-sermon-att-notes dashicons dashicons-media-document"
-									href="<?php echo get_wpfc_sermon_meta( 'sermon_notes' ); ?>"
-									download="<?php echo basename( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>"
+									href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>"
+									download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_notes' ) ) ); ?>"
 									title="Notes"></a>
 						<?php endif; ?>
 						<?php if ( get_wpfc_sermon_meta( 'sermon_bulletin' ) ) : ?>
 							<a class="wpfc-sermon-att-bulletin dashicons dashicons-media-text"
-									href="<?php echo get_wpfc_sermon_meta( 'sermon_bulletin' ); ?>"
-									download="<?php echo basename( get_wpfc_sermon_meta( 'sermon_bulletin' ) ); ?>"
+									href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_bulletin' ) ); ?>"
+									download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_bulletin' ) ) ); ?>"
 									title="Bulletin"></a>
 						<?php endif; ?>
 					</div>
@@ -100,9 +100,9 @@ if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_archi
 				<div class="wpfc-sermon-description">
 					<div class="sermon-description-content">
 						<?php if ( has_excerpt( $post ) ) : ?>
-							<?php echo get_the_excerpt( $post ); ?>
+							<?php echo wp_kses_post( get_the_excerpt( $post ) ); ?>
 						<?php else : ?>
-							<?php echo wp_trim_words( get_post_meta( $post->ID, 'sermon_description', true ), 30 ); ?>
+							<?php echo esc_html( wp_trim_words( get_post_meta( $post->ID, 'sermon_description', true ), 30 ) ); ?>
 						<?php endif; ?>
 						<br/>
 					</div>
