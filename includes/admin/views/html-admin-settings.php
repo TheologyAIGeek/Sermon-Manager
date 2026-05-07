@@ -12,7 +12,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 ?>
 <div class="wrap sm sm_settings_<?php echo $current_tab; ?>">
 	<div class="intro">
-		<h1 class="wp-heading-inline">Sermon Manager Settings</h1>
+		<h1 class="wp-heading-inline">Sermon Manager Revival Settings</h1>
 	</div>
 	<?php SM_Admin_Settings::show_messages(); ?>
 	<div class="settings-main">
@@ -66,15 +66,15 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 					<ol>
 						<li>
 							<a href="https://github.com/TheologyAIGeek/Sermon-Manager/wiki"
-									title="" target="_blank">Getting Started with Sermon Manager</a></li>
+									title="" target="_blank">Getting Started with Sermon Manager Revival</a></li>
 						<li>
 							<a href="https://github.com/TheologyAIGeek/Sermon-Manager/wiki"
-									title="Sermon Manager Shortcodes" target="_blank">
-								Sermon Manager Shortcodes</a></li>
+									title="Sermon Manager Revival Shortcodes" target="_blank">
+								Sermon Manager Revival Shortcodes</a></li>
 						<li>
 							<a href="https://github.com/TheologyAIGeek/Sermon-Manager/issues"
-									title="Troubleshooting Sermon Manager" target="_blank">
-								Troubleshooting Sermon Manager</a></li>
+									title="Troubleshooting Sermon Manager Revival" target="_blank">
+								Troubleshooting Sermon Manager Revival</a></li>
 					</ol>
 					<div class="text-align:center;font-size:0.85em;padding:0.4rem 0 0">
 						<?php // translators: %s GitHub URL. ?>
@@ -88,7 +88,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 					<span><?php esc_html_e( 'Lets Make It Even Better!', 'sermon-manager-for-wordpress' ); ?></span>
 				</h3>
 				<div class="inside">
-					<p><?php esc_html_e( 'If you have ideas on how to make Sermon Manager or any of our products better, let us know!', 'sermon-manager-for-wordpress' ); ?></p>
+					<p><?php esc_html_e( 'If you have ideas on how to make Sermon Manager Revival better, let us know!', 'sermon-manager-for-wordpress' ); ?></p>
 					<div style="text-align:center">
 						<a href="https://feedback.userreport.com/05ff651b-670e-4eb7-a734-9a201cd22906/"
 								target="_blank"

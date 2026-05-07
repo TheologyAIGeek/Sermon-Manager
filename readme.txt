@@ -1,9 +1,9 @@
-# Sermon Manager #  
+# Sermon Manager Revival #
 Contributors: wpforchurch, jasonmwestbrook, jlpurvis1982
-Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts, itunes  
-Requires at least: 4.7.0  
-Tested up to: 5.1  
-Requires PHP: 5.3  
+Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts, itunes
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
 Stable tag: 2026.5.1
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,9 +12,9 @@ Add audio and video sermons, manage speakers, series, and more to your church we
 
 ## Description ##
 
-### Sermon Manager is the #1 WordPress Sermon Plugin ###
+### Sermon Manager Revival ###
 
-Sermon Manager is designed to help churches easily publish sermons online. Some of the features include:
+Sermon Manager Revival is designed to help churches easily publish sermons online. Some of the features include:
 
 * Add Speakers, Series, Topics, Books, and Service Types
 * Attach images to sermons, series, speakers, and topics
@@ -25,8 +25,8 @@ Sermon Manager is designed to help churches easily publish sermons online. Some 
 * Full-featured API for developers (check it out at `/wp-json/wp/v2/wpfc_sermon`)
 * Full-featured iTunes podcasting support for all sermons, plus each sermon series, preachers, sermon topics, or book of the Bible!
 * Import sermons from other WordPress plugins
-* PHP 5.3+ - you can use Sermon Manager even with older websites!
-* PHP 7.2 ready - Sermon Manager is 100% compatible with latest PHP version
+* PHP 7.4+ compatible
+* PHP 8.x ready — Sermon Manager Revival is compatible with the latest PHP versions
 * Super flexible shortcode system
 * Supports 3rd party plugins such as Yoast SEO, Jetpack, etc
 * Quick and professional *free* and paid support
@@ -37,7 +37,7 @@ Sermon Manager is designed to help churches easily publish sermons online. Some 
 Sermon Manager supports migration/importing from other popular sermon plugins, such as Sermon Browser and Series Engine.
 
 This is a one click process and currently only supports migration/importing within existing WordPress installations.
-Soon you will be able to migrate from those 3rd party plugins to Sermon Manager on a separate server. (for example: moving to completely new website & WordPress installation)
+Soon you will be able to migrate from those 3rd party plugins to Sermon Manager Revival on a separate server. (for example: moving to completely new website & WordPress installation)
 
 ### Popular Shortcodes ###
 
@@ -61,7 +61,7 @@ Please read the [contributing guidelines](https://github.com/TheologyAIGeek/Serm
 
 Installation is simple:
 
-1. Just use the “Add New” button in Plugin section of your WordPress blog’s Control panel. To find the plugin there, search for `Sermon Manager`
+1. Just use the “Add New” button in Plugin section of your WordPress blog’s Control panel. To find the plugin there, search for `Sermon Manager Revival`
 2. Activate the plugin
 3. Add a sermon through the Dashboard
 4. To display the sermons on the frontend of your site, just visit the `http://yourdomain.com/sermons` if you have pretty permalinks enabled or `http://yourdomain.com/?post_type=wpfc_sermon` if not. Or you can use the shortcode `[sermons]` in any page.

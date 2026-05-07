@@ -34,18 +34,18 @@ No coding skills are required at all.
 
 # Development
 
-The default branch for the Sermon Manager repository on GitHub is **"master"**, while there is another important branch
+The default branch for the Sermon Manager Revival repository on GitHub is **"master"**, while there is another important branch
 called **"dev"** (shortened for "develop"). Each of them serves their own purpose.
 
 ### master branch
 The **"master"** branch is a stable branch, and gets updated only on releases. Whenever people checkout/download the 
-**"master"** branch, they get the source code of the latest official release of the Sermon Manager. (same as if they 
+**"master"** branch, they get the source code of the latest official release of Sermon Manager Revival. (same as if they 
 downloaded the latest version on WordPress)
 
 ### dev branch
 The **"dev"** branch, is where commits during development are integrated into. It is where the WP For Church team
 pushes or merges their actual changes together and where contributions from the community (Pull requests) are
-integrated into the development version of the plugin. Anyone who wish to try the cutting edge version of Sermon Manager
+integrated into the development version of the plugin. Anyone who wish to try the cutting edge version of Sermon Manager Revival
 can download the develop branch and install it on their website.
 
 (Note: whenever a commit is created on develop branch, a development zip package is created by WordPress, which can be 
@@ -56,7 +56,7 @@ sending us pull requests against the dev branch but not the *master* branch.
 
 ### GIT Flow
 They are named *master* and *dev* because most of the core developers adapt the git flow convention when working
-on Sermon Manager. When working on a feature that is likely taking quite some time to finish, a local feature branch is
+on Sermon Manager Revival. When working on a feature that is likely taking quite some time to finish, a local feature branch is
 created, and not necessarily pushed to GitHub. This way, when there are pending pull requests, they do not have to
 wait too long, since they can be merged into develop branch first.
 

@@ -12,7 +12,7 @@
 2. 
 
 ### Platform
-**Sermon Manager Version:**  
+**Sermon Manager Revival Version:**  
 **WordPress Version:**  
 **PHP Version:**
 
