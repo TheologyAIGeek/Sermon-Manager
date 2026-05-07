@@ -1,6 +1,5 @@
 # Sermon Manager #  
-Contributors: wpforchurch, jasonmwestbrook  
-Donate link: http://wpforchurch.com/  
+Contributors: wpforchurch, jasonmwestbrook, jlpurvis1982
 Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts, itunes  
 Requires at least: 4.7.0  
 Tested up to: 5.1  
@@ -50,45 +49,13 @@ Soon you will be able to migrate from those 3rd party plugins to Sermon Manager 
 * `[latest_series]` — This will display information about the latest sermon series, including the image, title (optional), and description (optional).
 * `[sermon_sort_fields]` — Dropdown selections to quickly navigate to all sermons in a series or by a particular speaker.
 
-For more information on each of these shortcodes please visit [our knowledge base](https://wpforchurch.com/my/knowledgebase/12/Sermon-Manager).
+For more information on each of these shortcodes please visit the [GitHub repository](https://github.com/TheologyAIGeek/Sermon-Manager).
 
-### Expert Support ###
+### Contributing ###
 
-The Sermon Manager is available as a FREE download however in order to maintain a free version we offer [premium support packages](https://wpforchurch.com/wordpress-plugins/sermon-manager/#pricing) for those who need any custom assistance. Paid support means you get exclusive access to the Sermon Manager forum as well as support tickets. This is also a way you can donate to the project to help us offer prompt support and a free version of the plugin.
+Bug reports and pull requests are welcome via [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager).
 
-You can access the paid support options via [our website](http://wpforchurch.com/).
-
-Bug fixing and fixing unexpected behavior *is free* and *always will be free*. Just [make an issue on GitHub](https://github.com/WP-for-Church/Sermon-Manager/issues/new) or [create a support thread on WordPress](https://wordpress.org/support/plugin/sermon-manager-for-wordpress#new-post) and we will solve it ASAP.
-
-### Sermon Manager Pro Features ###
-
-* Change your look with Templates
-* Multiple Podcast Support
-* Divi Support & Custom Divi Builder Modules
-* Custom Elementor Elements
-* Custom Beaver Builder Modules
-* Custom WPBakery Page Builder Modules
-* Works with YOUR theme
-* Page Assignment for Archive & Taxonomy
-* Migration from other plugins is a breeze
-* SEO & Marketing Ready
-* Live Chat Support Inside the Plugin
-* PowerPress Compatibility
-* [Full List of Pro Features & Roadmap](https://sermonmanager.pro/)
-
-When you upgrade to Pro you also get premium ticket and live chat support for the free version of Sermon Manager too!
-*Grab your copy of Sermon Manager Pro at early adopter pricing for life between Nov 9th and Nov 23!*
-
-### Developers ###
-
-Would you like to help improve Sermon Manager or report a bug you found? This project is open source on [GitHub](https://github.com/WP-for-Church/Sermon-Manager)!
-
-(Note: Please read [contributing instructions](https://github.com/WP-for-Church/Sermon-Manager/blob/dev/CONTRIBUTING.md) first.)
-
-### WP for Church ###
-
-* [WP for Church](https://wpforchurch.com/) provides plugins and responsive themes for churches using WordPress.
-* Keep up with the latest product news & tips, sign up to our [newsletter](https://www.wpforchurch.com/blog)!
+Please read the [contributing guidelines](https://github.com/TheologyAIGeek/Sermon-Manager/blob/dev/.github/CONTRIBUTING.md) before submitting.
 
 ## Installation ##
 
@@ -109,13 +76,9 @@ Visit the `http://yourdomain.com/sermons` if you have pretty permalinks enabled 
 
 Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain.com/?post_type=wpfc_sermon` as the URL and `Sermons` as the label and click “Add to Menu”.
 
-### I wish Sermon Manager could... ###
+### Have a suggestion? ###
 
-We are open to suggestions to make this a great tool for churches! Submit your feedback at [WP for Church](https://feedback.userreport.com/05ff651b-670e-4eb7-a734-9a201cd22906/)
-
-### More Questions? ###
-
-Visit the [plugin homepage](https://wpforchurch.com/wordpress-plugins/sermon-manager/ "Sermon Manager homepage")
+Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Screenshots ##
 1. Sermon Details
@@ -123,9 +86,16 @@ Visit the [plugin homepage](https://wpforchurch.com/wordpress-plugins/sermon-man
 
 ## Changelog ##
 ### 2026.5.1 ###
+* Fork: Project forked and maintained by Jerry Purvis <jlpurvis1982@outlook.com>
+* New: Add GPLv2 @copyright headers for Jerry Purvis to all first-party PHP files
+* Change: Update plugin Author, Author URI, and Plugin URI to reflect new maintainer and GitHub repo
+* Change: Adopt calendar versioning scheme (YYYY.M.N) starting at 2026.5.1
+* Change: Remove all Premium Support and Sermon Manager Pro references from plugin row meta and settings sidebar
+* Change: Update settings sidebar FAQ and support links to GitHub repo and issues
+* Change: Update CONTRIBUTING.md — replace old repo links, update security email, strike through Translations section pending future update
+* Change: Update readme.txt — add new contributor, remove donate link, remove outdated support/pro/WP for Church sections, point links to GitHub
 * Fix: "after" parameter not working in "[sermons]" shortcode
 * Fix: Improve [latest_series] shortcode
-* New: Add sidebar in dashboard compatibility for Pro version
 
 ### 2.15.15 ###
 * Fix: RSS feed not working
