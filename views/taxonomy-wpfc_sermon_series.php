@@ -3,6 +3,7 @@
  * Template used for displaying taxonomy archive pages
  *
  * @package SM/Views
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 get_header();

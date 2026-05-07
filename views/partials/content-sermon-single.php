@@ -14,6 +14,7 @@
  *
  * @since   2.13.0 - added
  * @since   2.15.0 - fix audio URL edge case
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 global $post;

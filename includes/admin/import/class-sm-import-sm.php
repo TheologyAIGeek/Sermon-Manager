@@ -3,6 +3,7 @@
  * Imports data from Sermon Manager import file into Sermon Manager.
  *
  * @package SM/Core/Admin/Importing
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;

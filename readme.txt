@@ -5,7 +5,7 @@ Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts
 Requires at least: 4.7.0  
 Tested up to: 5.1  
 Requires PHP: 5.3  
-Stable tag: 2.15.16  
+Stable tag: 2026.5.1
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,7 +122,7 @@ Visit the [plugin homepage](https://wpforchurch.com/wordpress-plugins/sermon-man
 2. Sermon Files
 
 ## Changelog ##
-### 2.15.16 ###
+### 2026.5.1 ###
 * Fix: "after" parameter not working in "[sermons]" shortcode
 * Fix: Improve [latest_series] shortcode
 * New: Add sidebar in dashboard compatibility for Pro version

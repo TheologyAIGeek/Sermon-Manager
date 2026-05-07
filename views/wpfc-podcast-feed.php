@@ -3,6 +3,7 @@
  * Used to display the RSS feed.
  *
  * @package  SM/Views/Podcasting
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or exit;

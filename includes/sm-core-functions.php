@@ -5,6 +5,7 @@
  * General core functions available on both the front-end and admin.
  *
  * @package SM/Core
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;
@@ -904,7 +905,7 @@ function sm_get_taxonomies() {
  *
  * @return mixed The field value or null.
  *
- * @since 2.15.16
+ * @since 2026.5.1
  */
 function sm_get_taxonomy_field( $taxonomy, $field_name ) {
 	$taxonomy = get_taxonomy( $taxonomy );

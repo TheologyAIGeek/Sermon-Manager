@@ -7,15 +7,16 @@ We appreciate any help from the community to improve the it.
 
 If you have found a bug, or have an idea for a new feature or to enhance existing features, you can submit them here:
 
-- [WordPress Forum](https://wordpress.org/support/plugin/sermon-manager-for-wordpress)
-- [Bug Tracker](https://github.com/WP-for-Church/Sermon-Manager/issues)
+- [Bug Tracker](https://github.com/TheologyAIGeek/Sermon-Manager/issues)
 
-Contributions via [pull request](https://github.com/WP-for-Church/Sermon-Manager/pulls),
-and [bug reports](https://github.com/WP-for-Church/Sermon-Manager/issues) are welcome!
-Please submit your pull request to the `develop` branch and use the GitHub issue tracker to report issues.
+Contributions via [pull request](https://github.com/TheologyAIGeek/Sermon-Manager/pulls),
+and [bug reports](https://github.com/TheologyAIGeek/Sermon-Manager/issues) are welcome!
+Please submit your pull request to the `dev` branch and use the GitHub issue tracker to report issues.
 
-**Note!** If you have detected any security issues, please write an email to nikola@wpforchurch.com. Do not submit it on the 
+**Note!** If you have detected any security issues, please write an email to jlpurvis1982@outlook.com. Do not submit it on the 
 public forum or in a public GitHub issue.
+
+<del>
 
 ### Translations
 
@@ -28,6 +29,8 @@ Create an account on [wordpress.org](wordpress.org) and you can start translatin
 No coding skills are required at all.
 
 (Our integration with GlotPress is still not ready)
+
+</del>
 
 # Development
 

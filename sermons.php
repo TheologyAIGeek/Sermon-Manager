@@ -1,11 +1,11 @@
 <?php // phpcs:ignore
 /**
  * Plugin Name: Sermon Manager for WordPress
- * Plugin URI: https://www.wpforchurch.com/products/sermon-manager-for-wordpress/
+ * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
  * Description: Add audio and video sermons, manage speakers, series, and more.
- * Version: 2.15.16
- * Author: WP for Church
- * Author URI: https://www.wpforchurch.com/
+ * Version: 2026.5.1
+ * Author: Jerry Purvis
+ * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0
  * Tested up to: 6.8
  * Requires PHP: 7.4
@@ -14,6 +14,7 @@
  * Domain Path: /languages/
  *
  * @package SM/Core
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;
@@ -47,7 +48,7 @@ if ( version_compare( PHP_VERSION, '7.4.0', '<' ) ) {
 /**
  * The class that is used to initialize Sermon Manager.
  *
- * @author  WP For Church
+ * @author  Jerry Purvis
  * @package SM/Core
  * @access  public
  */

@@ -3,6 +3,7 @@
  * Functions used by database updater go here.
  *
  * @package SM/Core/Updating
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 // Exit if accessed directly.

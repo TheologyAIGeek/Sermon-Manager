@@ -3,6 +3,7 @@
  * Registers SM related menus.
  *
  * @package SM/Core/Admin/Menus
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;

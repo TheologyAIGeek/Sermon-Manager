@@ -14,6 +14,7 @@
  *
  * @since   2.13.0 - added.
  * @since   2.15.2 - fix $args not being loaded from shortcode.
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 global $post;

@@ -3,6 +3,7 @@
  * Installation functionality.
  *
  * @package SM/Core/Updating
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;
@@ -63,7 +64,7 @@ class SM_Install {
 		'2.15.11' => array(
 			'sm_update_21511_update_term_dates',
 		),
-		'2.15.16' => array(
+		'2026.5.1' => array(
 			'sm_update_21516_update_term_dates',
 		),
 	);
@@ -270,15 +271,6 @@ class SM_Install {
 	 * @return    array
 	 */
 	public static function plugin_row_meta( $links, $file ) {
-		if ( SM_BASENAME == $file ) {
-			$row_meta = array(
-				'support' => '<a href="' . esc_url( 'https://wpforchurch.com/my/submitticket.php?utm_source=sermon-manager&utm_medium=wordpress' ) . '" aria-label="' . esc_attr__( 'Visit premium customer support', 'sermon-manager-for-wordpress' ) . '">' . esc_html__( 'Premium support', 'sermon-manager-for-wordpress' ) . '</a>',
-				'smp'     => '<a href="https://sermonmanager.pro/?utm_source=sermon-manager&amp;utm_medium=wordpress" aria-label="' . esc_attr( __( 'Get Sermon Manager Pro', 'sermon-manager-pro' ) ) . '" target="_blank" style="color:#ff0000;">' . __( 'Get Sermon Manager Pro', 'sermon-manager-pro' ) . '</a>',
-			);
-
-			return array_merge( $links, $row_meta );
-		}
-
 		return (array) $links;
 	}
 }

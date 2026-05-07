@@ -5,6 +5,7 @@
  * @package SM/Graveyard
  *
  * @since   2.4.9
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 // Exit if accessed directly.

@@ -3,6 +3,7 @@
  * Functions used for podcast rendering.
  *
  * @package SM/Core/Podcasting
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;

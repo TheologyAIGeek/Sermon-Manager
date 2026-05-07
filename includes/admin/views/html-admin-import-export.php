@@ -3,6 +3,7 @@
  * HTML for import/export page.
  *
  * @package SM/Core/Admin/Views
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 defined( 'ABSPATH' ) or die;

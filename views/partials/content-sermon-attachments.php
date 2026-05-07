@@ -13,6 +13,7 @@
  * @package SermonManager\Views\Partials
  *
  * @since   2.13.0 - added
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 global $post;

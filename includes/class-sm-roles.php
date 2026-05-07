@@ -5,6 +5,7 @@
  * @since   2.13.0
  *
  * @package SermonManager
+ * @copyright Copyright (C) 2026 Jerry Purvis <jlpurvis1982@outlook.com>
  */
 
 /**
