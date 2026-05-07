@@ -398,9 +398,15 @@ class SM_Import_SB {
 		}
 
 		foreach ( $sermons as $sermon ) {
-			if ( ! isset( $imported[ $sermon->id ] ) ) {
-				import: // phpcs:ignore
-				$id = wp_insert_post( apply_filters( 'sm_import_sb_message', array( // phpcs:ignore
+			$needs_insert = ! isset( $imported[ $sermon->id ] ) || ! post_exists( $sermon->title );
+
+			if ( isset( $imported[ $sermon->id ] ) && post_exists( $sermon->title ) ) {
+				// Already imported and the post still exists — skip insertion.
+				$this->log( ' • Sermon "' . $sermon->title . '" is already imported. (ID: ' . $imported[ $sermon->id ]['new_id'] . ')', 255 );
+				$id = $imported[ $sermon->id ]['new_id'];
+			} else {
+				// Either never imported, or the post was deleted — (re-)insert it.
+				$id = wp_insert_post( apply_filters( 'sm_import_sb_message', array(
 					'post_date'      => $sermon->datetime,
 					'post_content'   => '%todo_render%',
 					'post_title'     => $sermon->title,
@@ -426,13 +432,6 @@ class SM_Import_SB {
 				 * We don't want to import sermons twice, it would be a mess.
 				 */
 				update_option( '_sm_import_sb_messages', $imported );
-			} else {
-				if ( ! post_exists( $sermon->title ) ) {
-					goto import; // phpcs:ignore
-				} else {
-					$this->log( ' • Sermon "' . $sermon->title . '" is already imported. (ID: ' . $imported[ $sermon->id ]['new_id'] . ')', 255 );
-					$id = $imported[ $sermon->id ]['new_id'];
-				}
 			}
 
 			/**

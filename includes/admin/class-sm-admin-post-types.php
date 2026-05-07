@@ -101,7 +101,7 @@ class SM_Admin_Post_Types {
 		$columns['views']    = __( 'Views', 'sermon-manager-for-wordpress' );
 		$columns['comments'] = $existing_columns['comments'];
 		$columns['preached'] = __( 'Preached', 'sermon-manager-for-wordpress' );
-		$columns['date']     = __( 'Published' );
+		$columns['date']     = __( 'Published', 'sermon-manager-for-wordpress' );
 
 		return $columns + $existing_columns;
 	}
@@ -136,12 +136,12 @@ class SM_Admin_Post_Types {
 
 				if ( time() - $unix_preached < DAY_IN_SECONDS ) {
 					// translators: %s: The time. Such as "12 hours".
-					$data = sprintf( __( '%s ago' ), human_time_diff( $unix_preached ) );
+					$data = sprintf( __( '%s ago', 'sermon-manager-for-wordpress' ), human_time_diff( $unix_preached ) );
 				} else {
-					$data = date( 'Y/m/d', $unix_preached );
+					$data = wp_date( 'Y/m/d', $unix_preached );
 				}
 
-				$data = '<abbr title="' . esc_attr( date( 'Y/m/d g:i:s a', $unix_preached ) ) . '">' . esc_html( $data ) . '</abbr>';
+				$data = '<abbr title="' . esc_attr( wp_date( 'Y/m/d g:i:s a', $unix_preached ) ) . '">' . esc_html( $data ) . '</abbr>';
 
 				break;
 			default:
@@ -150,7 +150,7 @@ class SM_Admin_Post_Types {
 		}
 
 		if ( $data instanceof WP_Error ) {
-			$data = __( 'Error' );
+			$data = __( 'Error', 'sermon-manager-for-wordpress' );
 		}
 
 		echo wp_kses_post( $data );

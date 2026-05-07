@@ -719,7 +719,7 @@ class SM_Admin_Settings {
 			}
 
 			if ( count( $options ) === 0 ) {
-				$options = array( 0 => '-- ' . __( 'None' ) . ' --' ); // phpcs:ignore
+				$options = array( 0 => '-- ' . __( 'None', 'sermon-manager-for-wordpress' ) . ' --' ); // phpcs:ignore
 			}
 		} else {
 			$options = array(

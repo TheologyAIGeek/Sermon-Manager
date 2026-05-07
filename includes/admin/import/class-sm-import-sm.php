@@ -40,84 +40,84 @@ class SM_Import_SM {
 	 *
 	 * @var float
 	 */
-	var $max_wxr_version = 1.2;
+	public $max_wxr_version = 1.2;
 
 	/**
 	 * WXR attachment ID
 	 *
 	 * @var int
 	 */
-	var $id;
+	public $id;
 
 	/**
 	 * Should it fetch attachments.
 	 *
 	 * @var bool
 	 */
-	var $fetch_attachments = true;
+	public $fetch_attachments = true;
 
 	/**
 	 * URL re-mapping.
 	 *
 	 * @var array
 	 */
-	var $url_remap = array();
+	public $url_remap = array();
 
 	/**
 	 * Featured images.
 	 *
 	 * @var array
 	 */
-	var $featured_images = array();
+	public $featured_images = array();
 
 	/**
 	 * Taxonomy featured images.
 	 *
 	 * @var array
 	 */
-	var $taxonomy_featured_images = array();
+	public $taxonomy_featured_images = array();
 
 	/**
 	 * Import Status.
 	 *
 	 * @var bool
 	 */
-	var $import_status = false;
+	public $import_status = false;
 
 	/**
 	 * Import Message.
 	 *
 	 * @var string
 	 */
-	var $import_message = '';
+	public $import_message = '';
 
 	/**
 	 * Authors.
 	 *
 	 * @var array
 	 */
-	var $authors = array();
+	public $authors = array();
 
 	/**
 	 * Posts.
 	 *
 	 * @var array
 	 */
-	var $posts = array();
+	public $posts = array();
 
 	/**
 	 * Terms.
 	 *
 	 * @var array
 	 */
-	var $terms = array();
+	public $terms = array();
 
 	/**
 	 * Base URL.
 	 *
 	 * @var string
 	 */
-	var $base_url = '';
+	public $base_url = '';
 
 	// Mappings from old information to new.
 	/**
@@ -125,42 +125,42 @@ class SM_Import_SM {
 	 *
 	 * @var array
 	 */
-	var $processed_authors = array();
+	public $processed_authors = array();
 
 	/**
 	 * Author mapping.
 	 *
 	 * @var array
 	 */
-	var $author_mapping = array();
+	public $author_mapping = array();
 
 	/**
 	 * Processed terms.
 	 *
 	 * @var array
 	 */
-	var $processed_terms = array();
+	public $processed_terms = array();
 
 	/**
 	 * Processed posts.
 	 *
 	 * @var array
 	 */
-	var $processed_posts = array();
+	public $processed_posts = array();
 
 	/**
 	 * Post mapping.
 	 *
 	 * @var array
 	 */
-	var $post_orphans = array();
+	public $post_orphans = array();
 
 	/**
 	 * Accepted WXR tags.
 	 *
 	 * @var array
 	 */
-	var $wp_tags = array(
+	public $wp_tags = array(
 		'wp:post_id',
 		'wp:post_date',
 		'wp:post_date_gmt',
@@ -199,7 +199,7 @@ class SM_Import_SM {
 	 *
 	 * @var array
 	 */
-	var $wp_sub_tags = array(
+	public $wp_sub_tags = array(
 		'wp:comment_id',
 		'wp:comment_author',
 		'wp:comment_author_email',
@@ -1004,23 +1004,34 @@ class SM_Import_SM {
 		}
 
 		// fetch the remote url and write it to the placeholder file.
-		$headers = wp_get_http( $url, $upload['file'] );
+		$response = wp_remote_get( $url, array( 'timeout' => 60 ) );
 
 		// request failed.
-		if ( ! $headers ) {
+		if ( is_wp_error( $response ) ) {
 			@unlink( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'wordpress-importer' ) );
 		}
 
+		$response_code = wp_remote_retrieve_response_code( $response );
+
 		// make sure the fetch was successful.
-		if ( $headers['response'] != '200' ) {
+		if ( 200 !== (int) $response_code ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'wordpress-importer' ), esc_html( $headers['response'] ), get_status_header_desc( $headers['response'] ) ) );
+			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'wordpress-importer' ), esc_html( $response_code ), get_status_header_desc( $response_code ) ) );
 		}
 
+		// Write the body to the placeholder file.
+		global $wp_filesystem;
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		$wp_filesystem->put_contents( $upload['file'], wp_remote_retrieve_body( $response ) );
+
 		$filesize = filesize( $upload['file'] );
+		$headers  = wp_remote_retrieve_headers( $response );
 
 		if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
 			@unlink( $upload['file'] );

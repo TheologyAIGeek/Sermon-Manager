@@ -79,9 +79,9 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 			) );
 			if ( $r->have_posts() ) {
 				?>
-				<?php echo $args['before_widget']; ?>
+				<?php echo wp_kses_post( $args['before_widget'] ); ?>
 				<?php if ( $title ) : ?>
-					<?php echo $args['before_title'] . $title . $args['after_title']; ?>
+					<?php echo wp_kses_post( $args['before_title'] ) . esc_html( $title ) . wp_kses_post( $args['after_title'] ); ?>
 				<?php endif; ?>
 				<?php if ( $before_widget ) : ?>
 					<div class="sm-before-widget">
@@ -133,7 +133,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 						<?php echo $after_widget; ?>
 					</div>
 				<?php endif; ?>
-				<?php echo $args['after_widget']; ?>
+				<?php echo wp_kses_post( $args['after_widget'] ); ?>
 				<?php
 				wp_reset_postdata();
 			}

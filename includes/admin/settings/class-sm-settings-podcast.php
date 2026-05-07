@@ -228,9 +228,9 @@ class SM_Settings_Podcast extends SM_Settings_Page {
 		?>
 		<div>
 			<p>
-				<label for="feed_url"><?php echo __( 'Feed URL to Submit to iTunes', 'sermon-manager-for-wordpress' ); ?></label>
+				<label for="feed_url"><?php echo esc_html__( 'Feed URL to Submit to iTunes', 'sermon-manager-for-wordpress' ); ?></label>
 				<input type="text" disabled="disabled"
-						value="<?php echo site_url( '/' ) . '?feed=rss2&post_type=wpfc_sermon'; ?>" id="feed_url">
+						value="<?php echo esc_attr( site_url( '/' ) . '?feed=rss2&post_type=wpfc_sermon' ); ?>" id="feed_url">
 			</p>
 			<p>
 				<?php

@@ -99,7 +99,7 @@ class SM_Export_SM {
 		if ( ! function_exists( 'wxr_cdata' ) ) {
 			function wxr_cdata( $str ) {
 				if ( seems_utf8( $str ) == false ) {
-					$str = utf8_encode( $str );
+					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
 
 				$str = '<![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $str ) . ']]>';
@@ -339,7 +339,7 @@ class SM_Export_SM {
 				<title><?php bloginfo_rss( 'name' ); ?></title>
 				<link><?php bloginfo_rss( 'url' ); ?></link>
 				<description><?php bloginfo_rss( 'description' ); ?></description>
-				<pubDate><?php echo date( 'D, d M Y H:i:s +0000' ); ?></pubDate>
+				<pubDate><?php echo wp_date( 'D, d M Y H:i:s +0000' ); ?></pubDate>
 				<language><?php bloginfo_rss( 'language' ); ?></language>
 				<wp:wxr_version><?php echo WXR_VERSION; ?></wp:wxr_version>
 				<wp:base_site_url><?php echo wxr_site_url(); ?></wp:base_site_url>

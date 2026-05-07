@@ -20,13 +20,13 @@ global $post;
 ?>
 <div id="wpfc-attachments" class="cf">
 	<p>
-		<strong><?php echo __( 'Download Files', 'sermon-manager-for-wordpress' ); ?></strong>
+		<strong><?php echo esc_html__( 'Download Files', 'sermon-manager-for-wordpress' ); ?></strong>
 		<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) ) : ?>
 			<a href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>"
 				class="sermon-attachments"
 				download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_notes' ) ) ); ?>">
 				<span class="dashicons dashicons-media-document"></span>
-				<?php echo __( 'Notes', 'sermon-manager-for-wordpress' ); ?>
+				<?php echo esc_html__( 'Notes', 'sermon-manager-for-wordpress' ); ?>
 			</a>
 		<?php endif; ?>
 
@@ -35,7 +35,7 @@ global $post;
 				class="sermon-attachments"
 				download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_bulletin' ) ) ); ?>">
 				<span class="dashicons dashicons-media-document"></span>
-				<?php echo __( 'Bulletin', 'sermon-manager-for-wordpress' ); ?>
+				<?php echo esc_html__( 'Bulletin', 'sermon-manager-for-wordpress' ); ?>
 			</a>
 		<?php endif; ?>
 	</p>
