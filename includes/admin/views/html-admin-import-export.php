@@ -60,7 +60,7 @@ defined( 'ABSPATH' ) or die;
 											<?php esc_html_e( 'Import', 'sermon-manager-revival' ); ?>
 										</span>
 										<span class="import-sniper">
-											<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>">
+											<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>">
 										</span>
 									</span>
 								<?php endif; ?>
@@ -139,13 +139,13 @@ defined( 'ABSPATH' ) or die;
 						<p>
 							<?php
 							// translators: %s Plugin name.
-							echo wp_sprintf( __( 'Import your existing %s sermon library into Sermon Manager', 'sermon-manager-revival' ), 'Sermon Browser' );
+							echo wp_sprintf( __( 'Import your existing %s sermon library into Sermon Manager', 'sermon-manager-revival' ), 'Sermon Browser' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</p>
 						<p class="import-note">
 							<?php
 							// translators: %s Documentation URL.
-							echo wp_sprintf( __( 'Note: Some restrictions apply. Click %s for more details.', 'sermon-manager-revival' ), ' <a href="https://wpforchurch.com/my/knowledgebase/96/Importing.html#sermon-browser?utm_source=sermon-manager&utm_medium=wordpress" target="_blank">here</a>' );
+							echo wp_sprintf( __( 'Note: Some restrictions apply. Click %s for more details.', 'sermon-manager-revival' ), ' <a href="https://wpforchurch.com/my/knowledgebase/96/Importing.html#sermon-browser?utm_source=sermon-manager&utm_medium=wordpress" target="_blank">here</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</p>
 					</div>
@@ -180,13 +180,13 @@ defined( 'ABSPATH' ) or die;
 						<p>
 							<?php
 							// translators: %s Plugin name.
-							echo wp_sprintf( __( 'Import your existing %s sermon library into Sermon Manager', 'sermon-manager-revival' ), 'Series Engine' );
+							echo wp_sprintf( __( 'Import your existing %s sermon library into Sermon Manager', 'sermon-manager-revival' ), 'Series Engine' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</p>
 						<p class="import-note">
 							<?php
 							// translators: %s Documentation URL.
-							echo wp_sprintf( __( 'Note: Some restrictions apply. Click %s for more details.', 'sermon-manager-revival' ), ' <a href="https://wpforchurch.com/my/knowledgebase/96/Importing.html#series-engine?utm_source=sermon-manager&utm_medium=wordpress" target="_blank">here</a>' );
+							echo wp_sprintf( __( 'Note: Some restrictions apply. Click %s for more details.', 'sermon-manager-revival' ), ' <a href="https://wpforchurch.com/my/knowledgebase/96/Importing.html#series-engine?utm_source=sermon-manager&utm_medium=wordpress" target="_blank">here</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</p>
 					</div>
