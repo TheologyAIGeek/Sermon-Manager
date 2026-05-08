@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Functions used in admin area.
  *
@@ -96,7 +96,7 @@ function wpfc_dashboard() {
 	$num = number_format_i18n( $num_posts->publish );
 	// Put correct singular or plural text
 	// translators: %s integer count of sermons.
-	$text = wp_sprintf( esc_html( _n( '%s sermon', '%s sermons', intval( $num_posts->publish ), 'sermon-manager-for-wordpress' ) ), $num );
+	$text = wp_sprintf( esc_html( _n( '%s sermon', '%s sermons', intval( $num_posts->publish ), 'sermon-manager-revival' ) ), $num );
 
 	$count = '<li class="sermon-count">';
 

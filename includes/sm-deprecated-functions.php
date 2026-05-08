@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Place where functions come to die.
  *
@@ -80,7 +80,7 @@ function render_wpfc_sermon_archive() {
 
 	global $post;
 	// translators: Sermon Title.
-	$title = sprintf( esc_attr__( 'Permalink to %s', 'sermon-manager-for-wordpress' ), the_title_attribute( 'echo=0' ) );
+	$title = sprintf( esc_attr__( 'Permalink to %s', 'sermon-manager-revival' ), the_title_attribute( 'echo=0' ) );
 	?>
 	<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<h2 class="sermon-title"><a href="<?php the_permalink(); ?>"
@@ -98,9 +98,9 @@ function render_wpfc_sermon_archive() {
 			</p>
 			<p>
 				<?php
-				wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-for-wordpress' ), '</span> | ' );
+				wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-revival' ), '</span> | ' );
 				the_terms( $post->ID, 'wpfc_preacher', '<span class="preacher_name">', ' ', '</span>' );
-				the_terms( $post->ID, 'wpfc_sermon_series', '<p><span class="sermon_series">' . __( 'Series: ', 'sermon-manager-for-wordpress' ), ' ', '</span></p>' );
+				the_terms( $post->ID, 'wpfc_sermon_series', '<p><span class="sermon_series">' . __( 'Series: ', 'sermon-manager-revival' ), ' ', '</span></p>' );
 				?>
 			</p>
 		</div>
@@ -138,12 +138,12 @@ function wpfc_sermon_excerpt( $return = false ) {
 				</p>
 				<p>
 					<?php
-					wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-for-wordpress' ), '</span> | ' );
+					wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-revival' ), '</span> | ' );
 					the_terms( $post->ID, 'wpfc_preacher', '<span class="preacher_name">', ', ', '</span>' );
 					?>
 				</p>
 				<p>
-					<?php the_terms( $post->ID, 'wpfc_sermon_series', '<span class="sermon_series">' . __( 'Series: ', 'sermon-manager-for-wordpress' ), ' ', '</span>' ); ?>
+					<?php the_terms( $post->ID, 'wpfc_sermon_series', '<span class="sermon_series">' . __( 'Series: ', 'sermon-manager-revival' ), ' ', '</span>' ); ?>
 				</p>
 			</div>
 			<?php if ( \SermonManager::getOption( 'archive_player' ) || \SermonManager::getOption( 'archive_meta' ) ) : ?>
@@ -214,9 +214,9 @@ function wpfc_sermon_single( $return = false, $post = null ) {
 				</p>
 				<p>
 					<?php
-					wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-for-wordpress' ), '</span> | ' );
+					wpfc_sermon_meta( 'bible_passage', '<span class="bible_passage">' . __( 'Bible Text: ', 'sermon-manager-revival' ), '</span> | ' );
 					the_terms( $post->ID, 'wpfc_preacher', '<span class="preacher_name">', ', ', '</span>' );
-					the_terms( $post->ID, 'wpfc_sermon_series', '<p><span class="sermon_series">' . __( 'Series: ', 'sermon-manager-for-wordpress' ), ' ', '</span></p>' );
+					the_terms( $post->ID, 'wpfc_sermon_series', '<p><span class="sermon_series">' . __( 'Series: ', 'sermon-manager-revival' ), ' ', '</span></p>' );
 					?>
 				</p>
 			</div>
@@ -229,7 +229,7 @@ function wpfc_sermon_single( $return = false, $post = null ) {
 
 			<?php echo wpfc_sermon_attachments(); ?>
 
-			<?php the_terms( $post->ID, 'wpfc_sermon_topics', '<p class="sermon_topics">' . __( 'Sermon Topics: ', 'sermon-manager-for-wordpress' ), ',', '</p>' ); ?>
+			<?php the_terms( $post->ID, 'wpfc_sermon_topics', '<p class="sermon_topics">' . __( 'Sermon Topics: ', 'sermon-manager-revival' ), ',', '</p>' ); ?>
 
 		</div>
 		<?php

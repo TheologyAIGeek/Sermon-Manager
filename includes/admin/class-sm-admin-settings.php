@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Most of Sermon Manager Settings related functions.
  *
@@ -73,8 +73,8 @@ class SM_Admin_Settings {
 		wp_register_script( 'sm_settings_verse', SM_URL . 'assets/js/admin/settings/verse' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', 'sm_settings', SM_VERSION, true );
 
 		wp_localize_script( 'sm_settings', 'sm_settings_params', array(
-			'i18n_nav_warning'        => __( 'The changes you made will be lost if you navigate away from this page.', 'sermon-manager-for-wordpress' ),
-			'i18n_bible_spanish_note' => __( 'Note: WordPress is not set to any Spanish variant. Reverted to ESV.', 'sermon-manager-for-wordpress' ),
+			'i18n_nav_warning'        => __( 'The changes you made will be lost if you navigate away from this page.', 'sermon-manager-revival' ),
+			'i18n_bible_spanish_note' => __( 'Note: WordPress is not set to any Spanish variant. Reverted to ESV.', 'sermon-manager-revival' ),
 			'is_wp_spanish'           => strpos( get_locale(), 'es_' ) !== false,
 			'ajax_nonce'              => wp_create_nonce( 'sm_settings_ajax' ),
 		) );
@@ -145,7 +145,7 @@ class SM_Admin_Settings {
 		global $current_tab, $wpdb;
 
 		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'sm-settings' ) ) {
-			wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'sermon-manager-for-wordpress' ) );
+			wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'sermon-manager-revival' ) );
 		}
 
 		/**
@@ -160,7 +160,7 @@ class SM_Admin_Settings {
 		do_action( 'sn_update_options_' . $current_tab );
 		do_action( 'sm_update_options' );
 
-		self::add_message( __( 'Your settings have been saved.', 'sermon-manager-for-wordpress' ) );
+		self::add_message( __( 'Your settings have been saved.', 'sermon-manager-revival' ) );
 
 		// Clear any unwanted data and flush rules.
 		wp_schedule_single_event( time(), 'sm_flush_rewrite_rules' );
@@ -719,11 +719,11 @@ class SM_Admin_Settings {
 			}
 
 			if ( count( $options ) === 0 ) {
-				$options = array( 0 => '-- ' . __( 'None', 'sermon-manager-for-wordpress' ) . ' --' ); // phpcs:ignore
+				$options = array( 0 => '-- ' . __( 'None', 'sermon-manager-revival' ) . ' --' ); // phpcs:ignore
 			}
 		} else {
 			$options = array(
-				0 => __( 'Error in populating field options.', 'sermon-manager-for-wordpress' ),
+				0 => __( 'Error in populating field options.', 'sermon-manager-revival' ),
 			);
 		}
 

@@ -1,4 +1,4 @@
-<?php // phpcs:ignore
+﻿<?php // phpcs:ignore
 /**
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
@@ -12,7 +12,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  *
- * Text Domain: sermon-manager-for-wordpress
+ * Text Domain: sermon-manager-revival
  * Domain Path: /languages/
  *
  * @package SM/Core
@@ -37,7 +37,7 @@ if ( version_compare( PHP_VERSION, '7.4.0', '<' ) ) {
 				<?php
 				// translators: %1$s current PHP version, see msgid "PHP %s", effectively <strong>PHP %s</strong>.
 				// translators: %2$s required PHP version, see msgid "PHP %s", effectively <strong>PHP %s</strong>.
-				echo wp_sprintf( esc_html__( 'You are running %1$s, but Sermon Manager requires at least %2$s.', 'sermon-manager-for-wordpress' ), '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), PHP_VERSION ) . '</strong>', '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-for-wordpress' ), '7.4.0' ) . '</strong>' );
+				echo wp_sprintf( esc_html__( 'You are running %1$s, but Sermon Manager requires at least %2$s.', 'sermon-manager-revival' ), '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-revival' ), PHP_VERSION ) . '</strong>', '<strong>' . wp_sprintf( esc_html__( 'PHP %s', 'sermon-manager-revival' ), '7.4.0' ) . '</strong>' );
 				?>
 			</p>
 		</div>
@@ -188,7 +188,7 @@ class SermonManager { // phpcs:ignore
 		$has_series    = has_term( '', 'wpfc_sermon_series', $post );
 
 		if ( $bible_passage ) {
-			$content .= __( 'Bible Text:', 'sermon-manager-for-wordpress' ) . ' ' . $bible_passage;
+			$content .= __( 'Bible Text:', 'sermon-manager-revival' ) . ' ' . $bible_passage;
 		}
 
 		if ( $has_preachers ) {
@@ -204,7 +204,7 @@ class SermonManager { // phpcs:ignore
 			if ( $has_preachers ) {
 				$content .= ' | ';
 			}
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-for-wordpress' ) . ' ', ', ', '' ) );
+			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
 		}
 
 		$description = strip_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
@@ -295,7 +295,7 @@ class SermonManager { // phpcs:ignore
 	 * @return void
 	 */
 	public static function load_translations() {
-		load_plugin_textdomain( 'sermon-manager-for-wordpress', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
 	/**
@@ -614,7 +614,7 @@ class SermonManager { // phpcs:ignore
 				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
 					if ( isset( $_GET['doimport'] ) ) {
 						if ( ! current_user_can( 'import' ) ) {
-							wp_die( esc_html__( 'You do not have permission to import data.', 'sermon-manager-for-wordpress' ), 403 );
+							wp_die( esc_html__( 'You do not have permission to import data.', 'sermon-manager-revival' ), 403 );
 						}
 
 						check_admin_referer( 'sm-import' );
@@ -653,7 +653,7 @@ class SermonManager { // phpcs:ignore
 									<?php endif; ?>
 
 									<div class="notice notice-success">
-										<p><?php esc_html_e( 'Import done!', 'sermon-manager-for-wordpress' ); ?></p>
+										<p><?php esc_html_e( 'Import done!', 'sermon-manager-revival' ); ?></p>
 									</div>
 									<?php
 								}
@@ -872,7 +872,7 @@ class SermonManager { // phpcs:ignore
 						<p>
 							<?php
 							// translators: %s: The plugin name. Effectively "<strong>Sermon Manager</strong>".
-							echo wp_sprintf( __( '%s requires output buffering to be turned on to display content. It is currently off. Please enable it or contact your hosting provider for help. Most of plugin functionality will be disabled until output buffering is enabled.', 'sermon-manager-for-wordpress' ), '<strong>' . __( 'Sermon Manager Revival', 'sermon-manager-for-wordpress' ) . '</strong>' );
+							echo wp_sprintf( __( '%s requires output buffering to be turned on to display content. It is currently off. Please enable it or contact your hosting provider for help. Most of plugin functionality will be disabled until output buffering is enabled.', 'sermon-manager-revival' ), '<strong>' . __( 'Sermon Manager Revival', 'sermon-manager-revival' ) . '</strong>' );
 							?>
 						</p>
 					</div>

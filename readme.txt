@@ -80,10 +80,6 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
-## Screenshots ##
-1. Sermon Details
-2. Sermon Files
-
 ## Changelog ##
 ### 2026.5.2 ###
 * Security: Add $wpdb->prepare() placeholders to all raw SQL queries (SQL injection prevention)
