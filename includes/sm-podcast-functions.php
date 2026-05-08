@@ -23,7 +23,7 @@ add_action( 'parse_request', function () {
 		$current_url = preg_replace( '{/$}', '', sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 
 		if ( strpos( $current_url, $old_url ) !== false ) {
-			wp_redirect( SermonManager::getOption( 'podcast_redirection_new_url' ), 301 );
+			wp_safe_redirect( SermonManager::getOption( 'podcast_redirection_new_url' ), 301 );
 			exit;
 		}
 	}

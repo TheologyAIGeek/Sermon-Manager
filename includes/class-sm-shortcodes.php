@@ -928,8 +928,8 @@ class SM_Shortcodes {
 						);
 						break;
 					case 'month':
-						$year  = $args['year'] ?: date( 'Y' );
-						$month = intval( $args['month'] ) ?: date( 'm' );
+						$year  = $args['year'] ?: gmdate( 'Y' );
+						$month = intval( $args['month'] ) ?: gmdate( 'm' );
 
 						$query_args['meta_query'][] = array(
 							'key'     => 'sermon_date',
@@ -1053,7 +1053,7 @@ class SM_Shortcodes {
 		}
 
 		foreach ( array( 'wpfc_preacher', 'wpfc_sermon_series', 'wpfc_sermon_topics', 'wpfc_bible_book' ) as $filter ) {
-			if ( ! empty( $_GET[ $filter ] ) ) {
+			if ( ! empty( $_GET[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
 					$query_args['tax_query'] = array();
 				}
@@ -1061,13 +1061,13 @@ class SM_Shortcodes {
 				$query_args['tax_query'][0][] = array(
 					'taxonomy' => $filter,
 					'field'    => 'slug',
-					'terms'    => sanitize_title_for_query( $_GET[ $filter ] ),
+					'terms'    => sanitize_title_for_query( wp_unslash( $_GET[ $filter ] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				);
 
 				$query_args['tax_query']['custom'] = true;
 			}
 
-			if ( ! empty( $_POST[ $filter ] ) ) {
+			if ( ! empty( $_POST[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
 					$query_args['tax_query'] = array();
 				}
@@ -1075,7 +1075,7 @@ class SM_Shortcodes {
 				$query_args['tax_query'][0][] = array(
 					'taxonomy' => $filter,
 					'field'    => 'slug',
-					'terms'    => sanitize_title_for_query( $_POST[ $filter ] ),
+					'terms'    => sanitize_title_for_query( wp_unslash( $_POST[ $filter ] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				);
 
 				$query_args['tax_query']['custom'] = true;

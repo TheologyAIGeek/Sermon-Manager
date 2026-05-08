@@ -81,7 +81,7 @@ $args = array(
 	'post_type'      => 'wpfc_sermon',
 	'posts_per_page' => $settings['podcasts_per_page'],
 	'order'          => strtoupper( SermonManager::getOption( 'archive_order' ) ),
-	'paged'          => isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1,
+	'paged'          => isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	'meta_query'     => array(
 		'relation' => 'AND',
 		array(
@@ -144,8 +144,8 @@ foreach (
 		'wpfc_service_type',
 	) as $taxonomy
 ) {
-	if ( isset( $_GET[ $taxonomy ] ) ) {
-		$terms = $_GET[ $taxonomy ];
+	if ( isset( $_GET[ $taxonomy ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$terms = sanitize_text_field( wp_unslash( $_GET[ $taxonomy ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// Override the default tax_query for that taxonomy.
 		if ( ! empty( $args['tax_query'] ) ) {
@@ -271,7 +271,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 		<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml"/>
 		<description><?php echo $description; ?></description>
 		<language><?php echo $language; ?></language>
-		<lastBuildDate><?php echo $last_sermon_date ? date( 'r', intval( $last_sermon_date ) ) : date( 'r' ); ?></lastBuildDate>
+		<lastBuildDate><?php echo $last_sermon_date ? gmdate( 'r', intval( $last_sermon_date ) ) : gmdate( 'r' ); ?></lastBuildDate>
 		<sy:updatePeriod>hourly</sy:updatePeriod>
 		<sy:updateFrequency>1</sy:updateFrequency>
 		<copyright><?php echo $copyright; ?></copyright>
@@ -308,11 +308,11 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				$audio_p           = strrpos( $audio_raw, '/' ) + 1;
 				$audio_raw         = urldecode( $audio_raw );
 				$audio             = substr( $audio_raw, 0, $audio_p ) . rawurlencode( substr( $audio_raw, $audio_p ) );
-				$speakers          = strip_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ' &amp; ', '' ) );
+				$speakers          = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ' &amp; ', '' ) );
 				$speakers_terms    = get_the_terms( $post->ID, 'wpfc_preacher' );
 				$speaker           = $speakers_terms ? $speakers_terms[0]->name : '';
-				$series            = strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', '', ', ', '' ) );
-				$topics            = strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_topics', '', ', ', '' ) );
+				$series            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', '', ', ', '' ) );
+				$topics            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_topics', '', ', ', '' ) );
 				$post_image        = get_sermon_image_url( $settings['podcast_sermon_image_series'] );
 				$post_image        = str_ireplace( 'https://', 'http://', ! empty( $post_image ) ? $post_image : '' );
 				$audio_duration    = get_post_meta( $post->ID, '_wpfc_sermon_duration', true ) ?: '0:00';
@@ -382,7 +382,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 			<?php
 			endwhile;
 		endif;
-		wp_reset_query();
+		wp_reset_postdata();
 		?>
 
 	</channel>

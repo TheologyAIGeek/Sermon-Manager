@@ -38,7 +38,7 @@ class SM_Export_SM {
 		if ( ! empty( $sitename ) ) {
 			$sitename .= '.';
 		}
-		$filename = $sitename . 'wordpress.' . date( 'Y-m-d' ) . '.xml';
+		$filename = $sitename . 'wordpress.' . gmdate( 'Y-m-d' ) . '.xml';
 
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -60,7 +60,7 @@ class SM_Export_SM {
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
-		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args );
+		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args );
 
 		// Get the requested terms ready, empty unless posts filtered by category or all content.
@@ -74,7 +74,7 @@ class SM_Export_SM {
 			'wpfc_bible_book',
 			'wpfc_service_type',
 		);
-		$custom_terms      = (array) get_terms( $custom_taxonomies, array( 'get' => 'all' ) );
+		$custom_terms      = (array) get_terms( array( 'taxonomy' => $custom_taxonomies, 'get' => 'all' ) );
 
 		// put terms in order with no child going before its parent.
 		while ( $t = array_shift( $custom_terms ) ) {
@@ -98,7 +98,7 @@ class SM_Export_SM {
 		 */
 		if ( ! function_exists( 'wxr_cdata' ) ) {
 			function wxr_cdata( $str ) {
-				if ( seems_utf8( $str ) == false ) {
+				if ( wp_is_valid_utf8( $str ) == false ) {
 					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
 
@@ -300,7 +300,7 @@ class SM_Export_SM {
 				$query = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url );
 
 				// get attachment id.
-				$attachment_id = $wpdb->get_var( $query );
+				$attachment_id = $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			}
 
 			// return id.
@@ -439,7 +439,7 @@ class SM_Export_SM {
 					// fetch 20 posts at a time rather than loading the entire table into memory.
 					while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
 						$placeholders = implode( ',', array_fill( 0, count( $next_posts ), '%d' ) );
-						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 
 						// Begin Loop.
 						foreach ( $posts as $post ) {
