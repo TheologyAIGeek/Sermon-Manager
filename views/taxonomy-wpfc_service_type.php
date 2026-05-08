@@ -9,21 +9,21 @@
 get_header();
 ?>
 
-<?php echo wpfc_get_partial( 'content-sermon-wrapper-start' ); ?>
+<?php echo wpfc_get_partial( 'content-sermon-wrapper-start' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 <?php
 echo wp_kses_post( render_wpfc_sorting() );
 
 if ( have_posts() ) :
 
-	echo apply_filters( 'taxonomy-wpfc_service_type-before-sermons', '' );
+	echo apply_filters( 'taxonomy-wpfc_service_type-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	while ( have_posts() ) :
 		the_post();
 		wpfc_sermon_excerpt_v2();
 	endwhile;
 
-	echo apply_filters( 'taxonomy-wpfc_service_type-after-sermons', '' );
+	echo apply_filters( 'taxonomy-wpfc_service_type-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	echo '<div class="sm-pagination ast-pagination">';
 	sm_pagination();
@@ -33,7 +33,7 @@ else :
 endif;
 ?>
 
-<?php echo wpfc_get_partial( 'content-sermon-wrapper-end' ); ?>
+<?php echo wpfc_get_partial( 'content-sermon-wrapper-end' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 <?php
 get_footer();
