@@ -127,7 +127,9 @@ function sermon_image_plugin_modal_button( $fields, $post ) {
 		$image_id = (int) $post->ID;
 
 		$o = '<div class="sermon-image-modal-control" id="' . esc_attr( 'sermon-image-modal-control-' . $image_id ) . '">';
+		// translators: %1$s: Term name wrapped in a span, e.g. "this term".
 		$o .= '<span class="button create-association">' . wp_sprintf( esc_html__( 'Associate with %1$s', 'sermon-manager-revival' ), '<span class="term-name">' . esc_html__( 'this term', 'sermon-manager-revival' ) . '</span>' ) . '</span>';
+		// translators: %1$s: Term name wrapped in a span, e.g. "this term".
 		$o .= '<span class="remove-association">' . wp_sprintf( esc_html__( 'Remove association with %1$s', 'sermon-manager-revival' ), '<span class="term-name">' . esc_html__( 'this term', 'sermon-manager-revival' ) . '</span>' ) . '</span>';
 		$o .= '<input class="sermon-image-button-image-id" name="' . esc_attr( 'sermon-image-button-image-id-' . $image_id ) . '" type="hidden" value="' . esc_attr( $image_id ) . '" />';
 		$o .= '<input class="sermon-image-button-nonce-create" name="' . esc_attr( 'sermon-image-button-nonce-create-' . $image_id ) . '" type="hidden" value="' . esc_attr( wp_create_nonce( 'sermon-image-plugin-create-association' ) ) . '" />';
@@ -798,6 +800,7 @@ function sermon_image_plugin_edit_tag_form( $term, $taxonomy ) {
         <td>
 			<?php print sermon_image_plugin_control_image( $term->term_id, $taxonomy->name ); ?>
             <div class="clear"></div>
+            <?php // translators: %1$s: Taxonomy singular name, e.g. "Series". ?>
             <span class="description"><?php printf( esc_html__( 'Associate an image from your media library to this %1$s.', 'sermon-manager-revival' ), esc_html( $name ) ); ?></span>
         </td>
     </tr>
@@ -847,8 +850,11 @@ function sermon_image_plugin_control_image( $term_id, $taxonomy ) {
 	$thickbox_class = version_compare( get_bloginfo( 'version' ), 3.5 ) >= 0 ? '' : 'thickbox';
 
 	$o = "\n" . '<div id="' . esc_attr( 'sermon-image-control-' . $tt_id ) . '" class="sermon-image-control hide-if-no-js">';
+	// translators: %1$s: Taxonomy singular name (e.g. "Series"). %2$s: Term name (e.g. "Advent 2024").
 	$o .= "\n" . '<a class="' . $thickbox_class . ' sermon-image-thumbnail" data-tt-id="' . $tt_id . '" data-attachment-id="' . $attachment_id . '" data-nonce="' . $nonce . '" href="' . esc_url( admin_url( 'media-upload.php' ) . '?type=image&tab=library&post_id=0&TB_iframe=true' ) . '" title="' . esc_attr( wp_sprintf( __( 'Associate an image with the %1$s named &ldquo;%2$s&rdquo;.', 'sermon-manager-revival' ), $name, $term->name ) ) . '"><img id="' . esc_attr( 'sermon_image_plugin_' . $tt_id ) . '" src="' . esc_url( $img ) . '" alt="" /></a>';
+	// translators: %s: Taxonomy singular name, e.g. "Series".
 	$o .= "\n" . '<a class="control upload ' . $thickbox_class . '" data-tt-id="' . $tt_id . '" data-attachment-id="' . $attachment_id . '" data-nonce="' . $nonce . '" href="' . esc_url( admin_url( 'media-upload.php' ) . '?type=image&tab=type&post_id=0&TB_iframe=true' ) . '" title="' . esc_attr( wp_sprintf( __( 'Upload a new image for this %s.', 'sermon-manager-revival' ), $name ) ) . '">' . esc_html__( 'Upload.', 'sermon-manager-revival' ) . '</a>';
+	// translators: %s: Taxonomy singular name, e.g. "Series".
 	$o .= "\n" . '<a class="control remove' . $hide . '" data-tt-id="' . $tt_id . '" data-nonce="' . $nonce_remove . '" href="#" id="' . esc_attr( 'remove-' . $tt_id ) . '" rel="' . esc_attr( $tt_id ) . '" title="' . esc_attr( wp_sprintf( __( 'Remove image from this %s.', 'sermon-manager-revival' ), $name ) ) . '">' . esc_html__( 'Delete', 'sermon-manager-revival' ) . '</a>';
 	$o .= "\n" . '<input type="hidden" class="tt_id" name="' . esc_attr( 'tt_id-' . $tt_id ) . '" value="' . esc_attr( $tt_id ) . '" />';
 	$o .= "\n" . '<input type="hidden" class="image_id" name="' . esc_attr( 'image_id-' . $tt_id ) . '" value="' . esc_attr( $attachment_id ) . '" />';
@@ -1159,6 +1165,7 @@ add_action( 'template_redirect', 'sermon_image_plugin_cache_queried_images' );
  */
 function sermon_image_plugin_check_taxonomy( $taxonomy, $filter ) {
 	if ( ! taxonomy_exists( $taxonomy ) ) {
+		// translators: %1$s: Argument name in <var> tags. %2$s: Filter name in <code> tags. %3$s: Taxonomy slug in <strong> tags.
 		trigger_error( wp_sprintf( esc_html__( 'The %1$s argument for %2$s is set to %3$s which is not a registered taxonomy. Please check the spelling and update the argument.', 'sermon-manager-revival' ),
 			'<var>' . esc_html__( 'taxonomy', 'sermon-manager-revival' ) . '</var>',
 			'<code>' . esc_html( $filter ) . '</code>',
@@ -1173,12 +1180,14 @@ function sermon_image_plugin_check_taxonomy( $taxonomy, $filter ) {
 	) );
 
 	if ( ! isset( $settings['taxonomies'] ) ) {
+		// translators: %1$s: Link to the plugin settings page.
 		trigger_error( wp_sprintf( esc_html__( 'No taxonomies have image support. %1$s', 'sermon-manager-revival' ), sermon_images_plugin_settings_page_link() ) );
 
 		return false;
 	}
 
 	if ( ! in_array( $taxonomy, (array) $settings['taxonomies'] ) ) {
+		// translators: %1$s: Taxonomy slug in <strong> tags. %2$s: Link to the plugin settings page.
 		trigger_error( wp_sprintf( esc_html__( 'The %1$s taxonomy does not have image support. %2$s', 'sermon-manager-revival' ),
 			'<strong>' . esc_html( $taxonomy ) . '</strong>',
 			sermon_images_plugin_settings_page_link()
@@ -1205,6 +1214,7 @@ function sermon_image_plugin_check_taxonomy( $taxonomy, $filter ) {
  * @since     0.7
  */
 function sermon_image_plugin_please_use_filter( $function, $filter ) {
+	// translators: %1$s: Function name in <code> tags. %2$s: Filter name in <code> tags.
 	trigger_error( wp_sprintf( esc_html__( 'The %1$s has been called directly. Please use the %2$s filter instead.', 'sermon-manager-revival' ),
 		'<code>' . esc_html( $function . '()' ) . '</code>',
 		'<code>' . esc_html( $filter ) . '</code>'
@@ -1301,7 +1311,9 @@ function sermon_images_admin_enqueue_scripts() {
 	wp_localize_script( 'sermon-images-media-modal', 'taxonomyImagesMediaModal', array(
 		'wp_media_post_id'     => 0,
 		'attachment_id'        => 0,
+		// translators: %s: Taxonomy singular name, e.g. "Preacher".
 		'uploader_title'       => wp_sprintf( esc_html__( 'Set %s&rsquo;s image', 'sermon-manager-revival' ), sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) ),
+		// translators: %s: Taxonomy singular name, e.g. "Preacher".
 		'uploader_button_text' => wp_sprintf( esc_html__( 'Set %s&rsquo;s image', 'sermon-manager-revival' ), sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) ),
 		'series_title'         => esc_html__( 'Set Series image', 'sermon-manager-revival' ),
 		'series_button_text'   => esc_html__( 'Set Series image', 'sermon-manager-revival' ),

@@ -453,6 +453,7 @@ abstract class SM_WP_Background_Process extends SM_WP_Async_Request {
 		// Adds every 5 minutes to the existing schedules.
 		$schedules[ $this->identifier . '_cron_interval' ] = array(
 			'interval' => MINUTE_IN_SECONDS * $interval,
+			// translators: %s: Number of minutes, e.g. "5".
 			'display'  => wp_sprintf( __( 'Every %s minutes', 'sermon-manager-revival' ), number_format_i18n( $interval ) ),
 		);
 
