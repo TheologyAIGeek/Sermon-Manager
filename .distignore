@@ -1,0 +1,49 @@
+# Files and directories to exclude from the WordPress.org release package.
+# Used by wp-env and deployment scripts.
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# GitHub
+.github
+
+# Development scripts and config
+bin
+CODE_OF_CONDUCT.md
+
+# Development / build tools
+composer.json
+composer.lock
+package.json
+package-lock.json
+node_modules
+Gruntfile.js
+webpack.config.js
+phpcs.xml
+phpcs.xml.dist
+phpunit.xml
+phpunit.xml.dist
+.phpcs.xml
+.phpunit.xml
+.distignore
+
+# Source SCSS (compiled CSS is included)
+assets/css/*.scss
+assets/css/partials
+assets/css/admin-partials
+assets/css/*.map
+assets/vendor/js/*.map
+
+# CMB2 SCSS source
+includes/vendor/CMB2/css/sass
+
+# Source maps
+**/*.map
+
+# Claude worktree / CI artifacts
+.claude
+
+# PHPUnit test suite (not needed in release)
+tests

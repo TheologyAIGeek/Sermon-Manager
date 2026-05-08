@@ -241,7 +241,7 @@ class SM_Install {
 	public static function cron_schedules( $schedules ) {
 		$schedules['monthly'] = array(
 			'interval' => 2635200,
-			'display'  => __( 'Monthly', 'sermon-manager-for-wordpress' ),
+			'display'  => __( 'Monthly', 'sermon-manager-revival' ),
 		);
 
 		return $schedules;
@@ -256,7 +256,7 @@ class SM_Install {
 	 */
 	public static function plugin_action_links( $links ) {
 		$action_links = array(
-			'settings' => '<a href="' . admin_url( 'edit.php?post_type=wpfc_sermon&page=sm-settings' ) . '" aria-label="' . esc_attr__( 'View Sermon Manager settings', 'sermon-manager-for-wordpress' ) . '">' . esc_html__( 'Settings' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'edit.php?post_type=wpfc_sermon&page=sm-settings' ) . '" aria-label="' . esc_attr__( 'View Sermon Manager settings', 'sermon-manager-revival' ) . '">' . esc_html__( 'Settings', 'sermon-manager-revival' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );

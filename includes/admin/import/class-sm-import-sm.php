@@ -423,7 +423,7 @@ class SM_Import_SM {
 		if ( ! preg_match( '/^\d+\.\d+$/', $this->wxr_version ) ) {
 			$this->log( 'This does not appear to be a WXR file, missing/invalid WXR version number.', 0 );
 
-			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'wordpress-importer' ) );
+			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'sermon-manager-revival' ) );
 		}
 
 		$this->log( 'Setting content parameters.', 0 );
@@ -945,7 +945,7 @@ class SM_Import_SM {
 	 */
 	function process_attachment( $post, $url ) {
 		if ( ! $this->fetch_attachments ) {
-			return new WP_Error( 'attachment_processing_error', __( 'Fetching attachments is not enabled', 'wordpress-importer' ) );
+			return new WP_Error( 'attachment_processing_error', __( 'Fetching attachments is not enabled', 'sermon-manager-revival' ) );
 		}
 
 		// if the URL is absolute, but does not contain address, then upload it assuming base_site_url.
@@ -962,7 +962,7 @@ class SM_Import_SM {
 		if ( $info ) {
 			$post['post_mime_type'] = $info['type'];
 		} else {
-			return new WP_Error( 'attachment_processing_error', __( 'Invalid file type', 'wordpress-importer' ) );
+			return new WP_Error( 'attachment_processing_error', __( 'Invalid file type', 'sermon-manager-revival' ) );
 		}
 
 		$post['guid'] = $upload['url'];
@@ -1010,7 +1010,7 @@ class SM_Import_SM {
 		if ( is_wp_error( $response ) ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'wordpress-importer' ) );
+			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'sermon-manager-revival' ) );
 		}
 
 		$response_code = wp_remote_retrieve_response_code( $response );
@@ -1019,7 +1019,8 @@ class SM_Import_SM {
 		if ( 200 !== (int) $response_code ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'wordpress-importer' ), esc_html( $response_code ), get_status_header_desc( $response_code ) ) );
+			// translators: %1$d: HTTP response code (e.g. 404). %2$s: HTTP status description (e.g. Not Found).
+			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'sermon-manager-revival' ), esc_html( $response_code ), get_status_header_desc( $response_code ) ) );
 		}
 
 		// Write the body to the placeholder file.
@@ -1036,20 +1037,21 @@ class SM_Import_SM {
 		if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'wordpress-importer' ) );
+			return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'sermon-manager-revival' ) );
 		}
 
 		if ( 0 == $filesize ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'wordpress-importer' ) );
+			return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'sermon-manager-revival' ) );
 		}
 
 		$max_size = (int) $this->max_attachment_size();
 		if ( ! empty( $max_size ) && $filesize > $max_size ) {
 			@unlink( $upload['file'] );
 
-			return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'wordpress-importer' ), size_format( $max_size ) ) );
+			// translators: %s: Maximum allowed file size, e.g. "10 MB".
+			return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'sermon-manager-revival' ), size_format( $max_size ) ) );
 		}
 
 		// keep track of the old and new urls so we can substitute them later.

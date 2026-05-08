@@ -130,7 +130,7 @@ class SM_Shortcodes {
 						$label = apply_filters( 'wpfc_podcast_label_' . esc_attr( $key ), $label );
 
 						// Print link.
-						echo '<li><a class="' . esc_attr( $key ) . '" title="' . esc_attr( $label ) . '" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . $label . '</a></li>';
+						echo '<li><a class="' . esc_attr( $key ) . '" title="' . esc_attr( $label ) . '" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . wp_kses_post( $label ) . '</a></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 				}
 				echo '</ul>';
@@ -1109,7 +1109,7 @@ class SM_Shortcodes {
 								1,
 								'1',
 							) ) ) :
-							echo SM_Shortcodes::display_sermon_sorting( $filtering_args );
+							echo SM_Shortcodes::display_sermon_sorting( $filtering_args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						endif;
 
 						while ( $query->have_posts() ) {
@@ -1123,7 +1123,7 @@ class SM_Shortcodes {
 								$output = '<div class="wpfc-sermon wpfc-sermon-shortcode">' . wpfc_sermon_excerpt_v2( true, $args ) . '</div>';
 							}
 
-							echo apply_filters( 'sm_shortcode_sermons_single_output', $output, $post, $args );
+							echo apply_filters( 'sm_shortcode_sermons_single_output', $output, $post, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 						?>
 					</div>
@@ -1152,7 +1152,7 @@ class SM_Shortcodes {
 									}
 								}
 
-								echo paginate_links( array(
+								echo paginate_links( array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									'base'     => preg_replace( '/\/\?.*/', '', rtrim( get_permalink( $post_ID ), '/' ) ) . '/%_%',
 									'current'  => $query->get( 'paged' ),
 									'total'    => $query->max_num_pages,

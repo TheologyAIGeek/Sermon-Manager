@@ -1,8 +1,8 @@
 # Sermon Manager Revival #
 Contributors: wpforchurch, jasonmwestbrook, jlpurvis1982
-Tags: church, sermon, sermons, preaching, podcasting, manage, managing, podcasts, itunes
+Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 2026.5.2
 License: GPLv2  
@@ -79,10 +79,6 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 ### Have a suggestion? ###
 
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
-
-## Screenshots ##
-1. Sermon Details
-2. Sermon Files
 
 ## Changelog ##
 ### 2026.5.2 ###

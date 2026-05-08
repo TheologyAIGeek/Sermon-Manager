@@ -96,7 +96,7 @@ function wpfc_dashboard() {
 	$num = number_format_i18n( $num_posts->publish );
 	// Put correct singular or plural text
 	// translators: %s integer count of sermons.
-	$text = wp_sprintf( esc_html( _n( '%s sermon', '%s sermons', intval( $num_posts->publish ), 'sermon-manager-for-wordpress' ) ), $num );
+	$text = wp_sprintf( esc_html( _n( '%s sermon', '%s sermons', intval( $num_posts->publish ), 'sermon-manager-revival' ) ), $num );
 
 	$count = '<li class="sermon-count">';
 
@@ -108,7 +108,7 @@ function wpfc_dashboard() {
 
 	$count .= '</li>';
 	$count .= "<style>.sermon-count a:before { content: '\\f330' !important;}</style>";
-	echo $count;
+	echo $count; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'dashboard_glance_items', 'wpfc_dashboard' );

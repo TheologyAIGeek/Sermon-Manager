@@ -12,7 +12,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 ?>
 <div class="wrap sm sm_settings_<?php echo esc_attr( $current_tab ); ?>">
 	<div class="intro">
-		<h1 class="wp-heading-inline"><?php esc_html_e( 'Sermon Manager Revival Settings', 'sermon-manager-for-wordpress' ); ?></h1>
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Sermon Manager Revival Settings', 'sermon-manager-revival' ); ?></h1>
 	</div>
 	<?php SM_Admin_Settings::show_messages(); ?>
 	<div class="settings-main">
@@ -36,7 +36,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 					<p class="submit">
 						<?php if ( empty( $GLOBALS['hide_save_button'] ) ) : ?>
 							<input name="save" class="button-primary sm-save-button" type="submit"
-									value="<?php esc_attr_e( 'Save changes', 'sermon-manager-for-wordpress' ); ?>"/>
+									value="<?php esc_attr_e( 'Save changes', 'sermon-manager-revival' ); ?>"/>
 						<?php endif; ?>
 						<?php wp_nonce_field( 'sm-settings' ); ?>
 					</p>
@@ -45,22 +45,22 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 		</div>
 		<div class="settings-side">
 			<div class="postbox sm-box">
-				<h3><span><?php esc_html_e( 'Need Some Help?', 'sermon-manager-for-wordpress' ); ?></span>
+				<h3><span><?php esc_html_e( 'Need Some Help?', 'sermon-manager-revival' ); ?></span>
 				</h3>
 				<div class="inside">
 					<div style="text-align:center">
-						<a href="https://wordpress.org/support/plugin/sermon-manager-for-wordpress"
+						<a href="https://wordpress.org/support/plugin/sermon-manager-revival"
 								target="_blank" class="button-secondary">
-							<?php esc_html_e( 'Free&nbsp;Support', 'sermon-manager-for-wordpress' ); ?></a>&nbsp;
+							<?php esc_html_e( 'Free&nbsp;Support', 'sermon-manager-revival' ); ?></a>&nbsp;
 						<a href="https://github.com/TheologyAIGeek/Sermon-Manager/issues"
 								target="_blank" class="button-primary">
-							<?php esc_html_e( 'GitHub&nbsp;Issues', 'sermon-manager-for-wordpress' ); ?></a>
+							<?php esc_html_e( 'GitHub&nbsp;Issues', 'sermon-manager-revival' ); ?></a>
 					</div>
 				</div>
 			</div>
 			<div class="postbox sm-box">
 				<h3>
-					<span><?php esc_html_e( 'Frequently Asked Questions', 'sermon-manager-for-wordpress' ); ?></span>
+					<span><?php esc_html_e( 'Frequently Asked Questions', 'sermon-manager-revival' ); ?></span>
 				</h3>
 				<div class="inside">
 					<ol>
@@ -78,21 +78,21 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 					</ol>
 					<div class="text-align:center;font-size:0.85em;padding:0.4rem 0 0">
 						<?php // translators: %s GitHub URL. ?>
-						<span><?php echo wp_sprintf( esc_html__( 'Find out more on our %s', 'sermon-manager-for-wordpress' ), '<a href="https://github.com/TheologyAIGeek/Sermon-Manager" title="GitHub" target="_blank">' . esc_html__( 'GitHub repository', 'sermon-manager-for-wordpress' ) . '</a>' ); ?></span>
+						<span><?php echo wp_sprintf( esc_html__( 'Find out more on our %s', 'sermon-manager-revival' ), '<a href="https://github.com/TheologyAIGeek/Sermon-Manager" title="GitHub" target="_blank">' . esc_html__( 'GitHub repository', 'sermon-manager-revival' ) . '</a>' ); ?></span>
 					</div>
 				</div>
 			</div>
 
 			<div class="postbox sm-box">
 				<h3>
-					<span><?php esc_html_e( 'Lets Make It Even Better!', 'sermon-manager-for-wordpress' ); ?></span>
+					<span><?php esc_html_e( 'Lets Make It Even Better!', 'sermon-manager-revival' ); ?></span>
 				</h3>
 				<div class="inside">
-					<p><?php esc_html_e( 'If you have ideas on how to make Sermon Manager Revival better, let us know!', 'sermon-manager-for-wordpress' ); ?></p>
+					<p><?php esc_html_e( 'If you have ideas on how to make Sermon Manager Revival better, let us know!', 'sermon-manager-revival' ); ?></p>
 					<div style="text-align:center">
 						<a href="https://feedback.userreport.com/05ff651b-670e-4eb7-a734-9a201cd22906/"
 								target="_blank"
-								class="button-secondary"><?php esc_html_e( 'Submit&nbsp;Your&nbsp;Idea', 'sermon-manager-for-wordpress' ); ?></a>
+								class="button-secondary"><?php esc_html_e( 'Submit&nbsp;Your&nbsp;Idea', 'sermon-manager-revival' ); ?></a>
 					</div>
 				</div>
 			</div>

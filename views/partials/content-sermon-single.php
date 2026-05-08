@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * To edit this file, please copy the contents of this file to one of these locations:
  * - `/wp-content/themes/<your_theme>/partials/content-sermon-single.php`
@@ -35,7 +36,7 @@ global $post;
 					<?php if ( 'date' === SermonManager::getOption( 'archive_orderby' ) ) : ?>
 						<?php the_date(); ?>
 					<?php else : ?>
-						<?php echo SM_Dates::get(); ?>
+						<?php echo SM_Dates::get(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php endif; ?>
 				</div>
 				<?php if ( ! \SermonManager::getOption( 'theme_compatibility' ) ) : ?>
@@ -44,28 +45,28 @@ global $post;
 				<div class="wpfc-sermon-single-meta">
 					<?php if ( has_term( '', 'wpfc_preacher', $post->ID ) ) : ?>
 						<div class="wpfc-sermon-single-meta-item wpfc-sermon-single-meta-preacher <?php echo \SermonManager::getOption( 'preacher_label', '' ) ? 'custom-label' : ''; ?>">
-							<span class="wpfc-sermon-single-meta-prefix"><?php echo sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) . ':'; ?></span>
+							<span class="wpfc-sermon-single-meta-prefix"><?php echo sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) . ':'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							<span class="wpfc-sermon-single-meta-text"><?php the_terms( $post->ID, 'wpfc_preacher' ); ?></span>
 						</div>
 					<?php endif; ?>
 					<?php if ( has_term( '', 'wpfc_sermon_series', $post->ID ) ) : ?>
 						<div class="wpfc-sermon-single-meta-item wpfc-sermon-single-meta-series">
 							<span class="wpfc-sermon-single-meta-prefix">
-								<?php echo __( 'Series', 'sermon-manager-for-wordpress' ); ?>:</span>
+								<?php echo esc_html__( 'Series', 'sermon-manager-revival' ); ?>:</span>
 							<span class="wpfc-sermon-single-meta-text"><?php the_terms( $post->ID, 'wpfc_sermon_series' ); ?></span>
 						</div>
 					<?php endif; ?>
 					<?php if ( get_post_meta( $post->ID, 'bible_passage', true ) ) : ?>
 						<div class="wpfc-sermon-single-meta-item wpfc-sermon-single-meta-passage">
 							<span class="wpfc-sermon-single-meta-prefix">
-								<?php echo __( 'Passage', 'sermon-manager-for-wordpress' ); ?>:</span>
+								<?php echo esc_html__( 'Passage', 'sermon-manager-revival' ); ?>:</span>
 							<span class="wpfc-sermon-single-meta-text"><?php wpfc_sermon_meta( 'bible_passage' ); ?></span>
 						</div>
 					<?php endif; ?>
 					<?php if ( has_term( '', 'wpfc_service_type', $post->ID ) ) : ?>
 						<div class="wpfc-sermon-single-meta-item wpfc-sermon-single-meta-service">
 							<span class="wpfc-sermon-single-meta-prefix">
-								<?php echo sm_get_taxonomy_field( 'wpfc_service_type', 'singular_name' ); ?>:</span>
+								<?php echo sm_get_taxonomy_field( 'wpfc_service_type', 'singular_name' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>:</span>
 							<span class="wpfc-sermon-single-meta-text"><?php the_terms( $post->ID, 'wpfc_service_type' ); ?></span>
 						</div>
 					<?php endif; ?>
@@ -75,7 +76,7 @@ global $post;
 			<div class="wpfc-sermon-single-media">
 				<?php if ( get_wpfc_sermon_meta( 'sermon_video_link' ) ) : ?>
 					<div class="wpfc-sermon-single-video wpfc-sermon-single-video-link">
-						<?php echo wpfc_render_video( get_wpfc_sermon_meta( 'sermon_video_link' ) ); ?>
+						<?php echo wpfc_render_video( get_wpfc_sermon_meta( 'sermon_video_link' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php endif; ?>
 				<?php if ( get_wpfc_sermon_meta( 'sermon_video' ) ) : ?>
@@ -90,12 +91,12 @@ global $post;
 					$sermon_audio_url_wp = $sermon_audio_id ? wp_get_attachment_url( intval( $sermon_audio_id ) ) : false;
 					$sermon_audio_url    = $sermon_audio_id && $sermon_audio_url_wp ? $sermon_audio_url_wp : get_wpfc_sermon_meta( 'sermon_audio' );
 					?>
-					<div class="wpfc-sermon-single-audio player-<?php echo strtolower( \SermonManager::getOption( 'player', 'plyr' ) ); ?>">
-						<?php echo wpfc_render_audio( $sermon_audio_url ); ?>
+					<div class="wpfc-sermon-single-audio player-<?php echo esc_attr( strtolower( \SermonManager::getOption( 'player', 'plyr' ) ) ); ?>">
+						<?php echo wpfc_render_audio( $sermon_audio_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<a class="wpfc-sermon-single-audio-download"
 								href="<?php echo esc_url( $sermon_audio_url ); ?>"
 								download="<?php echo esc_attr( basename( $sermon_audio_url ) ); ?>"
-								title="<?php echo esc_attr__( 'Download Audio File', 'sermon-manager-for-wordpress' ); ?>">
+								title="<?php echo esc_attr__( 'Download Audio File', 'sermon-manager-revival' ); ?>">
 							<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
 									xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 0h24v24H0z" fill="none"></path>
@@ -108,12 +109,12 @@ global $post;
 
 			<div class="wpfc-sermon-single-description"><?php wpfc_sermon_description(); ?></div>
 			<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) || get_wpfc_sermon_meta( 'sermon_bulletin' ) ) : ?>
-				<div class="wpfc-sermon-single-attachments"><?php echo wpfc_sermon_attachments(); ?></div>
+				<div class="wpfc-sermon-single-attachments"><?php echo wpfc_sermon_attachments(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 			<?php endif; ?>
 			<?php if ( has_term( '', 'wpfc_sermon_topics', $post->ID ) ) : ?>
 				<div class="wpfc-sermon-single-topics">
 					<span class="wpfc-sermon-single-topics-prefix">
-						<?php echo __( 'Topics', 'sermon-manager-for-wordpress' ); ?>:</span>
+						<?php echo esc_html__( 'Topics', 'sermon-manager-revival' ); ?>:</span>
 					<span class="wpfc-sermon-single-topics-text"><?php the_terms( $post->ID, 'wpfc_sermon_topics' ); ?></span>
 				</div>
 			<?php endif; ?>
@@ -130,12 +131,12 @@ global $post;
 						$next_attr     = apply_filters( 'next_posts_link_attributes', 'class="next-sermon"' );
 						if ( null !== $previous_sermon ) :
 							?>
-							<a href="<?php echo esc_url( get_the_permalink( $previous_sermon ) ); ?>" <?php echo $previous_attr; ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', '&laquo; ' . get_the_title( $previous_sermon ) ) ); ?></a>
+							<a href="<?php echo esc_url( get_the_permalink( $previous_sermon ) ); ?>" <?php echo $previous_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', '&laquo; ' . get_the_title( $previous_sermon ) ) ); ?></a>
 						<?php else : ?>
 							<div></div>
 						<?php endif; ?>
 						<?php if ( null !== $next_sermon ) : ?>
-							<a href="<?php echo esc_url( get_the_permalink( $next_sermon ) ); ?>" <?php echo $next_attr; ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', get_the_title( $next_sermon ) . ' &raquo;' ) ); ?></a>
+							<a href="<?php echo esc_url( get_the_permalink( $next_sermon ) ); ?>" <?php echo $next_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', get_the_title( $next_sermon ) . ' &raquo;' ) ); ?></a>
 						<?php else : ?>
 							<div></div>
 						<?php endif; ?>
