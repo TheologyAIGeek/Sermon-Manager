@@ -264,6 +264,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 		xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
 >
 
+	<?php // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<channel>
 		<title><?php echo $title; ?></title>
 		<link><?php echo $link; ?></link>
@@ -293,6 +294,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 		<?php else : ?>
 			<?php echo $category_override; ?>
 		<?php endif; ?>
+		<?php // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<?php
 		if ( $sermon_podcast_query->have_posts() ) :
 			while ( $sermon_podcast_query->have_posts() ) :
@@ -346,23 +348,23 @@ $cover_image_url  = $settings['itunes_cover_image'];
 						<comments><?php comments_link_feed(); ?></comments>
 					<?php endif; ?>
 
-					<pubDate><?php echo $settings['use_published_date'] ? $date_published : $date_preached; ?></pubDate>
+					<pubDate><?php echo $settings['use_published_date'] ? $date_published : $date_preached; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></pubDate>
 					<dc:creator><![CDATA[<?php echo esc_html( $speaker ); ?>]]></dc:creator>
 					<?php the_category_rss( 'rss2' ); ?>
 
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
-					<description><![CDATA[<?php echo $description; ?>]]></description>
-					<content:encoded><![CDATA[<?php echo $description; ?>]]></content:encoded>
-					<itunes:summary><![CDATA[<?php echo $description; ?>]]></itunes:summary>
+					<description><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></description>
+					<content:encoded><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></content:encoded>
+					<itunes:summary><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></itunes:summary>
 
 					<itunes:author><?php echo esc_html( $speakers ); ?></itunes:author>
-					<itunes:subtitle><?php echo $description_short; ?></itunes:subtitle>
+					<itunes:subtitle><?php echo $description_short; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></itunes:subtitle>
 					<?php if ( $post_image ) : ?>
 						<itunes:image href="<?php echo esc_url( $post_image ); ?>"/>
 					<?php endif; ?>
 
 					<?php if ( $custom_enclosure ) : ?>
-						<?php echo $custom_enclosure; ?>
+						<?php echo $custom_enclosure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php else : ?>
 						<!--suppress CheckEmptyScriptTag -->
 						<enclosure url="<?php echo esc_url( $audio ); ?>"

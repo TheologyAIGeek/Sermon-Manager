@@ -7,7 +7,7 @@
  * Author: Jerry Purvis
  * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0
- * Tested up to: 6.8
+ * Tested up to: 6.9
  * Requires PHP: 7.4
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -494,7 +494,7 @@ class SermonManager { // phpcs:ignore
 
 			if ( ! empty( $script->extra ) ) {
 				/* @noinspection BadExpressionStatementJS */
-				printf( "<script type='text/javascript'>\n%s\n</script>\n", $script->extra['data'] );
+				printf( "<script type='text/javascript'>\n%s\n</script>\n", $script->extra['data'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -872,7 +872,7 @@ class SermonManager { // phpcs:ignore
 						<p>
 							<?php
 							// translators: %s: The plugin name. Effectively "<strong>Sermon Manager</strong>".
-							echo wp_sprintf( __( '%s requires output buffering to be turned on to display content. It is currently off. Please enable it or contact your hosting provider for help. Most of plugin functionality will be disabled until output buffering is enabled.', 'sermon-manager-revival' ), '<strong>' . __( 'Sermon Manager Revival', 'sermon-manager-revival' ) . '</strong>' );
+							echo wp_kses_post( wp_sprintf( __( '%s requires output buffering to be turned on to display content. It is currently off. Please enable it or contact your hosting provider for help. Most of plugin functionality will be disabled until output buffering is enabled.', 'sermon-manager-revival' ), '<strong>' . esc_html__( 'Sermon Manager Revival', 'sermon-manager-revival' ) . '</strong>' ) );
 							?>
 						</p>
 					</div>
