@@ -28,9 +28,9 @@ defined( 'ABSPATH' ) or die;
 						<ul class="plugin-action-buttons">
 							<li>
 								<?php
-								$bytes      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
-								$size       = size_format( $bytes );
-								$upload_dir = wp_upload_dir();
+								$bytes      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+								$size       = size_format( $bytes ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+								$upload_dir = wp_upload_dir(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 								if ( ! empty( $upload_dir['error'] ) ) :
 									?>
 									<div class="error">

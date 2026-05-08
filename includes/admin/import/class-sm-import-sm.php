@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.12.0
  */
-class SM_Import_SM {
+class SM_Import_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * If import debug is enabled.
 	 *
@@ -285,7 +285,7 @@ class SM_Import_SM {
 		add_filter( 'http_request_timeout', array( $this, 'bump_request_timeout' ) );
 
 		$this->log( 'Doing `sm_import_before_sm` action.', 0 );
-		do_action( 'sm_import_before_sm' );
+		do_action( 'sm_import_before_sm' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 0 );
 
 		$this->log( 'Handling uploaded file.', 0 );
@@ -301,7 +301,7 @@ class SM_Import_SM {
 		}
 
 		$this->log( 'Doing `sm_import_after_sm` action.', 0 );
-		do_action( 'sm_import_after_sm' );
+		do_action( 'sm_import_after_sm' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 0 );
 	}
 
@@ -522,7 +522,7 @@ class SM_Import_SM {
 		wp_defer_term_counting( true );
 		wp_defer_comment_counting( true );
 
-		do_action( 'import_start' );
+		do_action( 'import_start' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -1166,7 +1166,7 @@ class SM_Import_SM {
 		wp_defer_term_counting( false );
 		wp_defer_comment_counting( false );
 
-		do_action( 'import_end' );
+		do_action( 'import_end' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/* WXR Functions - Start */

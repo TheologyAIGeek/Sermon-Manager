@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.9
  */
-class SM_Import_SE {
+class SM_Import_SE { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * Books that have been imported.
 	 *
@@ -63,7 +63,7 @@ class SM_Import_SE {
 			return;
 		}
 
-		do_action( 'sm_import_before_se' );
+		do_action( 'sm_import_before_se' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$this->_import_books();
 		$this->_import_speakers();
@@ -71,7 +71,7 @@ class SM_Import_SE {
 		$this->_import_topics();
 		$this->_import_messages();
 
-		do_action( 'sm_import_after_se' );
+		do_action( 'sm_import_after_se' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -116,7 +116,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $books list of book data that will be imported.
 		 */
-		return apply_filters( 'sm_import_se_books', $used_books );
+		return apply_filters( 'sm_import_se_books', $used_books ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -130,7 +130,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $speakers Raw database data.
 		 */
-		$speakers = apply_filters( 'sm_import_se_speakers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_speakers" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$speakers = apply_filters( 'sm_import_se_speakers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_speakers" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $speakers as $speaker ) {
 			foreach (
@@ -169,13 +169,13 @@ class SM_Import_SE {
 		 *
 		 * @var array $series Raw database data.
 		 */
-		$series = apply_filters( 'sm_import_se_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$series = apply_filters( 'sm_import_se_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $series as $item ) {
 			$term_data = term_exists( $item->s_title, 'wpfc_sermon_series' );
 			if ( ! $term_data ) {
 				$term_data = wp_insert_term( $item->s_title, 'wpfc_sermon_series', array(
-					'description' => apply_filters( 'sm_import_se_series_description', $item->s_description ?: '' ),
+					'description' => apply_filters( 'sm_import_se_series_description', $item->s_description ?: '' ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				) );
 			}
 
@@ -206,7 +206,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $topics Raw database data.
 		 */
-		$topics = apply_filters( 'sm_import_se_topics', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_topics" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$topics = apply_filters( 'sm_import_se_topics', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_topics" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $topics as $topic ) {
 			$term_data = term_exists( $topic->name, 'wpfc_sermon_topics' );
@@ -236,35 +236,35 @@ class SM_Import_SE {
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages = apply_filters( 'sm_import_se_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_messages" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$messages = apply_filters( 'sm_import_se_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_messages" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		/**
 		 * Filter speaker association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_speakers = apply_filters( 'sm_import_se_speaker_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_speaker_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$messages_speakers = apply_filters( 'sm_import_se_speaker_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_speaker_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		/**
 		 * Filter topics association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_topics = apply_filters( 'sm_import_se_topics_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_topic_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$messages_topics = apply_filters( 'sm_import_se_topics_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_topic_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		/**
 		 * Filter books association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_books = apply_filters( 'sm_import_se_books_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_book_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$messages_books = apply_filters( 'sm_import_se_books_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_book_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		/**
 		 * Filter series association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_series = apply_filters( 'sm_import_se_series_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$messages_series = apply_filters( 'sm_import_se_series_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Start the import.
 		foreach ( $messages as $message ) {
@@ -278,7 +278,7 @@ class SM_Import_SE {
 
 			if ( ! isset( $imported[ $post_id ] ) ) {
 				if ( null === $the_post ) {
-					$id = wp_insert_post( apply_filters( 'sm_import_se_message', array(
+					$id = wp_insert_post( apply_filters( 'sm_import_se_message', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						'post_date'      => $message->date . ' 12:00:00',
 						'post_content'   => '%todo_render%',
 						'post_title'     => $message->title,
@@ -287,7 +287,7 @@ class SM_Import_SE {
 						'comment_status' => SermonManager::getOption( 'import_disallow_comments' ) ? 'closed' : 'open',
 					) ) );
 				} else {
-					$id = wp_insert_post( apply_filters( 'sm_import_se_message', array(
+					$id = wp_insert_post( apply_filters( 'sm_import_se_message', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						'post_author'       => $the_post->post_author,
 						'post_date'         => $the_post->post_date,
 						'post_date_gmt'     => $the_post->post_date_gmt,

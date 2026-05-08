@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) or die;
 /**
  * Initialize settings
  */
-class SM_Settings_Debug extends SM_Settings_Page {
+class SM_Settings_Debug extends SM_Settings_Page { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * SM_Settings_Debug constructor.
 	 */
@@ -28,7 +28,7 @@ class SM_Settings_Debug extends SM_Settings_Page {
 	 * @return array
 	 */
 	public function get_settings() {
-		$settings = apply_filters( 'sm_debug_settings', array(
+		$settings = apply_filters( 'sm_debug_settings', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			array(
 				'title' => __( 'Advanced Settings', 'sermon-manager-revival' ),
 				'type'  => 'title',
@@ -183,7 +183,7 @@ class SM_Settings_Debug extends SM_Settings_Page {
 			),
 		) );
 
-		return apply_filters( 'sm_get_settings_' . $this->id, $settings );
+		return apply_filters( 'sm_get_settings_' . $this->id, $settings ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 }
 

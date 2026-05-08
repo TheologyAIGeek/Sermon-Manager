@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) or die;
 /**
  * Initialize settings
  */
-class SM_Settings_Verse extends SM_Settings_Page {
+class SM_Settings_Verse extends SM_Settings_Page { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * SM_Settings_Verse constructor.
 	 */
@@ -87,7 +87,7 @@ class SM_Settings_Verse extends SM_Settings_Page {
 			} );
 		}
 
-		$settings = apply_filters( 'sm_verse_settings', array(
+		$settings = apply_filters( 'sm_verse_settings', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			array(
 				'title' => __( 'Verse Settings', 'sermon-manager-revival' ),
 				'type'  => 'title',
@@ -143,7 +143,7 @@ class SM_Settings_Verse extends SM_Settings_Page {
 			),
 		) );
 
-		return apply_filters( 'sm_get_settings_' . $this->id, $settings );
+		return apply_filters( 'sm_get_settings_' . $this->id, $settings ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 }
 
