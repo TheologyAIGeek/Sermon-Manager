@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Defines CPT and CPT related stuff.
  *

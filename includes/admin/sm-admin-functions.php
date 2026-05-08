@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Functions used in admin area.
  *

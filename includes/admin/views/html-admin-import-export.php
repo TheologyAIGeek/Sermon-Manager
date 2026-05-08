@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * HTML for import/export page.
  *

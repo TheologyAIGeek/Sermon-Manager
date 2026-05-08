@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Podcast settings page.
  *

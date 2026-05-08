@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Manage everything related to Post Types in SM.
  *

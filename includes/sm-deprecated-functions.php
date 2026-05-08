@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Place where functions come to die.
  *

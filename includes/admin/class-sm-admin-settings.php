@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Most of Sermon Manager Settings related functions.
  *

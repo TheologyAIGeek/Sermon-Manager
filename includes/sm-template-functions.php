@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Template functions, used when displaying content on frontend.
  *

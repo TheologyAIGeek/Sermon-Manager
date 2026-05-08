@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined( 'ABSPATH' ) or die; // exit if accessed directly
 /*
 Plugin Name:          Taxonomy Images

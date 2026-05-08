@@ -1,4 +1,4 @@
-﻿<?php // phpcs:ignore
+<?php // phpcs:ignore
 /**
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager

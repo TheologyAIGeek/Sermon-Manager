@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * CMB2 metaboxes creation related functions.
  *

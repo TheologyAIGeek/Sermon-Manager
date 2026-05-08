@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Verse settings page.
  *
