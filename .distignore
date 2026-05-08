@@ -41,3 +41,6 @@ includes/vendor/CMB2/css/sass
 
 # Claude worktree / CI artifacts
 .claude
+
+# PHPUnit test suite (not needed in release)
+tests

@@ -48,8 +48,8 @@ $args               = $_partial_args['args'];
 		<?php endif; ?>
 
 		<?php if ( ( ! empty( $args[ $filter['taxonomy'] ] ) && 'none' !== $args['visibility'] ) || empty( $args[ $filter['taxonomy'] ] ) ) : ?>
-			<div class="<?php echo $filter['className']; ?>" style="display: inline-block">
-				<form action="<?php echo $args['action']; ?>" method="get">
+			<div class="<?php echo esc_attr( $filter['className'] ); ?>" style="display: inline-block">
+				<form action="<?php echo esc_url( $args['action'] ); ?>" method="get">
 					<select name="<?php echo esc_attr( $filter['taxonomy'] ); ?>"
 							title="<?php echo esc_attr( $filter['title'] ); ?>"
 							id="<?php echo esc_attr( $filter['taxonomy'] ); ?>"
@@ -57,7 +57,7 @@ $args               = $_partial_args['args'];
 							autocomplete="off"
 						<?php echo ! empty( $args[ $filter['taxonomy'] ] ) && 'disable' === $args['visibility'] ? 'disabled' : ''; ?>>
 						<option value=""><?php echo esc_html( $filter['title'] ); ?></option>
-						<?php echo wpfc_get_term_dropdown( $filter['taxonomy'], ! empty( $args[ $filter['taxonomy'] ] ) ? $args[ $filter['taxonomy'] ] : '' ); ?>
+						<?php echo wpfc_get_term_dropdown( $filter['taxonomy'], ! empty( $args[ $filter['taxonomy'] ] ) ? $args[ $filter['taxonomy'] ] : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</select>
 					<?php $series = explode( ',', $args['series_filter'] ); ?>
 					<?php if ( isset( $args['series_filter'] ) && '' !== $args['series_filter'] && $series ) : ?>

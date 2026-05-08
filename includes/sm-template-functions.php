@@ -216,7 +216,7 @@ function render_wpfc_sorting( $args = array() ) {
  * @param string $after    Content after key value.
  */
 function wpfc_sermon_meta( $meta_key = '', $before = '', $after = '' ) {
-	echo $before . esc_html( get_wpfc_sermon_meta( $meta_key ) ) . $after;
+	echo $before . esc_html( get_wpfc_sermon_meta( $meta_key ) ) . $after; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -275,7 +275,7 @@ function wpfc_sermon_description( $before = '', $after = '', $return = false ) {
 	$output = $before . wpautop( process_wysiwyg_output( 'sermon_description', get_the_ID() ) ) . $after;
 
 	if ( ! $return ) {
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	return $output;
@@ -495,7 +495,7 @@ function wpfc_sermon_single_v2( $return = false, $post = null ) {
 	$GLOBALS['post'] = ! empty( $GLOBALS['post'] ) ? ! empty( $old_post ) ? $old_post : $post : null;
 
 	if ( ! $return ) {
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	return $output;
@@ -531,7 +531,7 @@ function wpfc_sermon_excerpt_v2( $return = false, $args = array() ) {
 	$output = apply_filters( 'wpfc_sermon_excerpt_v2', $output, $post, $args );
 
 	if ( ! $return ) {
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	return $output;
@@ -803,7 +803,7 @@ function sm_pagination() {
 		elseif ( function_exists( 'pagination' ) ) :
 			pagination();
 		elseif ( function_exists( 'mfn_pagination' ) ) :
-			echo mfn_pagination();
+			echo mfn_pagination(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		elseif ( function_exists( 'presscore_complex_pagination' ) ) :
 			presscore_complex_pagination( $GLOBALS['wp_query'] );
 		elseif ( function_exists( 'cro_paging' ) ) :

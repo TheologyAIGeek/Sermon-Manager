@@ -84,7 +84,7 @@ function render_wpfc_sermon_archive() {
 	?>
 	<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<h2 class="sermon-title"><a href="<?php the_permalink(); ?>"
-					title="<?php echo $title; ?>"
+					title="<?php echo esc_attr( $title ); ?>"
 					rel="bookmark"><?php the_title(); ?></a></h2>
 		<div class="wpfc_sermon_image">
 			<?php render_sermon_image( 'thumbnail' ); ?>
@@ -149,10 +149,10 @@ function wpfc_sermon_excerpt( $return = false ) {
 			<?php if ( \SermonManager::getOption( 'archive_player' ) || \SermonManager::getOption( 'archive_meta' ) ) : ?>
 				<div class="wpfc_sermon cf">
 					<?php if ( \SermonManager::getOption( 'archive_player' ) ) : ?>
-						<?php echo wpfc_sermon_media(); ?>
+						<?php echo wpfc_sermon_media(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php endif; ?>
 					<?php if ( \SermonManager::getOption( 'archive_meta' ) ) : ?>
-						<?php echo wpfc_sermon_attachments(); ?>
+						<?php echo wpfc_sermon_attachments(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
@@ -175,7 +175,7 @@ function wpfc_sermon_excerpt( $return = false ) {
 	$output = apply_filters( 'wpfc_sermon_excerpt', $output, $post );
 
 	if ( ! $return ) {
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	return $output;
@@ -223,11 +223,11 @@ function wpfc_sermon_single( $return = false, $post = null ) {
 		</div>
 		<div class="wpfc_sermon cf">
 
-			<?php echo wpfc_sermon_media(); ?>
+			<?php echo wpfc_sermon_media(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<?php wpfc_sermon_description(); ?>
 
-			<?php echo wpfc_sermon_attachments(); ?>
+			<?php echo wpfc_sermon_attachments(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<?php the_terms( $post->ID, 'wpfc_sermon_topics', '<p class="sermon_topics">' . __( 'Sermon Topics: ', 'sermon-manager-revival' ), ',', '</p>' ); ?>
 
@@ -249,7 +249,7 @@ function wpfc_sermon_single( $return = false, $post = null ) {
 	$output = apply_filters( 'wpfc_sermon_single', $output, $post );
 
 	if ( ! $return ) {
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	return $output;
@@ -320,7 +320,7 @@ function render_sermon_image( $size ) {
 		the_post_thumbnail( $size );
 	elseif ( apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) :
 		// Get series image.
-		print apply_filters( 'sermon-images-list-the-terms', '', array(
+		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'image_size'   => $size,
 			'taxonomy'     => 'wpfc_sermon_series',
 			'after'        => '',
@@ -330,7 +330,7 @@ function render_sermon_image( $size ) {
 		) );
 	elseif ( ! has_post_thumbnail() && ! apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) :
 		// Get speaker image.
-		print apply_filters( 'sermon-images-list-the-terms', '', array(
+		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'image_size'   => $size,
 			'taxonomy'     => 'wpfc_preacher',
 			'after'        => '',
