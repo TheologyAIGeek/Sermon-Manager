@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * To edit this file, please copy the contents of this file to one of these locations:
  * - `/wp-content/themes/<your_theme>/partials/content-sermon-filtering.php`

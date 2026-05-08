@@ -22,9 +22,12 @@ node_modules
 Gruntfile.js
 webpack.config.js
 phpcs.xml
+phpcs.xml.dist
 phpunit.xml
+phpunit.xml.dist
 .phpcs.xml
 .phpunit.xml
+.distignore
 
 # Source SCSS (compiled CSS is included)
 assets/css/*.scss

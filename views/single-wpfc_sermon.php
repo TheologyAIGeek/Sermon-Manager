@@ -1,4 +1,5 @@
 <?php // phpcs:ignore
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Template used for displaying single pages
  *
