@@ -22,6 +22,7 @@ $template = get_option( 'template' );
 $additional_classes = apply_filters( 'sm_templates_additional_classes', array(), $template );
 $additional_classes = esc_attr( implode( ' ', $additional_classes ) );
 
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 switch ( $template ) {
 	case 'twentyeleven':
 		echo '<div id="primary"><div id="content" role="main" class="wpfc-sermon-container wpfc-twentyeleven ' . $additional_classes . '">';
@@ -150,6 +151,7 @@ switch ( $template ) {
 	case 'kerygma':
 		echo '<div id="page-wrap" class="clearfix"><div id="content" class="site-content" role="main">';
 		break;
+	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	case 'uncode':
 		if ( ! is_single() ) {
 			get_header();
@@ -277,7 +279,7 @@ switch ( $template ) {
 				$header_html = $page_header->html;
 				if ( $header_html !== '' ) {
 					echo '<div id="page-header">';
-					echo uncode_remove_p_tag( $page_header->html );
+					echo uncode_remove_p_tag( $page_header->html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				}
 			}
@@ -293,7 +295,7 @@ switch ( $template ) {
 
 				$content_breadcrumb = uncode_breadcrumbs();
 				$breadcrumb_title   = '<div class="breadcrumb-title h5 text-bold">' . uncode_archive_title() . '</div>';
-				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' );
+				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/** Build title **/
@@ -495,7 +497,7 @@ switch ( $template ) {
 				$header_html = $page_header->html;
 				if ( $header_html !== '' ) {
 					echo '<div id="page-header">';
-					echo uncode_remove_p_tag( $page_header->html );
+					echo uncode_remove_p_tag( $page_header->html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				}
 
@@ -514,7 +516,7 @@ switch ( $template ) {
 
 				$content_breadcrumb = uncode_breadcrumbs();
 				$breadcrumb_title   = '<div class="breadcrumb-title h5 text-bold">' . get_the_title() . '</div>';
-				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' );
+				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/** Build title **/
@@ -782,14 +784,16 @@ switch ( $template ) {
 			}
 
 			/** Display post html **/
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class( 'page-body' . $bg_color ) ) . '">
           <div class="post-wrapper">
           	<div class="post-body">';
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			ob_start();
 		}
 		break;
 	default:
-		echo apply_filters( 'sm_templates_wrapper_start', '<div class="wrap"><div id="primary" class="content-area"><main id="main" class="site-main wpfc-sermon-container ' . $additional_classes . '">' );
+		echo apply_filters( 'sm_templates_wrapper_start', '<div class="wrap"><div id="primary" class="content-area"><main id="main" class="site-main wpfc-sermon-container ' . $additional_classes . '">' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		break;
 }

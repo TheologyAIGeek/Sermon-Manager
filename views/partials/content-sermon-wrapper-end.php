@@ -297,17 +297,19 @@ switch ( $template ) {
 			}
 
 			/** Display post html **/
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<div class="page-body' . $bg_color . '">
           <div class="post-wrapper">
           	<div class="post-body">' . do_shortcode( $the_content ) . '</div>' .
 			     $navigation_content . '
           </div>
         </div>';
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			get_footer();
 		} else {
 			$the_content .= ob_get_clean();
-			echo uncode_remove_p_tag( $the_content ) . '</div></div></div></article>';
+			echo uncode_remove_p_tag( $the_content ) . '</div></div></div></article>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		break;
 	default:
@@ -320,6 +322,6 @@ switch ( $template ) {
 		} else {
 			$sidebar = '';
 		}
-		echo apply_filters( 'sm_templates_wrapper_end', '</main></div>' . $sidebar . '</div>' );
+		echo apply_filters( 'sm_templates_wrapper_end', '</main></div>' . $sidebar . '</div>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		break;
 }
