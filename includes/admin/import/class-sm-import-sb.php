@@ -80,7 +80,7 @@ class SM_Import_SB {
 	public static function is_installed() {
 		global $wpdb;
 
-		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}sb_sermons'" );
+		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}sb_sermons'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	/**
@@ -207,7 +207,7 @@ class SM_Import_SB {
 		global $wpdb;
 
 		$used_books = array();
-		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_books_sermons" );
+		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_books_sermons" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $books as $book ) {
 			foreach ( $used_books as $used_book ) {
@@ -238,7 +238,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data
 		 */
-		$preachers = apply_filters( 'sm_import_sb_preachers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_preachers" ) );
+		$preachers = apply_filters( 'sm_import_sb_preachers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_preachers" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $preachers as $preacher ) {
 			$term_data = term_exists( $preacher->name, 'wpfc_preacher' );
@@ -287,7 +287,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data
 		 */
-		$series = apply_filters( 'sm_import_sb_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_series" ) );
+		$series = apply_filters( 'sm_import_sb_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_series" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $series as $item ) {
 			if ( trim( $item->name ) === '' ) {
@@ -324,7 +324,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data.
 		 */
-		$services = apply_filters( 'sm_import_sb_service_types', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_services" ) );
+		$services = apply_filters( 'sm_import_sb_service_types', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_services" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $services as $service ) {
 			$term_data = term_exists( $service->name, 'wpfc_service_type' );
@@ -388,7 +388,7 @@ class SM_Import_SB {
 		 *
 		 * @var array $sermons Raw database data.
 		 */
-		$sermons = apply_filters( 'sm_import_sb_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_sermons" ) );
+		$sermons = apply_filters( 'sm_import_sb_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_sermons" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();
@@ -439,7 +439,7 @@ class SM_Import_SB {
 			 *
 			 * @var array $stuff Raw database data.
 			 */
-			$stuff = apply_filters( 'sm_import_sb_message_stuff', $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) );
+			$stuff = apply_filters( 'sm_import_sb_message_stuff', $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 			if ( SM_OB_ENABLED ) {
 				ob_start();
@@ -544,7 +544,7 @@ class SM_Import_SB {
 
 			// Set views.
 			/* @noinspection SqlResolve */
-			update_post_meta( $id, 'Views', $wpdb->get_var( $wpdb->prepare( "SELECT SUM(`count`) FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) );
+			update_post_meta( $id, 'Views', $wpdb->get_var( $wpdb->prepare( "SELECT SUM(`count`) FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 
 		// Convert passages to Sermon Manager format.

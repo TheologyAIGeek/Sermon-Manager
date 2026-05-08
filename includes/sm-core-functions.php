@@ -465,6 +465,7 @@ function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) {
 
 		preg_match( '/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $image_url, $matches );
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->insert( $wpdb->prefix . 'posts', array(
 			'post_author'       => get_current_user_id(),
 			'post_date'         => current_time( 'mysql' ),

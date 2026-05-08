@@ -50,7 +50,7 @@ class SM_Import_SE {
 	public static function is_installed() {
 		global $wpdb;
 
-		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}se_messages'" );
+		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}se_messages'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	/**
@@ -103,7 +103,7 @@ class SM_Import_SE {
 		global $wpdb;
 
 		$used_books = array();
-		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_books" );
+		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_books" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $books as $book ) {
 			if ( ! in_array( $book->book_name, $used_books ) ) {
@@ -130,7 +130,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $speakers Raw database data.
 		 */
-		$speakers = apply_filters( 'sm_import_se_speakers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_speakers" ) );
+		$speakers = apply_filters( 'sm_import_se_speakers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_speakers" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $speakers as $speaker ) {
 			foreach (
@@ -169,7 +169,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $series Raw database data.
 		 */
-		$series = apply_filters( 'sm_import_se_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series" ) );
+		$series = apply_filters( 'sm_import_se_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $series as $item ) {
 			$term_data = term_exists( $item->s_title, 'wpfc_sermon_series' );
@@ -206,7 +206,7 @@ class SM_Import_SE {
 		 *
 		 * @var array $topics Raw database data.
 		 */
-		$topics = apply_filters( 'sm_import_se_topics', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_topics" ) );
+		$topics = apply_filters( 'sm_import_se_topics', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_topics" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $topics as $topic ) {
 			$term_data = term_exists( $topic->name, 'wpfc_sermon_topics' );
@@ -236,35 +236,35 @@ class SM_Import_SE {
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages = apply_filters( 'sm_import_se_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_messages" ) );
+		$messages = apply_filters( 'sm_import_se_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_messages" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		/**
 		 * Filter speaker association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_speakers = apply_filters( 'sm_import_se_speaker_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_speaker_matches" ) );
+		$messages_speakers = apply_filters( 'sm_import_se_speaker_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_speaker_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		/**
 		 * Filter topics association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_topics = apply_filters( 'sm_import_se_topics_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_topic_matches" ) );
+		$messages_topics = apply_filters( 'sm_import_se_topics_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_message_topic_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		/**
 		 * Filter books association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_books = apply_filters( 'sm_import_se_books_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_book_message_matches" ) );
+		$messages_books = apply_filters( 'sm_import_se_books_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_book_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		/**
 		 * Filter series association table that will be imported.
 		 *
 		 * @var array Raw database data.
 		 */
-		$messages_series = apply_filters( 'sm_import_se_series_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series_message_matches" ) );
+		$messages_series = apply_filters( 'sm_import_se_series_association', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}se_series_message_matches" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		// Start the import.
 		foreach ( $messages as $message ) {

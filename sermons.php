@@ -232,7 +232,7 @@ class SermonManager { // phpcs:ignore
 			}
 		}
 
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"UPDATE $wpdb->posts SET `post_content` = %s WHERE `ID` = %s",
 				array(
@@ -694,7 +694,7 @@ class SermonManager { // phpcs:ignore
 					global $wpdb;
 
 					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- No user input; table name cannot be parameterized.
-					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" );
+					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 					?>
 					<div class="notice notice-success">
@@ -758,7 +758,7 @@ class SermonManager { // phpcs:ignore
 					$sm = SermonManager::get_instance();
 
 					// All sermons.
-					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) );
+					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 					foreach ( $sermons as $sermon ) {
 						$sermon_id = $sermon->ID;
@@ -766,7 +766,7 @@ class SermonManager { // phpcs:ignore
 						if ( 11 === $value ) {
 							$sm->render_sermon_into_content( $sermon_id, null, true );
 						} else {
-							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) );
+							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						}
 					}
 

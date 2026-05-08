@@ -222,7 +222,7 @@ class SM_Admin_Post_Types {
 				switch ( $vars['orderby'] ) {
 					case 'preached':
 						$vars = array_merge( $vars, array(
-							'meta_key'       => 'sermon_date',
+							'meta_key'       => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 							'orderby'        => 'meta_value_num',
 							'meta_value_num' => time(),
 							'meta_compare'   => '<=',
@@ -231,7 +231,7 @@ class SM_Admin_Post_Types {
 
 					case 'views':
 						$vars = array_merge( $vars, array(
-							'meta_key' => 'Views',
+							'meta_key' => 'Views', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 							'orderby'  => 'meta_value_num',
 						) );
 						break;
@@ -272,7 +272,7 @@ class SM_Admin_Post_Types {
 
 		if ( 'wpfc_sermon' == $typenow ) {
 			if ( isset( $query->query_vars['wpfc_service_type'] ) ) {
-				$query->query_vars['tax_query'] = array(
+				$query->query_vars['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					array(
 						'taxonomy' => 'wpfc_service_type',
 						'field'    => 'slug',
