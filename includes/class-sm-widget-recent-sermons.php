@@ -71,7 +71,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 				'no_found_rows'       => true,
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => true,
-				'meta_key'            => 'sermon_date',
+				'meta_key'            => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				'meta_value_num'      => time(),
 				'meta_compare'        => '<=',
 				'orderby'             => 'meta_value_num',

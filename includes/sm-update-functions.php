@@ -269,7 +269,7 @@ function sm_update_2130_fill_out_sermon_term_dates() {
 function sm_update_2130_remove_excerpts() {
 	$sermons = new WP_Query( array(
 		'post_type'      => 'wpfc_sermon',
-		'meta_key'       => 'sermon_date',
+		'meta_key'       => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 		'meta_value_num' => time(),
 		'meta_compare'   => '<=',
 		'orderby'        => 'meta_value_num',

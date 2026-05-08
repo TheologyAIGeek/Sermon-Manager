@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Used to display the RSS feed.
  *
@@ -82,7 +82,7 @@ $args = array(
 	'posts_per_page' => $settings['podcasts_per_page'],
 	'order'          => strtoupper( SermonManager::getOption( 'archive_order' ) ),
 	'paged'          => isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	'meta_query'     => array(
+	'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		'relation' => 'AND',
 		array(
 			'key'     => 'sermon_audio',
@@ -99,7 +99,7 @@ $args = array(
 switch ( SermonManager::getOption( 'archive_orderby' ) ) {
 	case 'date_preached':
 		$args += array(
-			'meta_key'       => 'sermon_date',
+			'meta_key'       => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_value_num' => time(),
 			'meta_compare'   => '<=',
 			'orderby'        => 'meta_value_num',
@@ -117,7 +117,7 @@ switch ( SermonManager::getOption( 'archive_orderby' ) ) {
  * If feed is being loaded via taxonomy feed URL, such as "https://www.example.com/service-type/service-type-slug"
  */
 if ( $taxonomy && $term ) {
-	$args['tax_query'] = array(
+	$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		array(
 			'taxonomy' => $taxonomy,
 			'field'    => 'slug',

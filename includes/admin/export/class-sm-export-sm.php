@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.12.0
  */
-class SM_Export_SM {
+class SM_Export_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * Do the export.
 	 *
@@ -60,8 +60,8 @@ class SM_Export_SM {
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
-		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args );
+		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Get the requested terms ready, empty unless posts filtered by category or all content.
 		$cats              = array();
@@ -97,7 +97,7 @@ class SM_Export_SM {
 		 * @return string
 		 */
 		if ( ! function_exists( 'wxr_cdata' ) ) {
-			function wxr_cdata( $str ) {
+			function wxr_cdata( $str ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 				if ( wp_is_valid_utf8( $str ) == false ) {
 					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
@@ -115,7 +115,7 @@ class SM_Export_SM {
 		 *
 		 * @return string Site URL.
 		 */
-		function wxr_site_url() {
+		function wxr_site_url() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			// ms: the base url.
 			if ( is_multisite() ) {
 				return network_home_url();
@@ -132,7 +132,7 @@ class SM_Export_SM {
 		 *
 		 * @param int $post_id The post ID.
 		 */
-		function wxr_post_taxonomy( $post_id ) {
+		function wxr_post_taxonomy( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			$custom_taxonomies = array(
 				'wpfc_preacher',
 				'wpfc_sermon_series',
@@ -154,7 +154,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $category Category Object.
 		 */
-		function wxr_cat_name( $category ) {
+		function wxr_cat_name( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $category->name ) ) {
 				return;
 			}
@@ -169,7 +169,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $category Category Object.
 		 */
-		function wxr_category_description( $category ) {
+		function wxr_category_description( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $category->description ) ) {
 				return;
 			}
@@ -184,7 +184,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $tag Tag Object.
 		 */
-		function wxr_tag_name( $tag ) {
+		function wxr_tag_name( $tag ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $tag->name ) ) {
 				return;
 			}
@@ -199,7 +199,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $tag Tag Object.
 		 */
-		function wxr_tag_description( $tag ) {
+		function wxr_tag_description( $tag ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $tag->description ) ) {
 				return;
 			}
@@ -214,7 +214,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $term Term Object.
 		 */
-		function wxr_term_name( $term ) {
+		function wxr_term_name( $term ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $term->name ) ) {
 				return;
 			}
@@ -229,7 +229,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $term Term Object.
 		 */
-		function wxr_term_description( $term ) {
+		function wxr_term_description( $term ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $term->description ) ) {
 				return;
 			}
@@ -242,7 +242,7 @@ class SM_Export_SM {
 		 *
 		 * @since 3.1.0
 		 */
-		function wxr_authors_list() {
+		function wxr_authors_list() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			global $wpdb;
 
 			$authors = array();
@@ -273,7 +273,7 @@ class SM_Export_SM {
 		 *
 		 * @return mixed
 		 */
-		function wxr_filter_postmeta( $return_me, $meta_key ) {
+		function wxr_filter_postmeta( $return_me, $meta_key ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( '_edit_lock' == $meta_key ) {
 				$return_me = true;
 			}
@@ -370,7 +370,7 @@ class SM_Export_SM {
 							 * @param string $meta_key Current meta key.
 							 * @param object $meta     Current meta object.
 							 */
-							if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) {
+							if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 								continue;
 							}
 							?>
@@ -390,7 +390,7 @@ class SM_Export_SM {
 
 				<?php
 				/** This action is documented in wp-includes/feed-rss2.php */
-				do_action( 'rss2_head' );
+				do_action( 'rss2_head' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				?>
 
 				<?php
@@ -448,7 +448,7 @@ class SM_Export_SM {
 							?>
 							<item>
 								<?php /** This filter is documented in wp-includes/feed.php */ ?>
-								<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></title>
+								<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?></title>
 								<link><?php the_permalink_rss(); ?></link>
 								<pubDate><?php echo esc_xml( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 								<dc:creator><?php echo wxr_cdata( get_the_author_meta( 'login' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></dc:creator>
@@ -463,7 +463,7 @@ class SM_Export_SM {
 									 *
 									 * @param string $post_content Content of the current post.
 									 */
-									echo wxr_cdata( apply_filters( 'the_content_export', $post->post_content ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo wxr_cdata( apply_filters( 'the_content_export', $post->post_content ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 									?>
 								</content:encoded>
 								<excerpt:encoded>
@@ -475,7 +475,7 @@ class SM_Export_SM {
 									 *
 									 * @param string $post_excerpt Excerpt for the current post.
 									 */
-									echo wxr_cdata( apply_filters( 'the_excerpt_export', $post->post_excerpt ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo wxr_cdata( apply_filters( 'the_excerpt_export', $post->post_excerpt ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 									?>
 								</excerpt:encoded>
 								<wp:post_id><?php echo absint( $post->ID ); ?></wp:post_id>
@@ -509,7 +509,7 @@ class SM_Export_SM {
 									 * @param string $meta_key Current meta key.
 									 * @param object $meta     Current meta object.
 									 */
-									if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) {
+									if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 										continue;
 									}
 									?>

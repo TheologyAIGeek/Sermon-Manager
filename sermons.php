@@ -490,7 +490,7 @@ class SermonManager { // phpcs:ignore
 		}
 
 		foreach ( $GLOBALS['sm_plyr_scripts'] as $script ) {
-			echo '<script type="text/javascript" data-cfasync="false" src="' . esc_url( $script->src ) . '"></script>';
+			echo '<script type="text/javascript" data-cfasync="false" src="' . esc_url( $script->src ) . '"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 
 			if ( ! empty( $script->extra ) ) {
 				/* @noinspection BadExpressionStatementJS */
@@ -509,10 +509,10 @@ class SermonManager { // phpcs:ignore
 	 * @since 2.15.7
 	 */
 	public static function register_scripts_styles() {
-		wp_register_script( 'wpfc-sm-fb-player', SM_URL . 'assets/vendor/js/facebook-video.js', array(), SM_VERSION );
+		wp_register_script( 'wpfc-sm-fb-player', SM_URL . 'assets/vendor/js/facebook-video.js', array(), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_register_script( 'wpfc-sm-plyr', SM_URL . 'assets/vendor/js/plyr.polyfilled' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array(), '3.4.7', SermonManager::getOption( 'player_js_footer' ) );
-		wp_register_script( 'wpfc-sm-plyr-loader', SM_URL . 'assets/js/plyr' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array( 'wpfc-sm-plyr' ), SM_VERSION );
-		wp_register_script( 'wpfc-sm-verse-script', SM_URL . 'assets/vendor/js/verse.js', array(), SM_VERSION );
+		wp_register_script( 'wpfc-sm-plyr-loader', SM_URL . 'assets/js/plyr' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array( 'wpfc-sm-plyr' ), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
+		wp_register_script( 'wpfc-sm-verse-script', SM_URL . 'assets/vendor/js/verse.js', array(), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_register_style( 'wpfc-sm-styles', SM_URL . 'assets/css/sermon.min.css', array(), SM_VERSION );
 		wp_register_style( 'wpfc-sm-plyr-css', SM_URL . 'assets/vendor/css/plyr.min.css', array(), '3.4.7' );
 

@@ -85,7 +85,7 @@ class SM_Shortcodes {
 		// Default options.
 		$args = array(
 			'include' => 'itunes, android, overcast',
-			'exclude' => null,
+			'exclude' => null, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 		);
 
 		// Init var.
@@ -96,7 +96,7 @@ class SM_Shortcodes {
 
 		// Remove spaces so we can get clean array values.
 		$args['include'] = str_replace( ' ', '', $args['include'] );
-		$args['exclude'] = str_replace( ' ', '', $args['exclude'] );
+		$args['exclude'] = str_replace( ' ', '', $args['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 
 		// Convert comma-separated shortcode attributes to array.
 		$services_to_include = explode( ',', $args['include'] );
@@ -208,7 +208,7 @@ class SM_Shortcodes {
 
 		if ( 'date' === $query_args['orderby'] ) {
 			$query_args['orderby']        = 'meta_value_num';
-			$query_args['meta_key']       = 'sermon_date';
+			$query_args['meta_key']       = 'sermon_date'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			$query_args['meta_compare']   = '<=';
 			$query_args['meta_value_num'] = time();
 		}
@@ -472,8 +472,8 @@ class SM_Shortcodes {
 		// Order by most recent sermon.
 		if ( in_array( $args['term_args']['orderby'], array( 'sermon', 'date' ) ) ) {
 			$args['term_args']['orderby']      = 'meta_value_num';
-			$args['term_args']['meta_key']     = 'sermon_date';
-			$args['term_args']['meta_value']   = time();
+			$args['term_args']['meta_key']     = 'sermon_date'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			$args['term_args']['meta_value']   = time(); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			$args['term_args']['meta_compare'] = '<';
 		}
 
@@ -636,8 +636,8 @@ class SM_Shortcodes {
 			case 'date_preached':
 				$query_args += array(
 					'orderby'      => 'meta_value_num',
-					'meta_key'     => 'sermon_date',
-					'meta_value'   => time(),
+					'meta_key'     => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'   => time(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					'meta_compare' => '<=',
 				);
 				break;
@@ -698,7 +698,7 @@ class SM_Shortcodes {
 			}
 
 			if ( is_int( $service_type ) && term_exists( $service_type, 'wpfc_service_type' ) ) {
-				$args['tax_query'] = array(
+				$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					'taxonomy' => 'wpfc_service_type',
 					'terms'    => $service_type,
 				);
@@ -808,7 +808,7 @@ class SM_Shortcodes {
 			'hide_books'         => '',
 			'hide_dates'         => '',
 			'include'            => '',
-			'exclude'            => '',
+			'exclude'            => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post_not_in
 			'hide_service_types' => \SermonManager::getOption( 'service_type_filtering' ) ? '' : 'yes',
 		);
 
@@ -879,7 +879,7 @@ class SM_Shortcodes {
 			case '':
 				$args['orderby'] = 'meta_value_num';
 
-				$query_args['meta_query'] = array(
+				$query_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
 						'key'     => 'sermon_date',
 						'value'   => time(),
@@ -912,7 +912,7 @@ class SM_Shortcodes {
 				}
 
 				// Reset the query.
-				$query_args['meta_query'] = array();
+				$query_args['meta_query'] = array(); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 
 				switch ( $date_arg ) {
 					case 'year':
@@ -947,7 +947,7 @@ class SM_Shortcodes {
 		// Add before and after parameters.
 		if ( 'meta_value_num' === $query_args['orderby'] && ( $args['before'] || $args['after'] ) ) {
 			if ( ! isset( $query_args['meta_query'] ) ) {
-				$query_args['meta_query'] = array();
+				$query_args['meta_query'] = array(); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			}
 
 			if ( $args['before'] ) {
@@ -1011,7 +1011,7 @@ class SM_Shortcodes {
 					$posts_in = intval( trim( $post_in ) );
 				}
 
-				$query_args['post__not_in'] = (array) $posts_in;
+				$query_args['post__not_in'] = (array) $posts_in; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post_not_in
 			}
 		}
 
@@ -1042,7 +1042,7 @@ class SM_Shortcodes {
 					}
 				}
 
-				$query_args['tax_query'] = array(
+				$query_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					array(
 						'taxonomy' => $this->convert_taxonomy_name( $args['filter_by'], false ),
 						'field'    => 'slug',
@@ -1055,7 +1055,7 @@ class SM_Shortcodes {
 		foreach ( array( 'wpfc_preacher', 'wpfc_sermon_series', 'wpfc_sermon_topics', 'wpfc_bible_book' ) as $filter ) {
 			if ( ! empty( $_GET[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
-					$query_args['tax_query'] = array();
+					$query_args['tax_query'] = array(); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				}
 
 				$query_args['tax_query'][0][] = array(
@@ -1069,7 +1069,7 @@ class SM_Shortcodes {
 
 			if ( ! empty( $_POST[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
-					$query_args['tax_query'] = array();
+					$query_args['tax_query'] = array(); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				}
 
 				$query_args['tax_query'][0][] = array(
