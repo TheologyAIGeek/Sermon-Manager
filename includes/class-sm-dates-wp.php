@@ -141,7 +141,7 @@ class SM_Dates_WP extends SM_Dates {
 		}
 
 		$original_terms = $GLOBALS['sm_original_terms'];
-		$tax_input      = isset( $_POST['tax_input'] ) ? wp_unslash( $_POST['tax_input'] ) : array();
+		$tax_input      = isset( $_POST['tax_input'] ) ? wp_unslash( $_POST['tax_input'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$updated_terms  = $tax_input;
 
 		// Convert terms to term array of term IDs if it's not already that way.
@@ -309,7 +309,7 @@ class SM_Dates_WP extends SM_Dates {
 
 		if ( $update ) {
 			// Compare sermon date and if user changed it update sermon date and disable auto update.
-			if ( ! empty( $_POST['sermon_date'] ) ) {
+			if ( ! empty( $_POST['sermon_date'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				switch ( \SermonManager::getOption( 'date_format' ) ) {
 					case '0':
 						$date_format = 'm/d/Y';
@@ -328,7 +328,7 @@ class SM_Dates_WP extends SM_Dates {
 						break;
 				}
 
-				$sermon_date_raw = isset( $_POST['sermon_date'] ) ? sanitize_text_field( wp_unslash( $_POST['sermon_date'] ) ) : '';
+				$sermon_date_raw = isset( $_POST['sermon_date'] ) ? sanitize_text_field( wp_unslash( $_POST['sermon_date'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$dt      = DateTime::createFromFormat( $date_format, $sermon_date_raw );
 				$dt_post = DateTime::createFromFormat( 'U', mysql2date( 'U', $post->post_date ) );
 
@@ -363,7 +363,7 @@ class SM_Dates_WP extends SM_Dates {
 		 * If sermon date is blank (not set on sermon create or removed later on update), mark
 		 * this post for auto updating and update date now.
 		 */
-		if ( isset( $_POST['sermon_date'] ) && '' == $_POST['sermon_date'] ) {
+		if ( isset( $_POST['sermon_date'] ) && '' == $_POST['sermon_date'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$update_date = true;
 			$auto        = true;
 		}

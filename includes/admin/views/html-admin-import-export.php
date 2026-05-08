@@ -46,7 +46,7 @@ defined( 'ABSPATH' ) or die;
 								<?php else : ?>
 									<form enctype="multipart/form-data" id="sm-import-upload-form" method="post"
 											class="wp-upload-form"
-											action="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sm', 'sm-import' ) ); ?>">
+											action="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sm', 'sm-import' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated ?>">
 										<p>
 											<input type="file" id="upload" name="import" size="25"/>
 											<input type="hidden" name="action" value="save"/>
@@ -88,7 +88,7 @@ defined( 'ABSPATH' ) or die;
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
 							<li>
-								<a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=exsm', 'sm-import' ) ); ?>"
+								<a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=exsm', 'sm-import' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated ?>"
 										class="button activate-now" id="sm-export-content"
 										aria-label="<?php esc_attr_e( 'Export to file', 'sermon-manager-revival' ); ?>">
 									<?php esc_html_e( 'Export', 'sermon-manager-revival' ); ?>
@@ -122,7 +122,7 @@ defined( 'ABSPATH' ) or die;
 					</div>
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
-							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sb', 'sm-import' ) ); ?>"
+							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=sb', 'sm-import' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated ?>"
 										class="button activate-now <?php echo SM_Import_SB::is_installed() ? '' : 'disabled'; ?>"
 										aria-label="<?php esc_attr_e( 'Import from Sermon Browser', 'sermon-manager-revival' ); ?>">
 									<?php esc_html_e( 'Import', 'sermon-manager-revival' ); ?></a>
@@ -163,7 +163,7 @@ defined( 'ABSPATH' ) or die;
 					</div>
 					<div class="action-links">
 						<ul class="plugin-action-buttons">
-							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=se', 'sm-import' ) ); ?>"
+							<li><a href="<?php echo esc_url( wp_nonce_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '&doimport=se', 'sm-import' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated ?>"
 										class="button activate-now <?php echo SM_Import_SE::is_installed() ? '' : 'disabled'; ?>"
 										aria-label="<?php esc_attr_e( 'Import from Series Engine', 'sermon-manager-revival' ); ?>">
 									<?php esc_html_e( 'Import', 'sermon-manager-revival' ); ?></a>

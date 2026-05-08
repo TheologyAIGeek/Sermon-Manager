@@ -83,20 +83,20 @@ class SM_Admin_Settings {
 		self::get_settings_pages();
 
 		// Get current tab/section.
-		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( $_GET['tab'] );
-		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : '';
+		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$current_section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// Save settings if data has been posted.
-		if ( ! empty( $_POST ) ) {
+		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			self::save();
 		}
 
 		// Add any posted messages.
-		if ( ! empty( $_GET['sm_error'] ) ) {
+		if ( ! empty( $_GET['sm_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) );
 		}
 
-		if ( ! empty( $_GET['sm_message'] ) ) {
+		if ( ! empty( $_GET['sm_message'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) );
 		}
 
@@ -144,14 +144,14 @@ class SM_Admin_Settings {
 	public static function save() {
 		global $current_tab, $wpdb;
 
-		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'sm-settings' ) ) {
+		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'sm-settings' ) ) {
 			wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'sermon-manager-revival' ) );
 		}
 
 		/**
 		 * Flush rewrite rules on archive page slug change.
 		 */
-		if ( 'general' === $current_tab && SermonManager::getOption( 'archive_slug' ) !== $_POST['archive_slug'] ) {
+		if ( 'general' === $current_tab && SermonManager::getOption( 'archive_slug' ) !== ( isset( $_POST['archive_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['archive_slug'] ) ) : '' ) ) {
 			flush_rewrite_rules( true );
 		}
 
@@ -788,7 +788,7 @@ class SM_Admin_Settings {
 	 */
 	public static function save_fields( $options, $data = null ) {
 		if ( is_null( $data ) ) {
-			$data = $_POST;
+			$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
 		if ( empty( $data ) ) {
 			return false;

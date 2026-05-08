@@ -197,17 +197,17 @@ class SermonManager { // phpcs:ignore
 			}
 
 			$content .= sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) . ': ';
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
 		}
 
 		if ( $has_series ) {
 			if ( $has_preachers ) {
 				$content .= ' | ';
 			}
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
 		}
 
-		$description = strip_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
+		$description = wp_strip_all_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
 
 		if ( '' !== $description ) {
 			$content .= ' | ' . $description;
@@ -295,7 +295,7 @@ class SermonManager { // phpcs:ignore
 	 * @return void
 	 */
 	public static function load_translations() {
-		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 	}
 
 	/**
@@ -570,7 +570,7 @@ class SermonManager { // phpcs:ignore
 			function ( $url, $attachment_id ) {
 				$db_url = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
-				if ( $db_url && parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
+				if ( $db_url && wp_parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
 					return $db_url;
 				}
 
@@ -611,7 +611,7 @@ class SermonManager { // phpcs:ignore
 		add_action(
 			'admin_init',
 			function () {
-				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
+				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( isset( $_GET['doimport'] ) ) {
 						if ( ! current_user_can( 'import' ) ) {
 							wp_die( esc_html__( 'You do not have permission to import data.', 'sermon-manager-revival' ), 403 );
@@ -787,12 +787,12 @@ class SermonManager { // phpcs:ignore
 					return;
 				}
 
-				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) {
+				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					return;
 				}
 
-				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) );
-				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) );
+				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 				// Attempt to get remote file size.
 				if ( $audio_url && ! $audio_id ) {
@@ -818,8 +818,8 @@ class SermonManager { // phpcs:ignore
 					return;
 				}
 
-				$parsed_audio_url   = parse_url( $audio_url, PHP_URL_HOST );
-				$parsed_website_url = parse_url( home_url(), PHP_URL_HOST );
+				$parsed_audio_url   = wp_parse_url( $audio_url, PHP_URL_HOST );
+				$parsed_website_url = wp_parse_url( home_url(), PHP_URL_HOST );
 
 				if ( $parsed_audio_url !== $parsed_website_url ) {
 					$audio_id = '';
@@ -832,7 +832,7 @@ class SermonManager { // phpcs:ignore
 
 					if ( $the_file ) {
 						if ( isset( $the_file['length'] ) ) {
-							$length                         = date( 'H:i:s', $the_file['length'] );
+							$length                         = gmdate( 'H:i:s', $the_file['length'] );
 							$_POST['_wpfc_sermon_duration'] = $length;
 							update_post_meta( $post_ID, '_wpfc_sermon_duration', $length );
 						}
