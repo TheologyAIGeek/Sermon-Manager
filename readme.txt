@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.2
+Stable tag: 2026.5.3
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,13 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.5.3 ###
+* Fix: Escape output in sermons.php — phpcs:ignore on inline JS printf(), wrap wp_sprintf() in wp_kses_post()
+* Fix: Add ABSPATH direct file access protection to all view templates
+* Fix: Exclude .distignore, phpcs.xml.dist, and phpunit.xml.dist from release ZIP
+* Fix: Update "Tested up to" to WordPress 6.9 in plugin header and readme
+* Fix: Trim readme.txt tags to the required maximum of 5
+
 ### 2026.5.2 ###
 * Security: Add $wpdb->prepare() placeholders to all raw SQL queries (SQL injection prevention)
 * Security: Add output escaping (esc_html, esc_attr, esc_url, wp_kses_post) throughout admin and frontend views
