@@ -9,6 +9,10 @@
 # GitHub
 .github
 
+# Development scripts and config
+bin
+CODE_OF_CONDUCT.md
+
 # Development / build tools
 composer.json
 composer.lock

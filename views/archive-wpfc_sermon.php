@@ -28,7 +28,7 @@ if ( have_posts() ) :
 	sm_pagination();
 	echo '</div>';
 else :
-	echo esc_html__( 'Sorry, but there aren\'t any posts matching your query.' );
+	echo esc_html__( 'Sorry, but there aren\'t any posts matching your query.', 'sermon-manager-revival' );
 endif;
 ?>
 
