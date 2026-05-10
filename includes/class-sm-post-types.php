@@ -37,7 +37,7 @@ class SM_Post_Types {
 			return;
 		}
 
-		do_action( 'sm_register_taxonomy' );
+		do_action( 'sm_register_taxonomy' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$permalinks = sm_get_permalink_structure();
 
@@ -56,9 +56,9 @@ class SM_Post_Types {
 
 		register_taxonomy(
 			'wpfc_preacher',
-			apply_filters( 'sm_taxonomy_objects_wpfc_preacher', array( 'wpfc_sermon' ) ),
+			apply_filters( 'sm_taxonomy_objects_wpfc_preacher', array( 'wpfc_sermon' ) ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			apply_filters(
-				'sm_taxonomy_args_wpfc_preacher',
+				'sm_taxonomy_args_wpfc_preacher', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'hierarchical' => false,
 					'label'        => ucwords( $labels['wpfc_preacher'] ),
@@ -99,9 +99,9 @@ class SM_Post_Types {
 
 		register_taxonomy(
 			'wpfc_sermon_series',
-			apply_filters( 'sm_taxonomy_objects_wpfc_sermon_series', array( 'wpfc_sermon' ) ),
+			apply_filters( 'sm_taxonomy_objects_wpfc_sermon_series', array( 'wpfc_sermon' ) ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			apply_filters(
-				'sm_taxonomy_args_wpfc_sermon_series',
+				'sm_taxonomy_args_wpfc_sermon_series', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'hierarchical' => false,
 					'label'        => __( 'Series', 'sermon-manager-revival' ),
@@ -135,9 +135,9 @@ class SM_Post_Types {
 
 		register_taxonomy(
 			'wpfc_sermon_topics',
-			apply_filters( 'sm_taxonomy_objects_wpfc_sermon_topics', array( 'wpfc_sermon' ) ),
+			apply_filters( 'sm_taxonomy_objects_wpfc_sermon_topics', array( 'wpfc_sermon' ) ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			apply_filters(
-				'sm_taxonomy_args_wpfc_sermon_topics',
+				'sm_taxonomy_args_wpfc_sermon_topics', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'hierarchical' => false,
 					'label'        => __( 'Topics', 'sermon-manager-revival' ),
@@ -171,9 +171,9 @@ class SM_Post_Types {
 
 		register_taxonomy(
 			'wpfc_bible_book',
-			apply_filters( 'sm_taxonomy_objects_wpfc_bible_book', array( 'wpfc_sermon' ) ),
+			apply_filters( 'sm_taxonomy_objects_wpfc_bible_book', array( 'wpfc_sermon' ) ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			apply_filters(
-				'sm_taxonomy_args_wpfc_bible_book',
+				'sm_taxonomy_args_wpfc_bible_book', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'hierarchical' => false,
 					'label'        => __( 'Books', 'sermon-manager-revival' ),
@@ -207,9 +207,9 @@ class SM_Post_Types {
 
 		register_taxonomy(
 			'wpfc_service_type',
-			apply_filters( 'sm_taxonomy_objects_wpfc_service_type', array( 'wpfc_sermon' ) ),
+			apply_filters( 'sm_taxonomy_objects_wpfc_service_type', array( 'wpfc_sermon' ) ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			apply_filters(
-				'sm_taxonomy_args_wpfc_service_type',
+				'sm_taxonomy_args_wpfc_service_type', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'hierarchical' => false,
 					'label'        => ucwords( $labels['wpfc_service_type'] ),
@@ -248,7 +248,7 @@ class SM_Post_Types {
 			)
 		);
 
-		do_action( 'sm_after_register_taxonomy' );
+		do_action( 'sm_after_register_taxonomy' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -259,14 +259,14 @@ class SM_Post_Types {
 			return;
 		}
 
-		do_action( 'sm_register_post_type' );
+		do_action( 'sm_register_post_type' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$permalinks = sm_get_permalink_structure();
 
 		register_post_type(
 			'wpfc_sermon',
 			apply_filters(
-				'sm_register_post_type_wpfc_sermon',
+				'sm_register_post_type_wpfc_sermon', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				array(
 					'labels'              => array(
 						'name'                  => __( 'Sermons', 'sermon-manager-revival' ),
@@ -330,7 +330,7 @@ class SM_Post_Types {
 			)
 		);
 
-		do_action( 'sm_after_register_post_type' );
+		do_action( 'sm_after_register_post_type' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**

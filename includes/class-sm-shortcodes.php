@@ -79,7 +79,7 @@ class SM_Shortcodes {
 	public function display_podcasts_list( $atts ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Default options.
@@ -161,7 +161,7 @@ class SM_Shortcodes {
 	public function display_sermons_list( $atts ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Unquote.
@@ -415,7 +415,7 @@ class SM_Shortcodes {
 	public function display_images( $atts = array() ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Unquote.
@@ -529,7 +529,7 @@ class SM_Shortcodes {
 	function display_latest_series_image( $atts = array() ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Unquote.
@@ -777,7 +777,7 @@ class SM_Shortcodes {
 
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Unquote and verify boolean values.
@@ -808,7 +808,7 @@ class SM_Shortcodes {
 			'hide_books'         => '',
 			'hide_dates'         => '',
 			'include'            => '',
-			'exclude'            => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post_not_in
+			'exclude'            => '', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'hide_service_types' => \SermonManager::getOption( 'service_type_filtering' ) ? '' : 'yes',
 		);
 
@@ -1117,13 +1117,13 @@ class SM_Shortcodes {
 							global $post;
 
 							// Allows preventing the call of wpfc_sermon_excerpt_v2().
-							if ( apply_filters( 'sm_shortcode_output_override', false ) ) {
+							if ( apply_filters( 'sm_shortcode_output_override', false ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 								$output = '';
 							} else {
 								$output = '<div class="wpfc-sermon wpfc-sermon-shortcode">' . wpfc_sermon_excerpt_v2( true, $args ) . '</div>';
 							}
 
-							echo apply_filters( 'sm_shortcode_sermons_single_output', $output, $post, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo apply_filters( 'sm_shortcode_sermons_single_output', $output, $post, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						}
 						?>
 					</div>
@@ -1173,7 +1173,7 @@ class SM_Shortcodes {
 			/**
 			 * Allows to filter the complete output of the shortcode.
 			 */
-			return apply_filters( 'sm_shortcode_sermons_output', $return, $query );
+			return apply_filters( 'sm_shortcode_sermons_output', $return, $query ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		} else {
 			return 'No sermons found.';
 		}
@@ -1199,7 +1199,7 @@ class SM_Shortcodes {
 	public function display_sermon_sorting( $atts = array() ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// Unquote.
@@ -1235,5 +1235,5 @@ class SM_Shortcodes {
 	}
 }
 
-$sm_shortcodes = new SM_Shortcodes;
+$sm_shortcodes = new SM_Shortcodes; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $sm_shortcodes->init();

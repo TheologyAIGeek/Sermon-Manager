@@ -50,7 +50,7 @@ class SM_Dates_WP extends SM_Dates {
 		/**
 		 * Exit if disabled.
 		 */
-		if ( apply_filters( 'sm_dates_wp', true ) === false || 'date' === SermonManager::getOption( 'archive_orderby' ) ) {
+		if ( apply_filters( 'sm_dates_wp', true ) === false || 'date' === SermonManager::getOption( 'archive_orderby' ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			return;
 		}
 
@@ -98,10 +98,10 @@ class SM_Dates_WP extends SM_Dates {
 			}
 
 			// New format. taxonomy => array(...terms).
-			$GLOBALS['sm_original_terms'] = $data;
+			$GLOBALS['sm_original_terms'] = $data; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 			// Back-compat.
-			$GLOBALS[ 'sm_original_' . $taxonomy ] = $terms;
+			$GLOBALS[ 'sm_original_' . $taxonomy ] = $terms; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		}
 	}
 
@@ -289,8 +289,8 @@ class SM_Dates_WP extends SM_Dates {
 	public static function get_original_date( $post_ID ) {
 		if ( get_post_type( $post_ID ) === 'wpfc_sermon' ) {
 			$post                                  = get_post( $post_ID );
-			$GLOBALS['sm_original_published_date'] = $post->post_date;
-			$GLOBALS['sm_original_sermon_date']    = get_post_meta( $post_ID, 'sermon_date', true );
+			$GLOBALS['sm_original_published_date'] = $post->post_date; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+			$GLOBALS['sm_original_sermon_date']    = get_post_meta( $post_ID, 'sermon_date', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		}
 	}
 

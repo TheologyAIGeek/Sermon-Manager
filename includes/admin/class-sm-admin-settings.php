@@ -60,7 +60,7 @@ class SM_Admin_Settings {
 	public static function output() {
 		global $current_section, $current_tab;
 
-		do_action( 'sm_settings_start' );
+		do_action( 'sm_settings_start' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		wp_enqueue_media();
 		wp_enqueue_script( 'sm_settings', SM_URL . 'assets/js/admin/settings' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array(
@@ -83,8 +83,8 @@ class SM_Admin_Settings {
 		self::get_settings_pages();
 
 		// Get current tab/section.
-		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$current_section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		$current_section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 		// Save settings if data has been posted.
 		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -93,11 +93,11 @@ class SM_Admin_Settings {
 
 		// Add any posted messages.
 		if ( ! empty( $_GET['sm_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) );
+			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		if ( ! empty( $_GET['sm_message'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) );
+			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		switch ( $current_tab ) {
@@ -112,7 +112,7 @@ class SM_Admin_Settings {
 
 		// Get tabs for the settings page.
 		/* @noinspection PhpUnusedLocalVariableInspection */
-		$tabs = apply_filters( 'sm_settings_tabs_array', array() );
+		$tabs = apply_filters( 'sm_settings_tabs_array', array() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		include 'views/html-admin-settings.php';
 	}
@@ -132,7 +132,7 @@ class SM_Admin_Settings {
 			$settings[] = include 'settings/class-sm-settings-verse.php';
 			$settings[] = include 'settings/class-sm-settings-debug.php';
 
-			self::$settings = apply_filters( 'sm_get_settings_pages', $settings );
+			self::$settings = apply_filters( 'sm_get_settings_pages', $settings ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 
 		return self::$settings;
@@ -156,9 +156,9 @@ class SM_Admin_Settings {
 		}
 
 		// Trigger actions.
-		do_action( 'sm_settings_save_' . $current_tab );
-		do_action( 'sn_update_options_' . $current_tab );
-		do_action( 'sm_update_options' );
+		do_action( 'sm_settings_save_' . $current_tab ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		do_action( 'sn_update_options_' . $current_tab ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		do_action( 'sm_update_options' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		self::add_message( __( 'Your settings have been saved.', 'sermon-manager-revival' ) );
 
@@ -168,14 +168,14 @@ class SM_Admin_Settings {
 		/**
 		 * Pass any false value to `sm_clear_feed_transients` filter to skip clearing transients.
 		 */
-		if ( 'podcast' === $current_tab && apply_filters( 'sm_clear_feed_transients', true ) ) {
+		if ( 'podcast' === $current_tab && apply_filters( 'sm_clear_feed_transients', true ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			/* @noinspection SqlNoDataSourceInspection */
 
 			/* @noinspection SqlResolve */
 			$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_feed_%') OR `option_name` LIKE ('_transient_timeout_feed_%')" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 
-		do_action( 'sm_settings_saved' );
+		do_action( 'sm_settings_saved' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -280,18 +280,18 @@ class SM_Admin_Settings {
 					}
 					echo '<table class="form-table">' . "\n\n";
 					if ( ! empty( $option['id'] ) ) {
-						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) );
+						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					}
 					break;
 
 				// Section Ends.
 				case 'sectionend':
 					if ( ! empty( $option['id'] ) ) {
-						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) . '_end' );
+						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) . '_end' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					}
 					echo '</table>';
 					if ( ! empty( $option['id'] ) ) {
-						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) . '_after' );
+						do_action( 'sm_settings_' . sanitize_title( $option['id'] ) . '_after' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					}
 					break;
 
@@ -626,7 +626,7 @@ class SM_Admin_Settings {
 					 * @since 2.9 - Added.
 					 * @since 2.15.6 - Added additional options, beside `$value`.
 					 */
-					do_action( 'sm_admin_field_' . $option['type'], $option, $option_value, $description, $tooltip_html, $custom_attributes );
+					do_action( 'sm_admin_field_' . $option['type'], $option, $option_value, $description, $tooltip_html, $custom_attributes ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					break;
 			}
 		}
@@ -851,14 +851,14 @@ class SM_Admin_Settings {
 			 *
 			 * @since 2.9
 			 */
-			$value = apply_filters( 'sm_admin_settings_sanitize_option', $value, $option, $raw_value );
+			$value = apply_filters( 'sm_admin_settings_sanitize_option', $value, $option, $raw_value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 			/**
 			 * Sanitize the value of an option by option name.
 			 *
 			 * @since 2.9
 			 */
-			$value = apply_filters( "sm_admin_settings_sanitize_option_$option_name", $value, $option, $raw_value );
+			$value = apply_filters( "sm_admin_settings_sanitize_option_$option_name", $value, $option, $raw_value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 			if ( is_null( $value ) ) {
 				continue;

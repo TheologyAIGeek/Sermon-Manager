@@ -39,7 +39,7 @@ class SM_Admin_Post_Types {
 		add_filter( 'enter_title_here', array( $this, 'enter_title_here' ), 1, 2 );
 
 		// include_once 'class-sm-admin-meta-boxes.php'; - @todo.
-		do_action( 'after_sm_admin_post_types' );
+		do_action( 'after_sm_admin_post_types' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -329,7 +329,7 @@ class SM_Admin_Post_Types {
 
 		$output .= '</select>';
 
-		echo wp_kses_post( apply_filters( 'sm_sermon_filters', $output ) );
+		echo wp_kses_post( apply_filters( 'sm_sermon_filters', $output ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 }
 

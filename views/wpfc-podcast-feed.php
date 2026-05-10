@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Used to display the RSS feed.
  *

@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) or die;
  * @return array Screen IDs
  * @since 2.9
  */
-function sm_get_screen_ids() {
+function sm_get_screen_ids() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$screen_ids = array(
 		'wpfc_sermon',
 		'edit-wpfc_sermon',
@@ -27,7 +27,7 @@ function sm_get_screen_ids() {
 		'wpfc_sermon_page_sm-import-export',
 	);
 
-	return apply_filters( 'sm_screen_ids', $screen_ids );
+	return apply_filters( 'sm_screen_ids', $screen_ids ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
