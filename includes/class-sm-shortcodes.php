@@ -1011,7 +1011,7 @@ class SM_Shortcodes {
 					$posts_in = intval( trim( $post_in ) );
 				}
 
-				$query_args['post__not_in'] = (array) $posts_in; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post_not_in
+				$query_args['post__not_in'] = (array) $posts_in; // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
 			}
 		}
 

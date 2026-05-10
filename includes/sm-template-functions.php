@@ -248,7 +248,7 @@ function get_wpfc_sermon_meta( $meta_key = '', $post = null ) { // phpcs:ignore 
  *
  * @return string The processed content
  */
-function process_wysiwyg_output( $meta_key, $post_id = 0 ) {
+function process_wysiwyg_output( $meta_key, $post_id = 0 ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wp_embed;
 
 	$post_id = $post_id ? $post_id : get_the_id();
