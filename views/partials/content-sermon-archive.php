@@ -28,16 +28,16 @@ $GLOBALS['wpfc_partial_args'] += array(
 	'image_size' => 'post-thumbnail',
 );
 
-$args = $GLOBALS['wpfc_partial_args'];
+$args = $GLOBALS['wpfc_partial_args']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$theme = get_option( 'template' );
+$theme = get_option( 'template' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$sm_image_html = '';
+$sm_image_html = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_archive' ) ) {
-	$sm_image_html .= '<div class="wpfc-sermon-image"><a href="' . get_the_permalink() . '">';
-	$sm_image_html .= '<div class="wpfc-sermon-image-img" style="background-image: url(' . get_sermon_image_url( true, $args['image_size'] ) . ')"></div>';
-	$sm_image_html .= '</a></div>';
+	$sm_image_html .= '<div class="wpfc-sermon-image"><a href="' . get_the_permalink() . '">'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$sm_image_html .= '<div class="wpfc-sermon-image-img" style="background-image: url(' . get_sermon_image_url( true, $args['image_size'] ) . ')"></div>'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$sm_image_html .= '</a></div>'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 
 ?>

@@ -121,14 +121,14 @@ global $post;
 
 			<?php if ( ! \SermonManager::getOption( 'theme_compatibility' ) ) : ?>
 				<?php
-				$previous_sermon = sm_get_previous_sermon();
-				$next_sermon     = sm_get_next_sermon();
+				$previous_sermon = sm_get_previous_sermon(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+				$next_sermon     = sm_get_next_sermon(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				if ( $previous_sermon || $next_sermon ) :
 					?>
 					<div class="wpfc-sermon-single-navigation">
 						<?php
-						$previous_attr = apply_filters( 'previous_posts_link_attributes', 'class="previous-sermon"' );
-						$next_attr     = apply_filters( 'next_posts_link_attributes', 'class="next-sermon"' );
+						$previous_attr = apply_filters( 'previous_posts_link_attributes', 'class="previous-sermon"' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+						$next_attr     = apply_filters( 'next_posts_link_attributes', 'class="next-sermon"' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						if ( null !== $previous_sermon ) :
 							?>
 							<a href="<?php echo esc_url( get_the_permalink( $previous_sermon ) ); ?>" <?php echo $previous_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( preg_replace( '/&([^#])(?![a-z]{1,8};)/i', '&#038;$1', '&laquo; ' . get_the_title( $previous_sermon ) ) ); ?></a>

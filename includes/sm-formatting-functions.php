@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) or die;
  * @return string|array
  * @since 2.7
  */
-function sm_clean( $var ) {
+function sm_clean( $var ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( is_array( $var ) ) {
 		return array_map( 'sm_clean', $var );
 	} else {
@@ -33,7 +33,7 @@ function sm_clean( $var ) {
  * @return string
  * @since 2.9
  */
-function sm_sanitize_tooltip( $var ) {
+function sm_sanitize_tooltip( $var ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	return htmlspecialchars( wp_kses( html_entity_decode( $var ), array(
 		'br'     => array(),
 		'em'     => array(),

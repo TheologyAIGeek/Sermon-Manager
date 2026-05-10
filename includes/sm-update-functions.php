@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) or die;
 /**
  * Renames all "sermon_date_old" fields to "sermon_date" if "sermon_date" is not set.
  */
-function sm_update_28_revert_old_dates() {
+function sm_update_28_revert_old_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( get_option( 'wpfc_sm_dates_restore_done' ) ) {
 		return;
 	}
@@ -40,7 +40,7 @@ function sm_update_28_revert_old_dates() {
  *
  * Basically, converts "sermon_date" value to Unix time if it's not numeric.
  */
-function sm_update_28_convert_dates_to_unix() {
+function sm_update_28_convert_dates_to_unix() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -67,7 +67,7 @@ function sm_update_28_convert_dates_to_unix() {
  * Fills out dates of sermons that don't have `sermon_date` set. Takes "Published" date for them and marks
  * them as auto-filled, so they get updated when Published date gets updated.
  */
-function sm_update_28_fill_out_empty_dates() {
+function sm_update_28_fill_out_empty_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -92,7 +92,7 @@ function sm_update_28_fill_out_empty_dates() {
  *
  * @see SM_Dates_WP::update_series_date()
  */
-function sm_update_28_fill_out_series_dates() {
+function sm_update_28_fill_out_series_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	SM_Dates_WP::update_series_date();
 
 	// Mark it as done, backup way.
@@ -104,7 +104,7 @@ function sm_update_28_fill_out_series_dates() {
  *
  * @since 2.11.0 updated to render text and not HTML.
  */
-function sm_update_28_save_sermon_render_into_post_content() {
+function sm_update_28_save_sermon_render_into_post_content() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	sm_update_211_render_content();
 
 	// Mark it as done, backup way.
@@ -114,7 +114,7 @@ function sm_update_28_save_sermon_render_into_post_content() {
 /**
  * We had a bug from 2.8 to 2.8.3, so we will do it again.
  */
-function sm_update_284_resave_sermons() {
+function sm_update_284_resave_sermons() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	sm_update_28_save_sermon_render_into_post_content();
 
 	// Mark it as done, backup way.
@@ -124,7 +124,7 @@ function sm_update_284_resave_sermons() {
 /**
  * There was a bug in function for 2.8, so we will do it again.
  */
-function sm_update_29_fill_out_series_dates() {
+function sm_update_29_fill_out_series_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	sm_update_28_fill_out_series_dates();
 
 	// Mark it as done, backup way.
@@ -134,7 +134,7 @@ function sm_update_29_fill_out_series_dates() {
 /**
  * Settings storage has been changed in 2.9
  */
-function sm_update_29_convert_settings() {
+function sm_update_29_convert_settings() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$original_settings = get_option( 'wpfc_options', array() );
 
 	foreach ( $original_settings as $key => $value ) {
@@ -148,7 +148,7 @@ function sm_update_29_convert_settings() {
 /**
  * SB and SE import did not import dates correctly. This function imports them for those who did import.
  */
-function sm_update_293_fix_import_dates() {
+function sm_update_293_fix_import_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	sm_update_28_fill_out_empty_dates();
 
 	// Mark it as done, backup way.
@@ -158,7 +158,7 @@ function sm_update_293_fix_import_dates() {
 /**
  * Removed Bibly so we will change option names.
  */
-function sm_update_210_update_options() {
+function sm_update_210_update_options() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( is_bool( SermonManager::getOption( 'bibly' ) ) ) {
 		add_option( 'sermonmanager_verse_popup', SermonManager::getOption( 'bibly' ) ? 'yes' : 'no' );
 	}
@@ -179,7 +179,7 @@ function sm_update_210_update_options() {
 /**
  * Re-renders all sermon content into database as text; for better compatibility with search engines, etc...
  */
-function sm_update_211_render_content() {
+function sm_update_211_render_content() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -201,7 +201,7 @@ function sm_update_211_render_content() {
 /**
  * Adds time alongside date in sermon date option.
  */
-function sm_update_211_update_date_time() {
+function sm_update_211_update_date_time() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -244,7 +244,7 @@ function sm_update_211_update_date_time() {
 /**
  * There was a bug that prevented preacher slug to be used as a permalink as well.
  */
-function sm_update_2123_fix_preacher_permalink() {
+function sm_update_2123_fix_preacher_permalink() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	flush_rewrite_rules();
 
 	// Mark it as done, backup way.
@@ -256,7 +256,7 @@ function sm_update_2123_fix_preacher_permalink() {
  *
  * @see SM_Dates_WP::update_term_dates()
  */
-function sm_update_2130_fill_out_sermon_term_dates() {
+function sm_update_2130_fill_out_sermon_term_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	SM_Dates_WP::update_term_dates();
 
 	// Mark it as done, backup way.
@@ -266,7 +266,7 @@ function sm_update_2130_fill_out_sermon_term_dates() {
 /**
  * Removes old auto-generated excerpts
  */
-function sm_update_2130_remove_excerpts() {
+function sm_update_2130_remove_excerpts() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$sermons = new WP_Query( array(
 		'post_type'      => 'wpfc_sermon',
 		'meta_key'       => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -291,7 +291,7 @@ function sm_update_2130_remove_excerpts() {
 /**
  * Converts bible verses from Sermon Browser to Sermon Manager format.
  */
-function sm_update_2140_convert_bible_verse() {
+function sm_update_2140_convert_bible_verse() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -366,7 +366,7 @@ function sm_update_2140_convert_bible_verse() {
  *
  * Future IDs won't be saved in that scenario.
  */
-function sm_update_2150_audio_file_ids() {
+function sm_update_2150_audio_file_ids() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -395,7 +395,7 @@ function sm_update_2150_audio_file_ids() {
 /**
  * Update sermon audio duration and file size.
  */
-function sm_update_2150_audio_duration_and_size() {
+function sm_update_2150_audio_duration_and_size() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -429,7 +429,7 @@ function sm_update_2150_audio_duration_and_size() {
  * The default image was not right, since it looked too much link an ad, so we removed it in 2.15.2.
  * We need to remove the option if it was already set to it.
  */
-function sm_update_2152_remove_default_image() {
+function sm_update_2152_remove_default_image() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( strpos( get_option( 'sermonmanager_default_image' ), 'SermonManagerDefaultImage.jpg' ) !== false ) {
 		update_option( 'sermonmanager_default_image', '' );
 	}
@@ -441,7 +441,7 @@ function sm_update_2152_remove_default_image() {
 /**
  * Updates all term dates so we can sort terms by latest sermon.
  */
-function sm_update_21511_update_term_dates() {
+function sm_update_21511_update_term_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	// All sermons.
@@ -468,7 +468,7 @@ function sm_update_21511_update_term_dates() {
  *
  * @see SM_Dates_WP::update_term_dates()
  */
-function sm_update_21516_update_term_dates() {
+function sm_update_21516_update_term_dates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	sm_update_21511_update_term_dates();
 
 	// Mark it as done, backup way.
