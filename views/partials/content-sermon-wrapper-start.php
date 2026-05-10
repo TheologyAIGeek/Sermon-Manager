@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 defined( 'ABSPATH' ) or exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 $template = get_option( 'template' );
 
 /**
@@ -798,3 +799,4 @@ switch ( $template ) {
 		echo apply_filters( 'sm_templates_wrapper_start', '<div class="wrap"><div id="primary" class="content-area"><main id="main" class="site-main wpfc-sermon-container ' . $additional_classes . '">' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		break;
 }
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
