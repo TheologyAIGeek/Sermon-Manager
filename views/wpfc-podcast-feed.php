@@ -349,17 +349,17 @@ $cover_image_url  = $settings['itunes_cover_image'];
 						<comments><?php comments_link_feed(); ?></comments>
 					<?php endif; ?>
 
-					<pubDate><?php echo $settings['use_published_date'] ? $date_published : $date_preached; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></pubDate>
+					<pubDate><?php echo esc_html( $settings['use_published_date'] ? $date_published : $date_preached ); ?></pubDate>
 					<dc:creator><![CDATA[<?php echo esc_html( $speaker ); ?>]]></dc:creator>
 					<?php the_category_rss( 'rss2' ); ?>
 
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
-					<description><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></description>
-					<content:encoded><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></content:encoded>
-					<itunes:summary><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></itunes:summary>
+					<description><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></description>
+					<content:encoded><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></content:encoded>
+					<itunes:summary><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></itunes:summary>
 
 					<itunes:author><?php echo esc_html( $speakers ); ?></itunes:author>
-					<itunes:subtitle><?php echo $description_short; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></itunes:subtitle>
+					<itunes:subtitle><?php echo wp_kses_post( $description_short ); ?></itunes:subtitle>
 					<?php if ( $post_image ) : ?>
 						<itunes:image href="<?php echo esc_url( $post_image ); ?>"/>
 					<?php endif; ?>

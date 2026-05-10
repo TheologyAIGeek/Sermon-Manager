@@ -311,7 +311,7 @@ switch ( $template ) {
 			get_footer();
 		} else {
 			$the_content .= ob_get_clean();
-			echo uncode_remove_p_tag( $the_content ) . '</div></div></div></article>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( uncode_remove_p_tag( $the_content ) . '</div></div></div></article>' );
 		}
 		break;
 	default:
@@ -324,7 +324,7 @@ switch ( $template ) {
 		} else {
 			$sidebar = '';
 		}
-		echo apply_filters( 'sm_templates_wrapper_end', '</main></div>' . $sidebar . '</div>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( apply_filters( 'sm_templates_wrapper_end', '</main></div>' . $sidebar . '</div>' ) );
 		break;
 }
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.Security.EscapeOutput.OutputNotEscaped
