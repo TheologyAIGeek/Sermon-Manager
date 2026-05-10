@@ -365,7 +365,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 					<?php endif; ?>
 
 					<?php if ( $custom_enclosure ) : ?>
-						<?php echo $custom_enclosure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php echo wp_kses( $custom_enclosure, array( 'enclosure' => array( 'url' => true, 'length' => true, 'type' => true ) ) ); ?>
 					<?php else : ?>
 						<!--suppress CheckEmptyScriptTag -->
 						<enclosure url="<?php echo esc_url( $audio ); ?>"
