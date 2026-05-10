@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 defined( 'ABSPATH' ) or exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 $template = get_option( 'template' );
 
 switch ( $template ) {
@@ -326,3 +327,4 @@ switch ( $template ) {
 		echo apply_filters( 'sm_templates_wrapper_end', '</main></div>' . $sidebar . '</div>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		break;
 }
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
