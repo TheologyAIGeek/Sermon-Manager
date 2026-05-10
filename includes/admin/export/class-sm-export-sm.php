@@ -60,7 +60,7 @@ class SM_Export_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobal
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
-		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Get the requested terms ready, empty unless posts filtered by category or all content.

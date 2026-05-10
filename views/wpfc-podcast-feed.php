@@ -7,6 +7,7 @@
  */
 
 defined( 'ABSPATH' ) or exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 global $taxonomy, $term;
 
@@ -387,3 +388,4 @@ $cover_image_url  = $settings['itunes_cover_image'];
 
 	</channel>
 </rss>
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
