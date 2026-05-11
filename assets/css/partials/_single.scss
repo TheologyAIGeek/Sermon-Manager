@@ -146,6 +146,40 @@
     margin-top: 24px;
   }
 
+  &-spotify-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  &-spotify-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #191414;
+    color: #ffffff;
+    padding: 8px 20px;
+    border-radius: 500px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s;
+    box-shadow: none;
+
+    &:hover,
+    &:focus {
+      background-color: #1db954;
+      color: #ffffff;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+  }
+
   &-navigation {
     border-top: 1px solid #ddd;
     margin-top: 2rem;
