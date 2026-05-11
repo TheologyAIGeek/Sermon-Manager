@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) or die;
  * @return array Screen IDs
  * @since 2.9
  */
-function sm_get_screen_ids() {
+function sm_get_screen_ids() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$screen_ids = array(
 		'wpfc_sermon',
 		'edit-wpfc_sermon',
@@ -27,7 +27,7 @@ function sm_get_screen_ids() {
 		'wpfc_sermon_page_sm-import-export',
 	);
 
-	return apply_filters( 'sm_screen_ids', $screen_ids );
+	return apply_filters( 'sm_screen_ids', $screen_ids ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -38,8 +38,8 @@ function sm_get_screen_ids() {
 function wpfc_maybe_change_downloads_upload_dir() {
 	global $pagenow;
 
-	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) {
-		$post_id = absint( wp_unslash( $_REQUEST['post_id'] ?? 0 ) );
+	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_id = absint( wp_unslash( $_REQUEST['post_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( 'wpfc_sermon' == get_post_type( $post_id ) ) {
 			add_filter( 'upload_dir', 'wpfc_change_downloads_upload_dir' );
 		}
@@ -175,7 +175,7 @@ function wpfc_taxonomy_short_description_columns( $columns ) {
 function wpfc_taxonomy_short_description_rows( $default, $column_name, $term ) {
 	if ( 'short_description' == $column_name ) {
 		global $taxonomy;
-		$default = term_description( $term, $taxonomy );
+		$default = term_description( $term );
 		$default = wp_trim_words( $default, 10 );
 	}
 

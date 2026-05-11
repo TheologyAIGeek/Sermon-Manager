@@ -75,7 +75,7 @@ class SM_Background_Updater extends SM_WP_Background_Process {
 	 */
 	protected function task( $callback ) {
 		if ( ! defined( 'SM_UPDATING' ) ) {
-			define( 'SM_UPDATING', true );
+			define( 'SM_UPDATING', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		include_once 'sm-update-functions.php';

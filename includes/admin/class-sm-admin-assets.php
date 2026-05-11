@@ -34,7 +34,7 @@ class SM_Admin_Assets {
 		if ( in_array( $screen_id, sm_get_screen_ids() ) ) {
 			wp_enqueue_style( 'sm_admin_styles' );
 
-			do_action( 'sm_enqueue_admin_css' );
+			do_action( 'sm_enqueue_admin_css' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 	}
 
@@ -47,7 +47,7 @@ class SM_Admin_Assets {
 
 		// Enqueue scripts for Sermon Manager pages only.
 		if ( in_array( $screen_id, sm_get_screen_ids() ) ) {
-			do_action( 'sm_enqueue_admin_js' );
+			do_action( 'sm_enqueue_admin_js' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 	}
 }

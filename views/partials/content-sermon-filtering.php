@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $post;
 
-$_partial_args = ! empty( $GLOBALS['wpfc_partial_args'] ) ? $GLOBALS['wpfc_partial_args'] : array();
+$_partial_args = ! empty( $GLOBALS['wpfc_partial_args'] ) ? $GLOBALS['wpfc_partial_args'] : array(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-foreach ( array( 'action', 'filters', 'visibility_mapping', 'args' ) as $_required_key ) {
+foreach ( array( 'action', 'filters', 'visibility_mapping', 'args' ) as $_required_key ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	if ( ! isset( $_partial_args[ $_required_key ] ) ) {
 		echo '<p><b>Sermon Manager Revival</b>: Partial "<i>' . esc_html( str_replace( '.php', '', basename( __FILE__ ) ) ) . '</i>" loaded incorrectly.</p>';
 
@@ -31,13 +31,13 @@ foreach ( array( 'action', 'filters', 'visibility_mapping', 'args' ) as $_requir
 }
 
 $action             = $_partial_args['action'];
-$filters            = $_partial_args['filters'];
-$visibility_mapping = $_partial_args['visibility_mapping'];
-$args               = $_partial_args['args'];
+$filters            = $_partial_args['filters']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$visibility_mapping = $_partial_args['visibility_mapping']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$args               = $_partial_args['args']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 ?>
 <div id="<?php echo esc_attr( $args['id'] ); ?>" class="<?php echo esc_attr( $args['classes'] ); ?>">
-	<?php foreach ( $filters as $filter ) : ?>
+	<?php foreach ( $filters as $filter ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 		<?php if ( isset( $visibility_mapping[ $filter['taxonomy'] ] ) && in_array( $args[ $visibility_mapping[ $filter['taxonomy'] ] ], array(
 			'yes',
 			'hide',
@@ -60,10 +60,10 @@ $args               = $_partial_args['args'];
 						<option value=""><?php echo esc_html( $filter['title'] ); ?></option>
 						<?php echo wpfc_get_term_dropdown( $filter['taxonomy'], ! empty( $args[ $filter['taxonomy'] ] ) ? $args[ $filter['taxonomy'] ] : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</select>
-					<?php $series = explode( ',', $args['series_filter'] ); ?>
+					<?php $series = explode( ',', $args['series_filter'] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<?php if ( isset( $args['series_filter'] ) && '' !== $args['series_filter'] && $series ) : ?>
 						<?php if ( $series > 1 ) : ?>
-							<?php foreach ( $series as $item ) : ?>
+							<?php foreach ( $series as $item ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 								<input type="hidden" name="wpfc_sermon_series[]"
 										value="<?php echo esc_attr( trim( $item ) ); ?>">
 							<?php endforeach; ?>
@@ -72,10 +72,10 @@ $args               = $_partial_args['args'];
 									value="<?php echo esc_attr( $series[0] ); ?>">
 						<?php endif; ?>
 					<?php endif; ?>
-					<?php $service_types = explode( ',', $args['service_type_filter'] ); ?>
+					<?php $service_types = explode( ',', $args['service_type_filter'] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<?php if ( isset( $args['service_type_filter'] ) && '' !== $args['service_type_filter'] && $service_types ) : ?>
 						<?php if ( $service_types > 1 ) : ?>
-							<?php foreach ( $service_types as $service_type ) : ?>
+							<?php foreach ( $service_types as $service_type ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 								<input type="hidden" name="wpfc_service_type[]"
 										value="<?php echo esc_attr( trim( $service_type ) ); ?>">
 							<?php endforeach; ?>

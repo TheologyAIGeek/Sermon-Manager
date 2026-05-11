@@ -101,7 +101,7 @@ class SM_Dates {
 		}
 
 		// Format it.
-		$date = $localize ? date_i18n( $format, $date ) : date( $format, $date );
+		$date = $localize ? date_i18n( $format, $date ) : gmdate( $format, $date );
 
 		/**
 		 * Filters the date a post was preached
@@ -113,7 +113,7 @@ class SM_Dates {
 		 * @param string $format                Date format
 		 * @param bool   $force_unix_sanitation If the sanitation is forced
 		 */
-		return apply_filters( 'sm_dates_get', $date, $orig_date, $format, $force_unix_sanitation );
+		return apply_filters( 'sm_dates_get', $date, $orig_date, $format, $force_unix_sanitation ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -137,6 +137,6 @@ class SM_Dates {
 		 *                               dates have been saved to the database in "mm/dd/YYYY" format.
 		 *                               Warning: there could be other formats that we are not aware of yet.
 		 */
-		return apply_filters( 'sm_sanitize_date', $sanitized_date, $date );
+		return apply_filters( 'sm_sanitize_date', $sanitized_date, $date ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 }

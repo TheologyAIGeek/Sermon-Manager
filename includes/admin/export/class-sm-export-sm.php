@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.12.0
  */
-class SM_Export_SM {
+class SM_Export_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * Do the export.
 	 *
@@ -38,7 +38,7 @@ class SM_Export_SM {
 		if ( ! empty( $sitename ) ) {
 			$sitename .= '.';
 		}
-		$filename = $sitename . 'wordpress.' . date( 'Y-m-d' ) . '.xml';
+		$filename = $sitename . 'wordpress.' . gmdate( 'Y-m-d' ) . '.xml';
 
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -60,8 +60,8 @@ class SM_Export_SM {
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
-		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args );
-		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args );
+		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Get the requested terms ready, empty unless posts filtered by category or all content.
 		$cats              = array();
@@ -74,7 +74,7 @@ class SM_Export_SM {
 			'wpfc_bible_book',
 			'wpfc_service_type',
 		);
-		$custom_terms      = (array) get_terms( $custom_taxonomies, array( 'get' => 'all' ) );
+		$custom_terms      = (array) get_terms( array( 'taxonomy' => $custom_taxonomies, 'get' => 'all' ) );
 
 		// put terms in order with no child going before its parent.
 		while ( $t = array_shift( $custom_terms ) ) {
@@ -97,8 +97,8 @@ class SM_Export_SM {
 		 * @return string
 		 */
 		if ( ! function_exists( 'wxr_cdata' ) ) {
-			function wxr_cdata( $str ) {
-				if ( seems_utf8( $str ) == false ) {
+			function wxr_cdata( $str ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+				if ( wp_is_valid_utf8( $str ) == false ) {
 					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
 
@@ -115,7 +115,7 @@ class SM_Export_SM {
 		 *
 		 * @return string Site URL.
 		 */
-		function wxr_site_url() {
+		function wxr_site_url() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			// ms: the base url.
 			if ( is_multisite() ) {
 				return network_home_url();
@@ -132,7 +132,7 @@ class SM_Export_SM {
 		 *
 		 * @param int $post_id The post ID.
 		 */
-		function wxr_post_taxonomy( $post_id ) {
+		function wxr_post_taxonomy( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			$custom_taxonomies = array(
 				'wpfc_preacher',
 				'wpfc_sermon_series',
@@ -154,7 +154,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $category Category Object.
 		 */
-		function wxr_cat_name( $category ) {
+		function wxr_cat_name( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $category->name ) ) {
 				return;
 			}
@@ -169,7 +169,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $category Category Object.
 		 */
-		function wxr_category_description( $category ) {
+		function wxr_category_description( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $category->description ) ) {
 				return;
 			}
@@ -184,7 +184,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $tag Tag Object.
 		 */
-		function wxr_tag_name( $tag ) {
+		function wxr_tag_name( $tag ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $tag->name ) ) {
 				return;
 			}
@@ -199,7 +199,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $tag Tag Object.
 		 */
-		function wxr_tag_description( $tag ) {
+		function wxr_tag_description( $tag ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $tag->description ) ) {
 				return;
 			}
@@ -214,7 +214,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $term Term Object.
 		 */
-		function wxr_term_name( $term ) {
+		function wxr_term_name( $term ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $term->name ) ) {
 				return;
 			}
@@ -229,7 +229,7 @@ class SM_Export_SM {
 		 *
 		 * @param object $term Term Object.
 		 */
-		function wxr_term_description( $term ) {
+		function wxr_term_description( $term ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( empty( $term->description ) ) {
 				return;
 			}
@@ -242,11 +242,11 @@ class SM_Export_SM {
 		 *
 		 * @since 3.1.0
 		 */
-		function wxr_authors_list() {
+		function wxr_authors_list() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			global $wpdb;
 
 			$authors = array();
-			$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft'" );
+			$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			foreach ( (array) $results as $result ) {
 				$authors[] = get_userdata( $result->post_author );
 			}
@@ -273,7 +273,7 @@ class SM_Export_SM {
 		 *
 		 * @return mixed
 		 */
-		function wxr_filter_postmeta( $return_me, $meta_key ) {
+		function wxr_filter_postmeta( $return_me, $meta_key ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 			if ( '_edit_lock' == $meta_key ) {
 				$return_me = true;
 			}
@@ -300,7 +300,7 @@ class SM_Export_SM {
 				$query = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url );
 
 				// get attachment id.
-				$attachment_id = $wpdb->get_var( $query );
+				$attachment_id = $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			}
 
 			// return id.
@@ -356,7 +356,7 @@ class SM_Export_SM {
 						<?php wxr_term_name( $t ); ?>
 						<?php wxr_term_description( $t ); ?>
 						<?php
-						$termmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d", $t->term_id ) );
+						$termmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d", $t->term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						foreach ( $termmeta as $meta ) :
 							/**
 							 * Filter whether to selectively skip post meta used for WXR exports.
@@ -370,7 +370,7 @@ class SM_Export_SM {
 							 * @param string $meta_key Current meta key.
 							 * @param object $meta     Current meta object.
 							 */
-							if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) {
+							if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 								continue;
 							}
 							?>
@@ -390,7 +390,7 @@ class SM_Export_SM {
 
 				<?php
 				/** This action is documented in wp-includes/feed-rss2.php */
-				do_action( 'rss2_head' );
+				do_action( 'rss2_head' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				?>
 
 				<?php
@@ -408,8 +408,8 @@ class SM_Export_SM {
 						'sermon_bulletin',
 					);
 					foreach ( $post_ids as $post ) {
-						$postmeta   = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post ) );
-						$postobject = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post ) );
+						$postmeta   = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+						$postobject = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						$meta_value = array();
 						if ( $postobject[0]->post_type == $post_type_export ) {
 							foreach ( $postmeta as $meta ) {
@@ -439,7 +439,7 @@ class SM_Export_SM {
 					// fetch 20 posts at a time rather than loading the entire table into memory.
 					while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
 						$placeholders = implode( ',', array_fill( 0, count( $next_posts ), '%d' ) );
-						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 						// Begin Loop.
 						foreach ( $posts as $post ) {
@@ -448,7 +448,7 @@ class SM_Export_SM {
 							?>
 							<item>
 								<?php /** This filter is documented in wp-includes/feed.php */ ?>
-								<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></title>
+								<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?></title>
 								<link><?php the_permalink_rss(); ?></link>
 								<pubDate><?php echo esc_xml( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 								<dc:creator><?php echo wxr_cdata( get_the_author_meta( 'login' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></dc:creator>
@@ -463,7 +463,7 @@ class SM_Export_SM {
 									 *
 									 * @param string $post_content Content of the current post.
 									 */
-									echo wxr_cdata( apply_filters( 'the_content_export', $post->post_content ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo wxr_cdata( apply_filters( 'the_content_export', $post->post_content ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 									?>
 								</content:encoded>
 								<excerpt:encoded>
@@ -475,7 +475,7 @@ class SM_Export_SM {
 									 *
 									 * @param string $post_excerpt Excerpt for the current post.
 									 */
-									echo wxr_cdata( apply_filters( 'the_excerpt_export', $post->post_excerpt ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo wxr_cdata( apply_filters( 'the_excerpt_export', $post->post_excerpt ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 									?>
 								</excerpt:encoded>
 								<wp:post_id><?php echo absint( $post->ID ); ?></wp:post_id>
@@ -495,7 +495,7 @@ class SM_Export_SM {
 									<wp:attachment_url><?php echo esc_url( wp_get_attachment_url( $post->ID ) ); ?></wp:attachment_url>
 								<?php endif; ?>
 								<?php
-								$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
+								$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 								foreach ( $postmeta as $meta ) :
 									/**
 									 * Filter whether to selectively skip post meta used for WXR exports.
@@ -509,7 +509,7 @@ class SM_Export_SM {
 									 * @param string $meta_key Current meta key.
 									 * @param object $meta     Current meta object.
 									 */
-									if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) {
+									if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 										continue;
 									}
 									?>
@@ -519,7 +519,7 @@ class SM_Export_SM {
 									</wp:postmeta>
 								<?php endforeach; ?>
 								<?php
-								$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );
+								$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 								foreach ( $comments as $c ) :
 									?>
 									<wp:comment>
@@ -536,7 +536,7 @@ class SM_Export_SM {
 										<wp:comment_parent><?php echo absint( $c->comment_parent ); ?></wp:comment_parent>
 										<wp:comment_user_id><?php echo absint( $c->user_id ); ?></wp:comment_user_id>
 										<?php
-										$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
+										$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 										foreach ( $c_meta as $meta ) :
 											?>
 											<wp:commentmeta>

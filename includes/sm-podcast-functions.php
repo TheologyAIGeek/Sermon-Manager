@@ -20,10 +20,10 @@ add_action( 'do_feed_podcast', 'wpfc_podcast_render', 10, 1 );
 add_action( 'parse_request', function () {
 	if ( SermonManager::getOption( 'enable_podcast_redirection' ) ) {
 		$old_url     = wp_make_link_relative( preg_replace( '{/$}', '', SermonManager::getOption( 'podcast_redirection_old_url' ) ) );
-		$current_url = preg_replace( '{/$}', '', sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		$current_url = preg_replace( '{/$}', '', sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 		if ( strpos( $current_url, $old_url ) !== false ) {
-			wp_redirect( SermonManager::getOption( 'podcast_redirection_new_url' ), 301 );
+			wp_safe_redirect( SermonManager::getOption( 'podcast_redirection_new_url' ), 301 );
 			exit;
 		}
 	}

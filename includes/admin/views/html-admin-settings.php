@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) or die;
 
-$current_tab = empty( $current_tab ) ? 'general' : $current_tab;
+$current_tab = empty( $current_tab ) ? 'general' : $current_tab; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <div class="wrap sm sm_settings_<?php echo esc_attr( $current_tab ); ?>">
 	<div class="intro">
@@ -17,21 +17,21 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 	<?php SM_Admin_Settings::show_messages(); ?>
 	<div class="settings-main">
 		<div class="settings-content">
-			<form method="<?php echo esc_attr( apply_filters( 'sm_settings_form_method_tab_' . $current_tab, 'post' ) ); ?>"
+			<form method="<?php echo esc_attr( apply_filters( 'sm_settings_form_method_tab_' . $current_tab, 'post' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?>"
 					id="mainform" action="" enctype="multipart/form-data">
 				<nav class="nav-tab-wrapper sm-nav-tab-wrapper">
 					<?php
-					foreach ( $tabs as $name => $label ) {
+					foreach ( $tabs as $name => $label ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						echo '<a href="' . esc_url( admin_url( 'edit.php?post_type=wpfc_sermon&page=sm-settings&tab=' . sanitize_key( $name ) ) ) . '" class="nav-tab ' . ( $current_tab == $name ? 'nav-tab-active' : '' ) . '">' . esc_html( $label ) . '</a>';
 					}
-					do_action( 'sm_settings_tabs' );
+					do_action( 'sm_settings_tabs' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					?>
 				</nav>
 				<div class="inside">
 					<h1 class="screen-reader-text"><?php echo esc_html( $tabs[ $current_tab ] ); ?></h1>
 					<?php
-					do_action( 'sm_sections_' . $current_tab );
-					do_action( 'sm_settings_' . $current_tab );
+					do_action( 'sm_sections_' . $current_tab ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+					do_action( 'sm_settings_' . $current_tab ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					?>
 					<p class="submit">
 						<?php if ( empty( $GLOBALS['hide_save_button'] ) ) : ?>
@@ -97,7 +97,7 @@ $current_tab = empty( $current_tab ) ? 'general' : $current_tab;
 				</div>
 			</div>
 		   <?php  
-			echo wp_kses_post( apply_filters( 'settings_page_sidebar_extra_boxs', '' ) );
+			echo wp_kses_post( apply_filters( 'settings_page_sidebar_extra_boxs', '' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			?>
 		</div>
 	</div>

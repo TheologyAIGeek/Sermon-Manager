@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 defined( 'ABSPATH' ) or exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.Security.EscapeOutput.OutputNotEscaped
 $template = get_option( 'template' );
 
 /**
@@ -280,7 +281,7 @@ switch ( $template ) {
 				$header_html = $page_header->html;
 				if ( $header_html !== '' ) {
 					echo '<div id="page-header">';
-					echo uncode_remove_p_tag( $page_header->html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses_post( uncode_remove_p_tag( $page_header->html ) );
 					echo '</div>';
 				}
 			}
@@ -296,7 +297,7 @@ switch ( $template ) {
 
 				$content_breadcrumb = uncode_breadcrumbs();
 				$breadcrumb_title   = '<div class="breadcrumb-title h5 text-bold">' . uncode_archive_title() . '</div>';
-				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ) );
 			}
 
 			/** Build title **/
@@ -310,7 +311,7 @@ switch ( $template ) {
 			$generic_body_content_block = ot_get_option( '_uncode_' . $post_type . '_content_block' );
 
 			$the_content .=
-				'<div id="index-' . rand() . '" class="isotope-system">
+				'<div id="index-' . wp_rand() . '" class="isotope-system">
 				<div class="isotope-wrapper single-gutter">
 					<div class="isotope-container isotope-layout style-masonry isotope-pagination" data-type="masonry" data-layout="masonry" data-lg="800">';
 
@@ -498,7 +499,7 @@ switch ( $template ) {
 				$header_html = $page_header->html;
 				if ( $header_html !== '' ) {
 					echo '<div id="page-header">';
-					echo uncode_remove_p_tag( $page_header->html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses_post( uncode_remove_p_tag( $page_header->html ) );
 					echo '</div>';
 				}
 
@@ -517,7 +518,7 @@ switch ( $template ) {
 
 				$content_breadcrumb = uncode_breadcrumbs();
 				$breadcrumb_title   = '<div class="breadcrumb-title h5 text-bold">' . get_the_title() . '</div>';
-				echo uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( uncode_get_row_template( $breadcrumb_title . $content_breadcrumb, '', ( $page_custom_width !== '' ? ' limit-width' : $limit_content_width ), $style, ' row-breadcrumb row-breadcrumb-' . $style . $breadcrumb_align, 'half', true, 'half' ) );
 			}
 
 			/** Build title **/
@@ -795,6 +796,7 @@ switch ( $template ) {
 		}
 		break;
 	default:
-		echo apply_filters( 'sm_templates_wrapper_start', '<div class="wrap"><div id="primary" class="content-area"><main id="main" class="site-main wpfc-sermon-container ' . $additional_classes . '">' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( apply_filters( 'sm_templates_wrapper_start', '<div class="wrap"><div id="primary" class="content-area"><main id="main" class="site-main wpfc-sermon-container ' . $additional_classes . '">' ) );
 		break;
 }
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.Security.EscapeOutput.OutputNotEscaped

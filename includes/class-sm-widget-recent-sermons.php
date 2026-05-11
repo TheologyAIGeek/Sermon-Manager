@@ -37,7 +37,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 	function widget( $args, $instance ) {
 		// Enqueue scripts and styles.
 		if ( ! defined( 'SM_ENQUEUE_SCRIPTS_STYLES' ) ) {
-			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true );
+			define( 'SM_ENQUEUE_SCRIPTS_STYLES', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		$cache = wp_cache_get( 'widget_recent_sermons', 'widget' );
@@ -51,7 +51,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 		 *
 		 * @since 2.13.0
 		 */
-		if ( isset( $cache[ $args['widget_id'] ] ) && ! apply_filters( 'sm_recent_sermons_widget_override_cache', false ) ) {
+		if ( isset( $cache[ $args['widget_id'] ] ) && ! apply_filters( 'sm_recent_sermons_widget_override_cache', false ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			echo $cache[ $args['widget_id'] ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			return;
@@ -71,7 +71,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 				'no_found_rows'       => true,
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => true,
-				'meta_key'            => 'sermon_date',
+				'meta_key'            => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				'meta_value_num'      => time(),
 				'meta_compare'        => '<=',
 				'orderby'             => 'meta_value_num',
@@ -151,7 +151,7 @@ class SM_Widget_Recent_Sermons extends WP_Widget {
 		 *
 		 * @since 2.13.0
 		 */
-		$output = apply_filters( 'sm_recent_sermons_widget_content', $output, $args, $r );
+		$output = apply_filters( 'sm_recent_sermons_widget_content', $output, $args, $r ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		$cache[ $args['widget_id'] ] = $output;
 		wp_cache_set( 'widget_recent_sermons', $cache, 'widget' );

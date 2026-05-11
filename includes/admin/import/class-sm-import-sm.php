@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.12.0
  */
-class SM_Import_SM {
+class SM_Import_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * If import debug is enabled.
 	 *
@@ -261,7 +261,7 @@ class SM_Import_SM {
 	 * Do the import
 	 */
 	public function import() {
-		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . date( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
+		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . gmdate( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
 		if ( ! doing_action( 'admin_init' ) ) {
 			$this->log( 'Scheduling for `admin_init` action.', 0 );
 			add_action( 'admin_init', array( $this, __FUNCTION__ ) );
@@ -285,7 +285,7 @@ class SM_Import_SM {
 		add_filter( 'http_request_timeout', array( $this, 'bump_request_timeout' ) );
 
 		$this->log( 'Doing `sm_import_before_sm` action.', 0 );
-		do_action( 'sm_import_before_sm' );
+		do_action( 'sm_import_before_sm' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 0 );
 
 		$this->log( 'Handling uploaded file.', 0 );
@@ -301,7 +301,7 @@ class SM_Import_SM {
 		}
 
 		$this->log( 'Doing `sm_import_after_sm` action.', 0 );
-		do_action( 'sm_import_after_sm' );
+		do_action( 'sm_import_after_sm' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 0 );
 	}
 
@@ -522,7 +522,7 @@ class SM_Import_SM {
 		wp_defer_term_counting( true );
 		wp_defer_comment_counting( true );
 
-		do_action( 'import_start' );
+		do_action( 'import_start' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -998,7 +998,7 @@ class SM_Import_SM {
 		$file_name = basename( $url );
 
 		// get placeholder file in the upload dir with a unique, sanitized filename.
-		$upload = wp_upload_bits( $file_name, 0, '', $post['upload_date'] );
+		$upload = wp_upload_bits( $file_name, null, '', $post['upload_date'] );
 		if ( $upload['error'] ) {
 			return new WP_Error( 'upload_dir_error', $upload['error'] );
 		}
@@ -1008,7 +1008,7 @@ class SM_Import_SM {
 
 		// request failed.
 		if ( is_wp_error( $response ) ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'sermon-manager-revival' ) );
 		}
@@ -1017,7 +1017,7 @@ class SM_Import_SM {
 
 		// make sure the fetch was successful.
 		if ( 200 !== (int) $response_code ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			// translators: %1$d: HTTP response code (e.g. 404). %2$s: HTTP status description (e.g. Not Found).
 			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'sermon-manager-revival' ), esc_html( $response_code ), get_status_header_desc( $response_code ) ) );
@@ -1035,20 +1035,20 @@ class SM_Import_SM {
 		$headers  = wp_remote_retrieve_headers( $response );
 
 		if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'sermon-manager-revival' ) );
 		}
 
 		if ( 0 == $filesize ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'sermon-manager-revival' ) );
 		}
 
 		$max_size = (int) $this->max_attachment_size();
 		if ( ! empty( $max_size ) && $filesize > $max_size ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			// translators: %s: Maximum allowed file size, e.g. "10 MB".
 			return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'sermon-manager-revival' ), size_format( $max_size ) ) );
@@ -1095,7 +1095,7 @@ class SM_Import_SM {
 			}
 
 			if ( $local_child_id && $local_parent_id ) {
-				$wpdb->update( $wpdb->posts, array( 'post_parent' => $local_parent_id ), array( 'ID' => $local_child_id ), '%d', '%d' );
+				$wpdb->update( $wpdb->posts, array( 'post_parent' => $local_parent_id ), array( 'ID' => $local_child_id ), '%d', '%d' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			}
 		}
 	}
@@ -1111,9 +1111,9 @@ class SM_Import_SM {
 
 		foreach ( $this->url_remap as $from_url => $to_url ) {
 			// remap urls in post_content.
-			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->posts} SET post_content = REPLACE(post_content, %s, %s)", $from_url, $to_url ) );
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->posts} SET post_content = REPLACE(post_content, %s, %s)", $from_url, $to_url ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			// remap enclosure urls.
-			$result = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = REPLACE(meta_value, %s, %s) WHERE meta_key='enclosure'", $from_url, $to_url ) );
+			$result = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = REPLACE(meta_value, %s, %s) WHERE meta_key='enclosure'", $from_url, $to_url ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 	}
 
@@ -1166,7 +1166,7 @@ class SM_Import_SM {
 		wp_defer_term_counting( false );
 		wp_defer_comment_counting( false );
 
-		do_action( 'import_end' );
+		do_action( 'import_end' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/* WXR Functions - Start */
