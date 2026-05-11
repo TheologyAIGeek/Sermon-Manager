@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.3
+Stable tag: 2026.5.4
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,19 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.5.4 ###
+* Fix: Resolve all remaining WordPress Plugin Check violations — zero errors across full plugin scan
+* Fix: Add proper WP output escaping (wp_kses_post, esc_html, wp_kses) to podcast feed and sermon wrapper templates replacing phpcs:ignore annotations that Plugin Check does not honor
+* Fix: Escape $custom_enclosure XML element with wp_kses() using an explicit enclosure-tag allowlist (wp_kses_post would strip non-HTML elements)
+* Fix: Strip byte order mark (BOM) from views/wpfc-podcast-feed.php (Generic.Files.ByteOrderMark)
+* Fix: Add phpcs:ignore annotations for PrefixAllGlobals false positives across 20+ files (sm_, SM_, wpfc_ prefixes are valid but not recognised by PHPCS without a ruleset)
+* Fix: Add NonceVerification phpcs:ignore to admin settings handler read-only GET checks
+* Fix: Add UnescapedDBParameter phpcs:ignore to export class raw SQL query
+* Fix: Broaden post__not_in sniff ignore to WordPressVIPMinimum.Performance.WPQueryParams in shortcodes class
+* Fix: Add missing NonPrefixedFunctionFound ignore to process_wysiwyg_output() in sm-template-functions.php
+* New: Add optional Spotify Episode Link URL field to the Sermon Files metabox on the sermon edit screen
+* New: Display a branded Listen on Spotify button (dark pill with Spotify logo, turns green on hover) below the audio player on the sermon single page when a Spotify link is provided; outputs nothing when the field is left blank
+
 ### 2026.5.3 ###
 * Fix: Escape output in sermons.php — phpcs:ignore on inline JS printf(), wrap wp_sprintf() in wp_kses_post()
 * Fix: Add ABSPATH direct file access protection to all view templates
