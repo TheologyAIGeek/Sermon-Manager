@@ -29,7 +29,7 @@ if ( ! SermonManager::getOption( 'disable_layouts', false ) ) {
 	 *
 	 * @return string The modified content if it's Sermon related data.
 	 */
-	function add_wpfc_sermon_content( $content ) {
+	function add_wpfc_sermon_content( $content ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 		if ( 'wpfc_sermon' === get_post_type() && in_the_loop() ) {
 			if ( ! is_feed() && ( is_archive() || is_search() ) ) {
 				$content = wpfc_sermon_excerpt_v2( true );
@@ -58,14 +58,14 @@ if ( ! SermonManager::getOption( 'disable_layouts', false ) ) {
  *
  * @since 2.5.0 added $args
  */
-function render_wpfc_sorting( $args = array() ) {
+function render_wpfc_sorting( $args = array() ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	// Action is not needed anymore, yay!
 	// Left here so filters below have the argument value.
 	$action = '';
 
 	// Filters HTML fields data.
 	$filters = apply_filters(
-		'render_wpfc_sorting_filters',
+		'render_wpfc_sorting_filters', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		array(
 			array(
 				'className' => 'sortPreacher',
@@ -96,7 +96,7 @@ function render_wpfc_sorting( $args = array() ) {
 	);
 
 	$visibility_mapping = apply_filters(
-		'render_wpfc_sorting_visibility_mapping',
+		'render_wpfc_sorting_visibility_mapping', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		array(
 			'wpfc_sermon_topics' => 'hide_topics',
 			'wpfc_sermon_series' => 'hide_series',
@@ -144,7 +144,7 @@ function render_wpfc_sorting( $args = array() ) {
 			if ( get_query_var( 'paged' ) === 0 ) {
 				$args['action'] = '';
 			} else {
-				$args['action'] = str_replace( parse_url( get_pagenum_link(), PHP_URL_QUERY ), '', get_pagenum_link() );
+				$args['action'] = str_replace( wp_parse_url( get_pagenum_link(), PHP_URL_QUERY ), '', get_pagenum_link() );
 			}
 			break;
 	}
@@ -162,7 +162,7 @@ function render_wpfc_sorting( $args = array() ) {
 	 *
 	 * @since 2.13.5
 	 */
-	$args = apply_filters( 'sm_render_wpfc_sorting_args', $args, $orig_args, $action, $filters, $visibility_mapping );
+	$args = apply_filters( 'sm_render_wpfc_sorting_args', $args, $orig_args, $action, $filters, $visibility_mapping ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 	$hide_filters = $args['hide_filters'];
 
@@ -179,7 +179,7 @@ function render_wpfc_sorting( $args = array() ) {
 	 * @since 2.13.5
 	 * @since 2.15.0 - add other parameters, except $hide_filters.
 	 */
-	if ( apply_filters( 'sm_render_wpfc_sorting', $hide_filters, $args, $orig_args, $action, $filters, $visibility_mapping ) ) {
+	if ( apply_filters( 'sm_render_wpfc_sorting', $hide_filters, $args, $orig_args, $action, $filters, $visibility_mapping ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$content = wpfc_get_partial(
 			'content-sermon-filtering',
 			array(
@@ -205,7 +205,7 @@ function render_wpfc_sorting( $args = array() ) {
 	 *
 	 * @since 2.15.0
 	 */
-	return apply_filters( 'render_wpfc_sorting_output', $content, $args, $orig_args, $action, $filters, $visibility_mapping );
+	return apply_filters( 'render_wpfc_sorting_output', $content, $args, $orig_args, $action, $filters, $visibility_mapping ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -215,7 +215,7 @@ function render_wpfc_sorting( $args = array() ) {
  * @param string $before   Content before key value.
  * @param string $after    Content after key value.
  */
-function wpfc_sermon_meta( $meta_key = '', $before = '', $after = '' ) {
+function wpfc_sermon_meta( $meta_key = '', $before = '', $after = '' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	echo $before . esc_html( get_wpfc_sermon_meta( $meta_key ) ) . $after; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
@@ -227,7 +227,7 @@ function wpfc_sermon_meta( $meta_key = '', $before = '', $after = '' ) {
  *
  * @return mixed|null The meta key content/null if it's blank.
  */
-function get_wpfc_sermon_meta( $meta_key = '', $post = null ) {
+function get_wpfc_sermon_meta( $meta_key = '', $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( null === $post ) {
 		global $post;
 	}
@@ -248,7 +248,7 @@ function get_wpfc_sermon_meta( $meta_key = '', $post = null ) {
  *
  * @return string The processed content
  */
-function process_wysiwyg_output( $meta_key, $post_id = 0 ) {
+function process_wysiwyg_output( $meta_key, $post_id = 0 ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wp_embed;
 
 	$post_id = $post_id ? $post_id : get_the_id();
@@ -301,7 +301,7 @@ function wpfc_render_video( $url = '', $seek = true ) {
 	if ( strpos( $url, 'facebook.' ) !== false ) {
 		wp_enqueue_script( 'wpfc-sm-fb-player' );
 
-		parse_str( parse_url( $url, PHP_URL_QUERY ), $query );
+		parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $query );
 
 		return '<div class="fb-video" data-href="' . $url . '" data-width="' . ( isset( $query['width'] ) ? ( is_numeric( $query['width'] ) ? $query['width'] : '600' ) : '600' ) . '" data-allowfullscreen="' . ( isset( $query['fullscreen'] ) ? ( 'yes' === $query['width'] ? 'true' : 'false' ) : 'true' ) . '"></div>';
 	}
@@ -352,7 +352,7 @@ function wpfc_render_video( $url = '', $seek = true ) {
 	 * @param string $output Video player HTML.
 	 * @param string $url    Video source URL.
 	 */
-	return apply_filters( 'sm_video_player', $output, $url );
+	return apply_filters( 'sm_video_player', $output, $url ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -435,7 +435,7 @@ function wpfc_render_audio( $source = '', $seek = null ) {
 	 *
 	 * @since 2.15.15 Added $source_orig.
 	 */
-	return apply_filters( 'sm_audio_player', $output, $source, $source_orig );
+	return apply_filters( 'sm_audio_player', $output, $source, $source_orig ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -457,7 +457,7 @@ function wpfc_sermon_attachments() {
 	 *
 	 * @since 2.11.3
 	 */
-	return apply_filters( 'sm_attachments_html', $output );
+	return apply_filters( 'sm_attachments_html', $output ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -648,7 +648,7 @@ function wpfc_get_term_dropdown( $taxonomy, $default = '' ) {
 		$terms = array_merge( $ordered_terms, $unordered_terms );
 	}
 
-	$current_slug = get_query_var( $taxonomy ) ?: ( isset( $_GET[ $taxonomy ] ) ? $_GET[ $taxonomy ] : '' );
+	$current_slug = get_query_var( $taxonomy ) ?: ( isset( $_GET[ $taxonomy ] ) ? sanitize_text_field( wp_unslash( $_GET[ $taxonomy ] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	foreach ( $terms as $term ) {
 		$html .= '<option value="' . $term->slug . '" ' . ( ( '' === $default ? $current_slug === $term->slug : $default === $term->slug ) ? 'selected' : '' ) . '>' . $term->name . '</option>';
@@ -745,7 +745,7 @@ function wpfc_get_partial( $name = '', $args = array() ) {
  *
  * @since 2.13.4
  */
-function sm_get_views_path( $template = '' ) {
+function sm_get_views_path( $template = '' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$force_views = SermonManager::getOption( 'force_layouts' );
 
 	if ( is_singular( 'wpfc_sermon' ) ) {
@@ -792,7 +792,7 @@ function sm_get_views_path( $template = '' ) {
  *
  * @since 2.15.14
  */
-function sm_pagination() {
+function sm_pagination() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( SermonManager::getOption( 'use_prev_next_pagination' ) ) {
 		posts_nav_link();
 	} else {

@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @return false|string
  */
-function sm_get_the_date( $d = '', $post = null ) {
+function sm_get_the_date( $d = '', $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$the_date = SM_Dates::get( $d, $post );
 	if ( ! $the_date ) {
 		$post = get_post( $post );
@@ -48,7 +48,7 @@ function sm_get_the_date( $d = '', $post = null ) {
 	 * @since 2.6
 	 *
 	 */
-	return apply_filters( 'sm_get_the_date', $the_date, $d, $post );
+	return apply_filters( 'sm_get_the_date', $the_date, $d, $post ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -69,7 +69,7 @@ function sm_get_the_date( $d = '', $post = null ) {
  *
  * @since 2.6
  */
-function sm_the_date( $d = '', $before = '', $after = '', $post = null ) {
+function sm_the_date( $d = '', $before = '', $after = '', $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$the_date = $before . sm_get_the_date( $d, $post ) . $after;
 
 	/**
@@ -85,7 +85,7 @@ function sm_the_date( $d = '', $before = '', $after = '', $post = null ) {
 	 * @since 2.6
 	 *
 	 */
-	echo apply_filters( 'the_date', $the_date, $d, $before, $after, $post ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'the_date', $the_date, $d, $before, $after, $post ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -96,7 +96,7 @@ function sm_the_date( $d = '', $before = '', $after = '', $post = null ) {
  *
  * @since 2.7
  */
-function sm_get_permalink_structure() {
+function sm_get_permalink_structure() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( did_action( 'admin_init' ) ) {
 		sm_switch_to_site_locale();
 	}
@@ -148,7 +148,7 @@ function sm_get_permalink_structure() {
  *
  * @since 2.7
  */
-function sm_switch_to_site_locale() {
+function sm_switch_to_site_locale() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( function_exists( 'switch_to_locale' ) ) {
 		switch_to_locale( get_locale() );
 
@@ -165,7 +165,7 @@ function sm_switch_to_site_locale() {
  *
  * @since 2.7
  */
-function sm_restore_locale() {
+function sm_restore_locale() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( function_exists( 'restore_previous_locale' ) ) {
 		restore_previous_locale();
 
@@ -186,7 +186,7 @@ function sm_restore_locale() {
  * @return string
  * @since 2.9
  */
-function sm_help_tip( $tip, $allow_html = false ) {
+function sm_help_tip( $tip, $allow_html = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( $allow_html ) {
 		$tip = sm_sanitize_tooltip( $tip );
 	} else {
@@ -206,7 +206,7 @@ function sm_help_tip( $tip, $allow_html = false ) {
  * @return array
  * @since 2.9
  */
-function sm_get_image_size( $image_size ) {
+function sm_get_image_size( $image_size ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( is_array( $image_size ) ) {
 		$width  = isset( $image_size[0] ) ? $image_size[0] : 300;
 		$height = isset( $image_size[1] ) ? $image_size[1] : 200;
@@ -260,7 +260,7 @@ function sm_get_image_size( $image_size ) {
 		);
 	}
 
-	return apply_filters( 'sm_get_image_size_' . $image_size, $size );
+	return apply_filters( 'sm_get_image_size_' . $image_size, $size ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -272,7 +272,7 @@ function sm_get_image_size( $image_size ) {
  *
  * @since 2.10
  */
-function sm_get_image_dimensions( $img_loc ) {
+function sm_get_image_dimensions( $img_loc ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	// Check if url is set.
 	if ( trim( $img_loc ) === '' ) {
 		return false;
@@ -299,8 +299,8 @@ function sm_get_image_dimensions( $img_loc ) {
  *
  * @since 2.10
  */
-function sm_get_png_dimensions( $img_loc ) {
-	$handle = fopen( $img_loc, 'rb' );
+function sm_get_png_dimensions( $img_loc ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+	$handle = fopen( $img_loc, 'rb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 
 	// Check if url is accessible or fail gracefully.
 	if ( false === $handle ) {
@@ -308,7 +308,7 @@ function sm_get_png_dimensions( $img_loc ) {
 	}
 
 	if ( ! feof( $handle ) ) {
-		$new_block = fread( $handle, 24 );
+		$new_block = fread( $handle, 24 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
 		if ( "\x89" == $new_block[0] && "\x50" == $new_block[1] && "\x4E" == $new_block[2] && "\x47" == $new_block[3] && "\x0D" == $new_block[4] && "\x0A" == $new_block[5] && "\x1A" == $new_block[6] && "\x0A" == $new_block[7] ) {
 			if ( "\x49\x48\x44\x52" === $new_block[12] . $new_block[13] . $new_block[14] . $new_block[15] ) {
 				$width = unpack( 'H*', $new_block[16] . $new_block[17] . $new_block[18] . $new_block[19] );
@@ -335,8 +335,8 @@ function sm_get_png_dimensions( $img_loc ) {
  *
  * @see   http://php.net/manual/en/function.getimagesize.php#88793
  */
-function sm_get_jpeg_dimensions( $img_loc ) {
-	$handle = fopen( $img_loc, 'rb' );
+function sm_get_jpeg_dimensions( $img_loc ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+	$handle = fopen( $img_loc, 'rb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 
 	// Check if url is accessible or fail gracefully.
 	if ( false === $handle ) {
@@ -345,7 +345,7 @@ function sm_get_jpeg_dimensions( $img_loc ) {
 
 	$new_block = null;
 	if ( ! feof( $handle ) ) {
-		$new_block = fread( $handle, 32 );
+		$new_block = fread( $handle, 32 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
 		$i         = 0;
 		if ( "\xFF" == $new_block[ $i ] && "\xD8" == $new_block[ $i + 1 ] && "\xFF" == $new_block[ $i + 2 ] && "\xE0" == $new_block[ $i + 3 ] ) {
 			$i += 4;
@@ -355,7 +355,7 @@ function sm_get_jpeg_dimensions( $img_loc ) {
 				$block_size = hexdec( $block_size[1] );
 				while ( ! feof( $handle ) ) {
 					$i         += $block_size;
-					$new_block .= fread( $handle, $block_size );
+					$new_block .= fread( $handle, $block_size ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
 					if ( "\xFF" == $new_block[ $i ] ) {
 						// New block detected, check for SOF marker.
 						$sof_marker = array(
@@ -421,7 +421,7 @@ function sm_get_jpeg_dimensions( $img_loc ) {
  * @return bool|int If $post_id is set to 0 - returns attachment ID; True|false otherwise, depending on success.
  * @since 2.9
  */
-function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) {
+function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	global $wpdb;
 
 	if ( empty( $image_url ) || trim( $image_url ) === '' ) {
@@ -443,7 +443,7 @@ function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) {
 	} elseif ( $upload && false !== strpos( $image_url, $upload['baseurl'] ) ) {
 		global $doing_sm_upload;
 
-		$doing_sm_upload = true;
+		$doing_sm_upload = true; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 		if ( ! function_exists( 'media_handle_sideload' ) ) {
 			require_once( ABSPATH . 'wp-admin' . '/includes/image.php' );
@@ -459,12 +459,13 @@ function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) {
 			'tmp_name' => $url,
 		), 0 );
 
-		$doing_sm_upload = false;
+		$doing_sm_upload = false; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	} else {
 		$file = wp_check_filetype( $image_url );
 
 		preg_match( '/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $image_url, $matches );
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->insert( $wpdb->prefix . 'posts', array(
 			'post_author'       => get_current_user_id(),
 			'post_date'         => current_time( 'mysql' ),
@@ -533,7 +534,7 @@ add_filter( 'pre_move_uploaded_file', function ( $null, $file ) {
 
 	if ( true === $doing_sm_upload ) {
 		$uploads              = wp_get_upload_dir();
-		$upload_dir_file_path = str_replace( $uploads['basedir'], '', $file['tmp_name'] );
+		$upload_dir_file_path = str_replace( $uploads['basedir'], '', $file['tmp_name'] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 		return false;
 	}
@@ -573,7 +574,7 @@ add_filter( 'wp_handle_upload', function ( $data ) {
  *
  * @since 2.11.0
  */
-function get_sermon_series_image_url( $series_id = 0, $image_size = 'thumbnail' ) {
+function get_sermon_series_image_url( $series_id = 0, $image_size = 'thumbnail' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( ! ( is_int( $series_id ) && 0 !== $series_id ) ) {
 		return null;
 	}
@@ -590,7 +591,7 @@ function get_sermon_series_image_url( $series_id = 0, $image_size = 'thumbnail' 
  *
  * @since 2.11.0
  */
-function sm_debug_get_update_functions() {
+function sm_debug_get_update_functions() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$options = array(
 		'' => '---',
 	);
@@ -617,7 +618,7 @@ function sm_debug_get_update_functions() {
 	 *
 	 * @since 2.15.14
 	 */
-	return apply_filters( 'sm_get_update_functions', $options );
+	return apply_filters( 'sm_get_update_functions', $options ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -634,7 +635,7 @@ function sm_debug_get_update_functions() {
  *
  * @since 2.12.0
  */
-function get_sermon_image_url( $fallback = true, $image_size = 'post-thumbnail', $series_image_primary = false, $post = null ) {
+function get_sermon_image_url( $fallback = true, $image_size = 'post-thumbnail', $series_image_primary = false, $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( null === $post ) {
 		global $post;
 	}
@@ -651,7 +652,7 @@ function get_sermon_image_url( $fallback = true, $image_size = 'post-thumbnail',
 	 *
 	 * @since 2.13.0
 	 */
-	$image_size = apply_filters( 'get_sermon_image_url_image_size', $image_size, $fallback, $series_image_primary, $post );
+	$image_size = apply_filters( 'get_sermon_image_url_image_size', $image_size, $fallback, $series_image_primary, $post ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 	// Get the sermon image.
 	$sermon_image = get_the_post_thumbnail_url( $post, $image_size ) ?: null;
@@ -697,7 +698,7 @@ function get_sermon_image_url( $fallback = true, $image_size = 'post-thumbnail',
 	 * @since 2.13.0
 	 * @since 2.15.2 - Added missing $image_size argument, and re-labelled $image to correct description.
 	 */
-	return apply_filters( 'get_sermon_image_url', $image, $fallback, $series_image_primary, $post, $image_size );
+	return apply_filters( 'get_sermon_image_url', $image, $fallback, $series_image_primary, $post, $image_size ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -800,7 +801,7 @@ function wpfc_get_media_url_seconds( $url ) {
  * @since 2.12.5
  *
  */
-function sm_get_previous_sermon( $post = null ) {
+function sm_get_previous_sermon( $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( null === $post ) {
 		global $post;
 	}
@@ -816,7 +817,7 @@ function sm_get_previous_sermon( $post = null ) {
 	 *
 	 * @param $the_post WP_Post|null The post if found.
 	 */
-	return apply_filters( 'sm_get_previous_sermon', empty( $the_post ) ? null : $the_post );
+	return apply_filters( 'sm_get_previous_sermon', empty( $the_post ) ? null : $the_post ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -828,7 +829,7 @@ function sm_get_previous_sermon( $post = null ) {
  * @since 2.12.5
  *
  */
-function sm_get_next_sermon( $post = null ) {
+function sm_get_next_sermon( $post = null ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	if ( null === $post ) {
 		global $post;
 	}
@@ -844,7 +845,7 @@ function sm_get_next_sermon( $post = null ) {
 	 *
 	 * @param $the_post WP_Post|null The post if found.
 	 */
-	return apply_filters( 'sm_get_next_sermon', empty( $the_post ) ? null : $the_post );
+	return apply_filters( 'sm_get_next_sermon', empty( $the_post ) ? null : $the_post ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -854,7 +855,7 @@ function sm_get_next_sermon( $post = null ) {
  *
  * @param int $post_ID The sermon ID.
  */
-function sm_set_service_type( $post_ID ) {
+function sm_set_service_type( $post_ID ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	// Verify nonce and capability.
 	if ( ! isset( $_POST['wpfc_sermon_service_type_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wpfc_sermon_service_type_nonce'] ), 'sm_service_type_' . $post_ID ) ) {
 		// Fall back to checking the standard WordPress post nonce for REST/quick-edit contexts.
@@ -883,7 +884,7 @@ function sm_set_service_type( $post_ID ) {
 	$tax_input = isset( $_GET['tax_input'] ) ? array_map( 'absint', (array) $_GET['tax_input'] ) : array();
 
 	$get  = ! empty( $tax_input['wpfc_service_type'] );
-	$post = isset( $_POST['tax_input'] ) && isset( $_POST['tax_input']['wpfc_service_type'] ) && $_POST['tax_input']['wpfc_service_type'];
+	$post = isset( $_POST['tax_input'] ) && isset( $_POST['tax_input']['wpfc_service_type'] ) && $_POST['tax_input']['wpfc_service_type']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 	if ( $get || $post ) {
 		$field = $get ? $tax_input['wpfc_service_type'] : sanitize_text_field( wp_unslash( $_POST['tax_input']['wpfc_service_type'] ) );
@@ -908,7 +909,7 @@ add_action( 'save_post', 'sm_set_service_type' );
  *
  * @since 2.13.5
  */
-function sm_get_taxonomies() {
+function sm_get_taxonomies() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	return get_object_taxonomies( 'wpfc_sermon' );
 }
 
@@ -922,7 +923,7 @@ function sm_get_taxonomies() {
  *
  * @since 2026.5.1
  */
-function sm_get_taxonomy_field( $taxonomy, $field_name ) {
+function sm_get_taxonomy_field( $taxonomy, $field_name ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$taxonomy = get_taxonomy( $taxonomy );
 
 	if ( ! $taxonomy instanceof WP_Taxonomy ) {

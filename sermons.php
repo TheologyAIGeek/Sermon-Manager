@@ -3,7 +3,7 @@
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
  * Description: Add audio and video sermons, manage speakers, series, and more.
- * Version: 2026.5.3
+ * Version: 2026.5.4
  * Author: Jerry Purvis
  * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0
@@ -30,7 +30,7 @@ if ( version_compare( PHP_VERSION, '7.4.0', '<' ) ) {
 	 *
 	 * @since 2.8
 	 */
-	function sm_render_php_version_error() {
+	function sm_render_php_version_error() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 		?>
 		<div class="notice notice-wpfc-php notice-error">
 			<p>
@@ -77,7 +77,7 @@ class SermonManager { // phpcs:ignore
 		// Easy way to get if output buffering is enabled. @todo - fix it, causes issues to many users.
 		define( 'SM_OB_ENABLED', true );
 
-		do_action( 'sm_before_plugin_load' );
+		do_action( 'sm_before_plugin_load' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Include required items.
 		$this->_includes();
@@ -86,7 +86,7 @@ class SermonManager { // phpcs:ignore
 		$this->_init_actions();
 
 		// Exec stuff after load.
-		do_action( 'sm_after_plugin_load' );
+		do_action( 'sm_after_plugin_load' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -178,7 +178,7 @@ class SermonManager { // phpcs:ignore
 			if ( defined( 'SM_SAVING_POST' ) ) {
 				return;
 			} else {
-				define( 'SM_SAVING_POST', 1 );
+				define( 'SM_SAVING_POST', 1 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 			}
 		}
 
@@ -197,17 +197,17 @@ class SermonManager { // phpcs:ignore
 			}
 
 			$content .= sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) . ': ';
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
 		}
 
 		if ( $has_series ) {
 			if ( $has_preachers ) {
 				$content .= ' | ';
 			}
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
 		}
 
-		$description = strip_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
+		$description = wp_strip_all_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
 
 		if ( '' !== $description ) {
 			$content .= ' | ' . $description;
@@ -223,8 +223,8 @@ class SermonManager { // phpcs:ignore
 		 *
 		 * @since 2.11.0
 		 */
-		$content = apply_filters( 'sm_sermon_post_content', $content, $post_ID, $post, $skip_check );
-		$content = apply_filters( "sm_sermon_post_content_$post_ID", $content, $post_ID, $post, $skip_check );
+		$content = apply_filters( 'sm_sermon_post_content', $content, $post_ID, $post, $skip_check ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		$content = apply_filters( "sm_sermon_post_content_$post_ID", $content, $post_ID, $post, $skip_check ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		if ( ! $sm_skip_content_check ) {
 			if ( ! SermonManager::getOption( 'post_content_enabled', 1 ) ) {
@@ -232,7 +232,7 @@ class SermonManager { // phpcs:ignore
 			}
 		}
 
-		$wpdb->query(
+		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"UPDATE $wpdb->posts SET `post_content` = %s WHERE `ID` = %s",
 				array(
@@ -284,7 +284,7 @@ class SermonManager { // phpcs:ignore
 				 *
 				 * @since 2.13.5
 				 */
-				do_action( 'sm_query', $query );
+				do_action( 'sm_query', $query ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			}
 		}
 	}
@@ -295,7 +295,7 @@ class SermonManager { // phpcs:ignore
 	 * @return void
 	 */
 	public static function load_translations() {
-		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' ); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 	}
 
 	/**
@@ -320,8 +320,8 @@ class SermonManager { // phpcs:ignore
 			// Load theme-specific styling, if there's any.
 			wp_enqueue_style( 'wpfc-sm-style-' . get_option( 'template' ) );
 
-			do_action( 'sm_enqueue_css' );
-			do_action( 'sm_enqueue_js' );
+			do_action( 'sm_enqueue_css' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+			do_action( 'sm_enqueue_js' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 
 		// Load top theme-specific styling, if there's any.
@@ -346,7 +346,7 @@ class SermonManager { // phpcs:ignore
 				if ( SermonManager::getOption( 'disable_cloudflare_plyr' ) ) {
 					global $wp_scripts;
 
-					$GLOBALS['sm_plyr_scripts'] = array(
+					$GLOBALS['sm_plyr_scripts'] = array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						'wpfc-sm-plyr-loader' => $wp_scripts->registered['wpfc-sm-plyr-loader'],
 						'wpfc-sm-plyr'        => $wp_scripts->registered['wpfc-sm-plyr'],
 					);
@@ -390,13 +390,13 @@ class SermonManager { // phpcs:ignore
 			 *
 			 * @since 2.15.9
 			 */
-			$verse_popup_data = apply_filters( 'sm_verse_popup_data', $verse_popup_data );
+			$verse_popup_data = apply_filters( 'sm_verse_popup_data', $verse_popup_data ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 			wp_localize_script( 'wpfc-sm-verse-script', 'verse', $verse_popup_data );
 		}
 
 		// Do not enqueue twice.
-		define( 'SM_SCRIPTS_STYLES_ENQUEUED', true );
+		define( 'SM_SCRIPTS_STYLES_ENQUEUED', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	}
 
 	/**
@@ -490,7 +490,7 @@ class SermonManager { // phpcs:ignore
 		}
 
 		foreach ( $GLOBALS['sm_plyr_scripts'] as $script ) {
-			echo '<script type="text/javascript" data-cfasync="false" src="' . esc_url( $script->src ) . '"></script>';
+			echo '<script type="text/javascript" data-cfasync="false" src="' . esc_url( $script->src ) . '"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 
 			if ( ! empty( $script->extra ) ) {
 				/* @noinspection BadExpressionStatementJS */
@@ -498,7 +498,7 @@ class SermonManager { // phpcs:ignore
 			}
 		}
 
-		define( 'SM_CLOUDFLARE_DONE', true );
+		define( 'SM_CLOUDFLARE_DONE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	}
 
 	/**
@@ -509,10 +509,10 @@ class SermonManager { // phpcs:ignore
 	 * @since 2.15.7
 	 */
 	public static function register_scripts_styles() {
-		wp_register_script( 'wpfc-sm-fb-player', SM_URL . 'assets/vendor/js/facebook-video.js', array(), SM_VERSION );
+		wp_register_script( 'wpfc-sm-fb-player', SM_URL . 'assets/vendor/js/facebook-video.js', array(), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_register_script( 'wpfc-sm-plyr', SM_URL . 'assets/vendor/js/plyr.polyfilled' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array(), '3.4.7', SermonManager::getOption( 'player_js_footer' ) );
-		wp_register_script( 'wpfc-sm-plyr-loader', SM_URL . 'assets/js/plyr' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array( 'wpfc-sm-plyr' ), SM_VERSION );
-		wp_register_script( 'wpfc-sm-verse-script', SM_URL . 'assets/vendor/js/verse.js', array(), SM_VERSION );
+		wp_register_script( 'wpfc-sm-plyr-loader', SM_URL . 'assets/js/plyr' . ( ( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) ? '' : '.min' ) . '.js', array( 'wpfc-sm-plyr' ), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
+		wp_register_script( 'wpfc-sm-verse-script', SM_URL . 'assets/vendor/js/verse.js', array(), SM_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_register_style( 'wpfc-sm-styles', SM_URL . 'assets/css/sermon.min.css', array(), SM_VERSION );
 		wp_register_style( 'wpfc-sm-plyr-css', SM_URL . 'assets/vendor/css/plyr.min.css', array(), '3.4.7' );
 
@@ -570,7 +570,7 @@ class SermonManager { // phpcs:ignore
 			function ( $url, $attachment_id ) {
 				$db_url = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
-				if ( $db_url && parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
+				if ( $db_url && wp_parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
 					return $db_url;
 				}
 
@@ -611,7 +611,7 @@ class SermonManager { // phpcs:ignore
 		add_action(
 			'admin_init',
 			function () {
-				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
+				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( isset( $_GET['doimport'] ) ) {
 						if ( ! current_user_can( 'import' ) ) {
 							wp_die( esc_html__( 'You do not have permission to import data.', 'sermon-manager-revival' ), 403 );
@@ -694,7 +694,7 @@ class SermonManager { // phpcs:ignore
 					global $wpdb;
 
 					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- No user input; table name cannot be parameterized.
-					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" );
+					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 					?>
 					<div class="notice notice-success">
@@ -753,12 +753,12 @@ class SermonManager { // phpcs:ignore
 				if ( $value >= 10 ) {
 					global $wpdb, $sm_skip_content_check;
 
-					$sm_skip_content_check = true;
+					$sm_skip_content_check = true; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 					$sm = SermonManager::get_instance();
 
 					// All sermons.
-					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) );
+					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 					foreach ( $sermons as $sermon ) {
 						$sermon_id = $sermon->ID;
@@ -766,11 +766,11 @@ class SermonManager { // phpcs:ignore
 						if ( 11 === $value ) {
 							$sm->render_sermon_into_content( $sermon_id, null, true );
 						} else {
-							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) );
+							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						}
 					}
 
-					$sm_skip_content_check = false;
+					$sm_skip_content_check = false; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 					$value = intval( substr( $value, 1 ) );
 				}
@@ -787,12 +787,12 @@ class SermonManager { // phpcs:ignore
 					return;
 				}
 
-				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) {
+				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					return;
 				}
 
-				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) );
-				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) );
+				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 				// Attempt to get remote file size.
 				if ( $audio_url && ! $audio_id ) {
@@ -818,8 +818,8 @@ class SermonManager { // phpcs:ignore
 					return;
 				}
 
-				$parsed_audio_url   = parse_url( $audio_url, PHP_URL_HOST );
-				$parsed_website_url = parse_url( home_url(), PHP_URL_HOST );
+				$parsed_audio_url   = wp_parse_url( $audio_url, PHP_URL_HOST );
+				$parsed_website_url = wp_parse_url( home_url(), PHP_URL_HOST );
 
 				if ( $parsed_audio_url !== $parsed_website_url ) {
 					$audio_id = '';
@@ -832,7 +832,7 @@ class SermonManager { // phpcs:ignore
 
 					if ( $the_file ) {
 						if ( isset( $the_file['length'] ) ) {
-							$length                         = date( 'H:i:s', $the_file['length'] );
+							$length                         = gmdate( 'H:i:s', $the_file['length'] );
 							$_POST['_wpfc_sermon_duration'] = $length;
 							update_post_meta( $post_ID, '_wpfc_sermon_duration', $length );
 						}
@@ -894,7 +894,7 @@ class SermonManager { // phpcs:ignore
 				$podcast_id = absint( $_POST['podcast_id'] ?? 0 );
 				$option_id  = sanitize_key( wp_unslash( $_POST['option_id'] ?? '' ) );
 
-				wp_send_json( apply_filters( 'sm_settings_get_select_data', array(), $category, $podcast_id, $option_id ) );
+				wp_send_json( apply_filters( 'sm_settings_get_select_data', array(), $category, $podcast_id, $option_id ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			}
 		);
 	}

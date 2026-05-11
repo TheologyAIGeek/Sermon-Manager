@@ -17,14 +17,14 @@ echo wp_kses_post( render_wpfc_sorting() );
 
 if ( have_posts() ) :
 
-	echo apply_filters( 'taxonomy-wpfc_bible_book-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'taxonomy-wpfc_bible_book-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 	while ( have_posts() ) :
 		the_post();
 		wpfc_sermon_excerpt_v2();
 	endwhile;
 
-	echo apply_filters( 'taxonomy-wpfc_bible_book-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'taxonomy-wpfc_bible_book-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 	echo '<div class="sm-pagination ast-pagination">';
 	sm_pagination();

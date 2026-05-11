@@ -95,9 +95,9 @@ class SM_Install {
 	public static function check_version() {
 		global $pagenow;
 
-		if ( ! defined( 'IFRAME_REQUEST' ) && ( ( 'plugins.php' === $pagenow && isset( $_GET['activate'] ) && 'true' === $_GET['activate'] ) || SM_VERSION !== get_option( 'sm_version' ) ) ) {
+		if ( ! defined( 'IFRAME_REQUEST' ) && ( ( 'plugins.php' === $pagenow && isset( $_GET['activate'] ) && 'true' === $_GET['activate'] ) || SM_VERSION !== get_option( 'sm_version' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			self::_install();
-			do_action( 'sm_updated' );
+			do_action( 'sm_updated' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 	}
 
@@ -112,7 +112,7 @@ class SM_Install {
 		}
 
 		if ( ! defined( 'SM_INSTALLING' ) ) {
-			define( 'SM_INSTALLING', true );
+			define( 'SM_INSTALLING', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		// self::_create_roles(); @todo: will be done in future versions (move it below options).
@@ -129,11 +129,11 @@ class SM_Install {
 		self::update_db_version();
 
 		// Flush 1.
-		do_action( 'sm_flush_rewrite_rules' );
+		do_action( 'sm_flush_rewrite_rules' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Flush 2.
 		add_action( 'init', function () {
-			do_action( 'sm_flush_rewrite_rules' );
+			do_action( 'sm_flush_rewrite_rules' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		} );
 
 		/*
@@ -143,6 +143,7 @@ class SM_Install {
 		 *
 		 * Based on code inside core's upgrade_network() function.
 		 */
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query( $wpdb->prepare( "DELETE a, b FROM $wpdb->options a, $wpdb->options b
 			WHERE a.option_name LIKE %s
 			AND a.option_name NOT LIKE %s
@@ -150,7 +151,7 @@ class SM_Install {
 			AND b.option_value < %d", $wpdb->esc_like( '_transient_' ) . '%', $wpdb->esc_like( '_transient_timeout_' ) . '%', time() ) );
 
 		// Trigger action.
-		do_action( 'sm_installed' );
+		do_action( 'sm_installed' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**

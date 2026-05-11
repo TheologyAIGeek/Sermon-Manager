@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.9
  */
-abstract class SM_Settings_Page {
+abstract class SM_Settings_Page { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * Setting page id
@@ -99,7 +99,7 @@ abstract class SM_Settings_Page {
 	 * @return array
 	 */
 	public function get_sections() {
-		return apply_filters( 'sm_get_sections_' . $this->id, array() );
+		return apply_filters( 'sm_get_sections_' . $this->id, array() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -117,7 +117,7 @@ abstract class SM_Settings_Page {
 	 * @return array
 	 */
 	public function get_settings() {
-		return apply_filters( 'sm_get_settings_' . $this->id, array() );
+		return apply_filters( 'sm_get_settings_' . $this->id, array() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -130,7 +130,7 @@ abstract class SM_Settings_Page {
 		SM_Admin_Settings::save_fields( $settings );
 
 		if ( $current_section ) {
-			do_action( 'sm_update_options_' . $this->id . '_' . $current_section );
+			do_action( 'sm_update_options_' . $this->id . '_' . $current_section ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		}
 	}
 }

@@ -7,6 +7,7 @@
  */
 
 defined( 'ABSPATH' ) or exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.Security.EscapeOutput.OutputNotEscaped
 
 global $taxonomy, $term;
 
@@ -81,8 +82,8 @@ $args = array(
 	'post_type'      => 'wpfc_sermon',
 	'posts_per_page' => $settings['podcasts_per_page'],
 	'order'          => strtoupper( SermonManager::getOption( 'archive_order' ) ),
-	'paged'          => isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1,
-	'meta_query'     => array(
+	'paged'          => isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		'relation' => 'AND',
 		array(
 			'key'     => 'sermon_audio',
@@ -99,7 +100,7 @@ $args = array(
 switch ( SermonManager::getOption( 'archive_orderby' ) ) {
 	case 'date_preached':
 		$args += array(
-			'meta_key'       => 'sermon_date',
+			'meta_key'       => 'sermon_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_value_num' => time(),
 			'meta_compare'   => '<=',
 			'orderby'        => 'meta_value_num',
@@ -117,7 +118,7 @@ switch ( SermonManager::getOption( 'archive_orderby' ) ) {
  * If feed is being loaded via taxonomy feed URL, such as "https://www.example.com/service-type/service-type-slug"
  */
 if ( $taxonomy && $term ) {
-	$args['tax_query'] = array(
+	$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		array(
 			'taxonomy' => $taxonomy,
 			'field'    => 'slug',
@@ -144,8 +145,8 @@ foreach (
 		'wpfc_service_type',
 	) as $taxonomy
 ) {
-	if ( isset( $_GET[ $taxonomy ] ) ) {
-		$terms = $_GET[ $taxonomy ];
+	if ( isset( $_GET[ $taxonomy ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$terms = sanitize_text_field( wp_unslash( $_GET[ $taxonomy ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// Override the default tax_query for that taxonomy.
 		if ( ! empty( $args['tax_query'] ) ) {
@@ -271,7 +272,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 		<atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml"/>
 		<description><?php echo $description; ?></description>
 		<language><?php echo $language; ?></language>
-		<lastBuildDate><?php echo $last_sermon_date ? date( 'r', intval( $last_sermon_date ) ) : date( 'r' ); ?></lastBuildDate>
+		<lastBuildDate><?php echo $last_sermon_date ? gmdate( 'r', intval( $last_sermon_date ) ) : gmdate( 'r' ); ?></lastBuildDate>
 		<sy:updatePeriod>hourly</sy:updatePeriod>
 		<sy:updateFrequency>1</sy:updateFrequency>
 		<copyright><?php echo $copyright; ?></copyright>
@@ -308,11 +309,11 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				$audio_p           = strrpos( $audio_raw, '/' ) + 1;
 				$audio_raw         = urldecode( $audio_raw );
 				$audio             = substr( $audio_raw, 0, $audio_p ) . rawurlencode( substr( $audio_raw, $audio_p ) );
-				$speakers          = strip_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ' &amp; ', '' ) );
+				$speakers          = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ' &amp; ', '' ) );
 				$speakers_terms    = get_the_terms( $post->ID, 'wpfc_preacher' );
 				$speaker           = $speakers_terms ? $speakers_terms[0]->name : '';
-				$series            = strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', '', ', ', '' ) );
-				$topics            = strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_topics', '', ', ', '' ) );
+				$series            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', '', ', ', '' ) );
+				$topics            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_topics', '', ', ', '' ) );
 				$post_image        = get_sermon_image_url( $settings['podcast_sermon_image_series'] );
 				$post_image        = str_ireplace( 'https://', 'http://', ! empty( $post_image ) ? $post_image : '' );
 				$audio_duration    = get_post_meta( $post->ID, '_wpfc_sermon_duration', true ) ?: '0:00';
@@ -348,23 +349,23 @@ $cover_image_url  = $settings['itunes_cover_image'];
 						<comments><?php comments_link_feed(); ?></comments>
 					<?php endif; ?>
 
-					<pubDate><?php echo $settings['use_published_date'] ? $date_published : $date_preached; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></pubDate>
+					<pubDate><?php echo esc_html( $settings['use_published_date'] ? $date_published : $date_preached ); ?></pubDate>
 					<dc:creator><![CDATA[<?php echo esc_html( $speaker ); ?>]]></dc:creator>
 					<?php the_category_rss( 'rss2' ); ?>
 
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
-					<description><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></description>
-					<content:encoded><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></content:encoded>
-					<itunes:summary><![CDATA[<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]></itunes:summary>
+					<description><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></description>
+					<content:encoded><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></content:encoded>
+					<itunes:summary><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></itunes:summary>
 
 					<itunes:author><?php echo esc_html( $speakers ); ?></itunes:author>
-					<itunes:subtitle><?php echo $description_short; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></itunes:subtitle>
+					<itunes:subtitle><?php echo wp_kses_post( $description_short ); ?></itunes:subtitle>
 					<?php if ( $post_image ) : ?>
 						<itunes:image href="<?php echo esc_url( $post_image ); ?>"/>
 					<?php endif; ?>
 
 					<?php if ( $custom_enclosure ) : ?>
-						<?php echo $custom_enclosure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php echo wp_kses( $custom_enclosure, array( 'enclosure' => array( 'url' => true, 'length' => true, 'type' => true ) ) ); ?>
 					<?php else : ?>
 						<!--suppress CheckEmptyScriptTag -->
 						<enclosure url="<?php echo esc_url( $audio ); ?>"
@@ -382,8 +383,9 @@ $cover_image_url  = $settings['itunes_cover_image'];
 			<?php
 			endwhile;
 		endif;
-		wp_reset_query();
+		wp_reset_postdata();
 		?>
 
 	</channel>
 </rss>
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.Security.EscapeOutput.OutputNotEscaped

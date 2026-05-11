@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.9
  */
-class SM_Import_SB {
+class SM_Import_SB { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * If import debug is enabled.
@@ -80,7 +80,7 @@ class SM_Import_SB {
 	public static function is_installed() {
 		global $wpdb;
 
-		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}sb_sermons'" );
+		return (bool) $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}sb_sermons'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	/**
@@ -94,7 +94,7 @@ class SM_Import_SB {
 	 * Do the import.
 	 */
 	public function import() {
-		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . date( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
+		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . gmdate( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
 		if ( ! doing_action( 'admin_init' ) ) {
 			$this->log( 'Scheduling for `admin_init` action.', 0 );
 			add_action( 'admin_init', array( $this, __FUNCTION__ ) );
@@ -103,7 +103,7 @@ class SM_Import_SB {
 		}
 
 		$this->log( 'Doing `sm_import_before_sb` action.', 0 );
-		do_action( 'sm_import_before_sb' );
+		do_action( 'sm_import_before_sb' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 254 );
 
 		$this->log( 'Starting book import.', 0 );
@@ -126,7 +126,7 @@ class SM_Import_SB {
 		$this->log( 'Finished sermons import.' );
 
 		$this->log( 'Doing `sm_import_after_sb` action.', 0 );
-		do_action( 'sm_import_after_sb' );
+		do_action( 'sm_import_after_sb' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$this->log( 'Done.', 254 );
 	}
 
@@ -207,7 +207,7 @@ class SM_Import_SB {
 		global $wpdb;
 
 		$used_books = array();
-		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_books_sermons" );
+		$books      = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_books_sermons" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		foreach ( $books as $book ) {
 			foreach ( $used_books as $used_book ) {
@@ -224,7 +224,7 @@ class SM_Import_SB {
 		 *
 		 * @var array $used_books list of book names that will be imported.
 		 */
-		return apply_filters( 'sm_import_sb_books', $used_books );
+		return apply_filters( 'sm_import_sb_books', $used_books ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	}
 
 	/**
@@ -238,7 +238,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data
 		 */
-		$preachers = apply_filters( 'sm_import_sb_preachers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_preachers" ) );
+		$preachers = apply_filters( 'sm_import_sb_preachers', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_preachers" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $preachers as $preacher ) {
 			$term_data = term_exists( $preacher->name, 'wpfc_preacher' );
@@ -246,7 +246,7 @@ class SM_Import_SB {
 				$this->log( 'Term "' . $preacher->name . '" already exists. (ID: ' . $term_data['term_id'] . ')' );
 			} else {
 				$term_data = wp_insert_term( $preacher->name, 'wpfc_preacher', array(
-					'desc' => apply_filters( 'sm_import_sb_preacher_description', $preacher->description ?: '' ),
+					'desc' => apply_filters( 'sm_import_sb_preacher_description', $preacher->description ?: '' ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				) );
 				if ( ! $term_data instanceof WP_Error ) {
 					$this->log( 'Term "' . $preacher->name . '" imported. (ID: ' . $term_data['term_id'] . ')' );
@@ -287,7 +287,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data
 		 */
-		$series = apply_filters( 'sm_import_sb_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_series" ) );
+		$series = apply_filters( 'sm_import_sb_series', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_series" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $series as $item ) {
 			if ( trim( $item->name ) === '' ) {
@@ -324,7 +324,7 @@ class SM_Import_SB {
 		 *
 		 * @var array Raw database data.
 		 */
-		$services = apply_filters( 'sm_import_sb_service_types', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_services" ) );
+		$services = apply_filters( 'sm_import_sb_service_types', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_services" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		foreach ( $services as $service ) {
 			$term_data = term_exists( $service->name, 'wpfc_service_type' );
@@ -378,7 +378,7 @@ class SM_Import_SB {
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();
-			print_r( $options );
+			print_r( $options ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 
 			$this->log( 'Sermon Browser plugin options: <a onclick="jQuery(\'#sb-options\').toggle();" style="cursor:pointer;">Show data</a><div id="sb-options" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 0 );
 		}
@@ -388,11 +388,11 @@ class SM_Import_SB {
 		 *
 		 * @var array $sermons Raw database data.
 		 */
-		$sermons = apply_filters( 'sm_import_sb_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_sermons" ) );
+		$sermons = apply_filters( 'sm_import_sb_messages', $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}sb_sermons" ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();
-			print_r( $sermons );
+			print_r( $sermons ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 
 			$this->log( 'Raw sermons data: <a onclick="jQuery(\'#sermon-data\').toggle();" style="cursor:pointer;">Show data</a><div id="sermon-data" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 0 );
 		}
@@ -406,7 +406,7 @@ class SM_Import_SB {
 				$id = $imported[ $sermon->id ]['new_id'];
 			} else {
 				// Either never imported, or the post was deleted — (re-)insert it.
-				$id = wp_insert_post( apply_filters( 'sm_import_sb_message', array(
+				$id = wp_insert_post( apply_filters( 'sm_import_sb_message', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					'post_date'      => $sermon->datetime,
 					'post_content'   => '%todo_render%',
 					'post_title'     => $sermon->title,
@@ -439,11 +439,11 @@ class SM_Import_SB {
 			 *
 			 * @var array $stuff Raw database data.
 			 */
-			$stuff = apply_filters( 'sm_import_sb_message_stuff', $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) );
+			$stuff = apply_filters( 'sm_import_sb_message_stuff', $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 			if ( SM_OB_ENABLED ) {
 				ob_start();
-				print_r( $stuff );
+				print_r( $stuff ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 
 				$this->log( 'Raw files data: <a onclick="jQuery(\'#files-data-' . $id . '\').toggle();" style="cursor:pointer;">Show data</a><div id="files-data-' . $id . '" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 253 );
 			}
@@ -456,7 +456,7 @@ class SM_Import_SB {
 				$url = $item->name;
 
 				if ( 'file' === $item->type || 'url' === $item->type ) {
-					if ( parse_url( $url, PHP_URL_SCHEME ) === null ) {
+					if ( wp_parse_url( $url, PHP_URL_SCHEME ) === null ) {
 						$url = site_url( ( ! empty( $options['upload_dir'] ) ? $options['upload_dir'] : 'wp-content/uploads/sermons/' ) . rawurlencode( $url ) );
 						$this->log( 'File URL is local, created a full URL. ("' . $url . '")', 253 );
 					}
@@ -539,12 +539,12 @@ class SM_Import_SB {
 
 			// Set date.
 			update_post_meta( $id, 'sermon_date', strtotime( $sermon->datetime ) );
-			$this->log( 'Set sermon_date to ' . date( 'c', strtotime( $sermon->datetime ) ), 253 );
+			$this->log( 'Set sermon_date to ' . gmdate( 'c', strtotime( $sermon->datetime ) ), 253 );
 			update_post_meta( $id, 'sermon_date_auto', SermonManager::getOption( 'import_disable_auto_dates' ) ? '0' : '1' );
 
 			// Set views.
 			/* @noinspection SqlResolve */
-			update_post_meta( $id, 'Views', $wpdb->get_var( $wpdb->prepare( "SELECT SUM(`count`) FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) );
+			update_post_meta( $id, 'Views', $wpdb->get_var( $wpdb->prepare( "SELECT SUM(`count`) FROM {$wpdb->prefix}sb_stuff WHERE `sermon_id` = %d", $sermon->id ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 
 		// Convert passages to Sermon Manager format.

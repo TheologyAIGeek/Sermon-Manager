@@ -113,12 +113,18 @@ function wpfc_sermon_metaboxes() {
 		'id'   => 'sermon_video',
 		'type' => 'textarea_code',
 	) );
-	$sermon_files_meta->add_field( apply_filters( 'sm_cmb2_field_sermon_video_link', array(
+	$sermon_files_meta->add_field( apply_filters( 'sm_cmb2_field_sermon_video_link', array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		'name' => esc_html__( 'Video Link', 'sermon-manager-revival' ),
 		'desc' => esc_html__( 'Paste your link for Vimeo, Youtube, Facebook, or direct video file here', 'sermon-manager-revival' ),
 		'id'   => 'sermon_video_link',
 		'type' => 'text_url',
 	) ) );
+	$sermon_files_meta->add_field( array(
+		'name' => esc_html__( 'Spotify Episode Link', 'sermon-manager-revival' ),
+		'desc' => esc_html__( 'Paste the Spotify episode URL to display a "Listen on Spotify" button near the audio player. Leave blank to hide.', 'sermon-manager-revival' ),
+		'id'   => 'sermon_spotify_link',
+		'type' => 'text_url',
+	) );
 	$sermon_files_meta->add_field( array(
 		'name' => esc_html__( 'Sermon Notes', 'sermon-manager-revival' ),
 		'desc' => esc_html__( 'Upload a pdf file or enter an URL.', 'sermon-manager-revival' ),
@@ -146,7 +152,7 @@ function wpfc_sermon_metaboxes() {
 	 * @param CMB2 $sermon_details_meta Sermon Details meta.
 	 * @param CMB2 $sermon_files_meta   Sermon Files meta box.
 	 */
-	do_action( 'sm_cmb2_meta_fields', $sermon_details_meta, $sermon_files_meta );
+	do_action( 'sm_cmb2_meta_fields', $sermon_details_meta, $sermon_files_meta ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 add_action( 'cmb2_admin_init', 'wpfc_sermon_metaboxes' );
@@ -158,7 +164,7 @@ add_action( 'cmb2_admin_init', 'wpfc_sermon_metaboxes' );
  *
  * @return array An array of options that matches the CMB2 options array
  */
-function cmb2_get_term_options( $taxonomy = 'category' ) {
+function cmb2_get_term_options( $taxonomy = 'category' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$args['taxonomy'] = $taxonomy;
 	$taxonomy         = $args['taxonomy'];
 
@@ -190,7 +196,7 @@ function cmb2_get_term_options( $taxonomy = 'category' ) {
  *
  * @return null|string|string[]
  */
-function sm_cmb2_sanitize_text_number( $null = null, $value = '' ) {
+function sm_cmb2_sanitize_text_number( $null = null, $value = '' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$value = preg_replace( '/[^0-9]/', '', $value );
 
 	return $value;
