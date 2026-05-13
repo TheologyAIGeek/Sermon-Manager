@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.4
+Stable tag: 2026.5.5
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,28 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.5.5 ###
+* Feature: Modernize podcast feature — remove dead integrations, add Spotify and Podcasting 2.0 support
+* Remove: FeedBurner references from podcast settings (service is dead)
+* Remove: Android subscription URL field (subscribeonandroid.com is shut down)
+* Remove: HTTP-only enforcement on enclosure URLs (outdated RSS 2.0 spec clause; all modern directories require HTTPS)
+* Remove: HTTP stripping from audio and cover image URLs in feed output
+* Remove: Dead Sermon Manager Pro category branch from feed template
+* Fix: Update PodTrac redirect prefix from HTTP to HTTPS (https://dts.podtrac.com/redirect.mp3/)
+* Fix: Update all iTunes branding to Apple Podcasts throughout settings labels and descriptions
+* Fix: Update cover image description with correct Apple Podcasts and Spotify size requirements
+* Fix: Update Feed Validator link from dead feedvalidator.org to podcastpage.io/podcast-validator
+* Fix: Replace dead Apple iTunes submission links with Apple Podcasts Connect and Spotify for Podcasters
+* Add: podcast and spotify XML namespaces to RSS feed element
+* Add: podcast:guid channel element (stable UUID auto-generated on first use, per Podcasting 2.0 spec)
+* Add: spotify:countryOfOrigin channel element (configurable ISO country code, defaults to US)
+* Add: Country of Origin setting field in Podcast Settings
+* Add: Spotify Podcast URL field in Directory Links settings section
+* Add: Spotify subscribe button to [list_podcasts] shortcode (Spotify green, replaces android as default)
+* Add: Submit to Podcast Directories section in settings with links for Apple Podcasts Connect, Spotify for Podcasters, Amazon Music, and iHeartRadio
+* Change: Reorganize podcast settings into logical sections (feed settings + directory links)
+* Change: Default [list_podcasts] include changed from itunes/android/overcast to itunes/spotify/overcast
+
 ### 2026.5.4 ###
 * Fix: Resolve all remaining WordPress Plugin Check violations — zero errors across full plugin scan
 * Fix: Add proper WP output escaping (wp_kses_post, esc_html, wp_kses) to podcast feed and sermon wrapper templates replacing phpcs:ignore annotations that Plugin Check does not honor

@@ -37,6 +37,7 @@ $default_settings = array(
 	'itunes_sub_category'             => '',
 	'podcast_sermon_image_series'     => '',
 	'podtrac'                         => '',
+	'spotify_country'                 => 'esc_attr',
 );
 
 // If there is no default.
@@ -184,64 +185,19 @@ $args = apply_filters( 'sermon_feed_query_args', $args );
 
 $sermon_podcast_query = new WP_Query( $args );
 
-if ( ! $is_pro ) {
-	$categories = array(
-		'0' => '',
-		'1' => 'Buddhism',
-		'2' => 'Christianity',
-		'3' => 'Hinduism',
-		'4' => 'Islam',
-		'5' => 'Judaism',
-		'6' => 'Other',
-		'7' => 'Spirituality',
-	);
+$categories = array(
+	'0' => '',
+	'1' => 'Buddhism',
+	'2' => 'Christianity',
+	'3' => 'Hinduism',
+	'4' => 'Islam',
+	'5' => 'Judaism',
+	'6' => 'Other',
+	'7' => 'Spirituality',
+);
 
-	$category          = 'Religion &amp; Spirituality';
-	$subcategory       = esc_attr( ! empty( $categories[ $settings['itunes_sub_category'] ] ) ? $categories[ $settings['itunes_sub_category'] ] : 'Christianity' );
-	$category_override = false;
-} else {
-	if ( function_exists( 'smp_get_itunes_categories' ) && function_exists( 'smp_get_itunes_subcategories' ) ) {
-		$category_override = PHP_EOL;
-		$all_categories    = smp_get_itunes_categories();
-		$all_subcategories = smp_get_itunes_subcategories();
-
-		for ( $i = 1; $i <= 3; $i ++ ) {
-			$category    = isset( $settings[ 'itunes_category_' . $i ] ) ? $settings[ 'itunes_category_' . $i ] : '';
-			$category    = $category ? ( isset( $all_categories[ $category ] ) ? $all_categories[ $category ] : '' ) : '';
-			$category    = str_replace( '&', '&amp;', $category );
-			$subcategory = isset( $settings[ 'itunes_category_' . $i . '_subcategory' ] ) ? $settings[ 'itunes_category_' . $i . '_subcategory' ] : '';
-			$subcategory = str_replace( '&', '&amp;', $subcategory );
-
-			if ( $subcategory ) {
-				foreach ( $all_subcategories as $cat_id => $cat_subs ) {
-					foreach ( $cat_subs as $cat_sub_id => $cat_sub_name ) {
-						if ( $cat_sub_id === $subcategory ) {
-							$subcategory = $cat_sub_name;
-							break 2;
-						}
-					}
-				}
-			}
-
-			if ( ! $category ) {
-				continue;
-			}
-
-			$category_override .= '<itunes:category text="' . $category . '">' . PHP_EOL;
-
-			if ( $subcategory ) {
-				$category_override .= '	<itunes:category text="' . $subcategory . '"/>' . PHP_EOL;
-			}
-
-			$category_override .= '</itunes:category>' . PHP_EOL;
-		}
-
-		unset( $category );
-		unset( $subcategory );
-
-		$category_override .= PHP_EOL;
-	}
-}
+$category    = 'Religion &amp; Spirituality';
+$subcategory = esc_attr( ! empty( $categories[ $settings['itunes_sub_category'] ] ) ? $categories[ $settings['itunes_sub_category'] ] : 'Christianity' );
 
 $title            = $settings['title'];
 $link             = $settings['website_link'];
@@ -255,6 +211,14 @@ $summary          = str_replace( '&nbsp;', '', $settings['enable_podcast_html_de
 $owner_name       = $settings['itunes_owner_name'];
 $owner_email      = $settings['itunes_owner_email'];
 $cover_image_url  = $settings['itunes_cover_image'];
+$spotify_country  = strtolower( $settings['spotify_country'] ?: 'us' );
+
+// Get or generate a stable podcast GUID (Podcasting 2.0 spec).
+$podcast_guid = get_option( 'sermonmanager_podcast_guid' );
+if ( ! $podcast_guid ) {
+	$podcast_guid = wp_generate_uuid4();
+	update_option( 'sermonmanager_podcast_guid', $podcast_guid, false );
+}
 
 ?>
 <rss version="2.0"
@@ -263,6 +227,8 @@ $cover_image_url  = $settings['itunes_cover_image'];
 		xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
 		xmlns:content="http://purl.org/rss/1.0/modules/content/"
 		xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		xmlns:podcast="https://podcastindex.org/namespace/1.0"
+		xmlns:spotify="http://www.spotify.com/ns/rss"
 >
 
 	<?php // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -288,13 +254,11 @@ $cover_image_url  = $settings['itunes_cover_image'];
 			<itunes:image href="<?php echo $cover_image_url; ?>"/>
 		<?php endif; ?>
 
-		<?php if ( ! $category_override ) : ?>
-			<itunes:category text="<?php echo $category; ?>">
-				<itunes:category text="<?php echo $subcategory; ?>"/>
-			</itunes:category>
-		<?php else : ?>
-			<?php echo $category_override; ?>
-		<?php endif; ?>
+		<itunes:category text="<?php echo $category; ?>">
+			<itunes:category text="<?php echo $subcategory; ?>"/>
+		</itunes:category>
+		<podcast:guid><?php echo esc_html( $podcast_guid ); ?></podcast:guid>
+		<spotify:countryOfOrigin><?php echo esc_html( $spotify_country ); ?></spotify:countryOfOrigin>
 		<?php // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<?php
 		if ( $sermon_podcast_query->have_posts() ) :
@@ -305,9 +269,8 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				$audio_id          = get_post_meta( $post->ID, 'sermon_audio_id', true );
 				$audio_url_wp      = $audio_id ? wp_get_attachment_url( intval( $audio_id ) ) : false;
 				$audio_url         = $audio_id && $audio_url_wp ? $audio_url_wp : get_post_meta( $post->ID, 'sermon_audio', true );
-				$audio_raw         = str_ireplace( 'https://', 'http://', $audio_url );
-				$audio_p           = strrpos( $audio_raw, '/' ) + 1;
-				$audio_raw         = urldecode( $audio_raw );
+				$audio_p           = strrpos( $audio_url, '/' ) + 1;
+				$audio_raw         = urldecode( $audio_url );
 				$audio             = substr( $audio_raw, 0, $audio_p ) . rawurlencode( substr( $audio_raw, $audio_p ) );
 				$speakers          = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ' &amp; ', '' ) );
 				$speakers_terms    = get_the_terms( $post->ID, 'wpfc_preacher' );
@@ -315,7 +278,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				$series            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', '', ', ', '' ) );
 				$topics            = wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_topics', '', ', ', '' ) );
 				$post_image        = get_sermon_image_url( $settings['podcast_sermon_image_series'] );
-				$post_image        = str_ireplace( 'https://', 'http://', ! empty( $post_image ) ? $post_image : '' );
+				$post_image        = ! empty( $post_image ) ? $post_image : '';
 				$audio_duration    = get_post_meta( $post->ID, '_wpfc_sermon_duration', true ) ?: '0:00';
 				$audio_file_size   = get_post_meta( $post->ID, '_wpfc_sermon_size', 'true' ) ?: 0;
 				$description       = strip_shortcodes( get_post_meta( $post->ID, 'sermon_description', true ) );
@@ -332,11 +295,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				}
 
 				if ( $settings['podtrac'] ) {
-					$audio = 'http://dts.podtrac.com/redirect.mp3/' . esc_url( preg_replace( '#^https?://#', '', $audio ) );
-				} else {
-					// As per RSS 2.0 spec, the enclosure URL must be HTTP only:
-					// http://www.rssboard.org/rss-specification#ltenclosuregtSubelementOfLtitemgt .
-					$audio = preg_replace( '/^https:/i', 'http:', $audio );
+					$audio = 'https://dts.podtrac.com/redirect.mp3/' . preg_replace( '#^https?://#', '', $audio );
 				}
 				?>
 

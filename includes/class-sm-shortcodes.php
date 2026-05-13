@@ -84,7 +84,7 @@ class SM_Shortcodes {
 
 		// Default options.
 		$args = array(
-			'include' => 'itunes, android, overcast',
+			'include' => 'itunes, spotify, overcast',
 			'exclude' => null, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 		);
 
