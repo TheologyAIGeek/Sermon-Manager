@@ -104,7 +104,7 @@ global $post;
 							</svg>
 						</a>
 					</div>
-					<?php $spotify_url = get_wpfc_sermon_meta( 'sermon_spotify_link' ); ?>
+					<?php $spotify_url = get_wpfc_sermon_meta( 'sermon_spotify_link' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<?php if ( $spotify_url ) : ?>
 						<div class="wpfc-sermon-single-spotify-wrap">
 							<a class="wpfc-sermon-single-spotify-link"
@@ -119,7 +119,7 @@ global $post;
 							</a>
 						</div>
 					<?php endif; ?>
-					<?php $apple_podcasts_url = get_wpfc_sermon_meta( 'sermon_apple_podcasts_link' ); ?>
+					<?php $apple_podcasts_url = get_wpfc_sermon_meta( 'sermon_apple_podcasts_link' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 					<?php if ( $apple_podcasts_url ) : ?>
 						<div class="wpfc-sermon-single-apple-podcasts-wrap">
 							<a class="wpfc-sermon-single-apple-podcasts-link"

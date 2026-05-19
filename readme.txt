@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.6
+Stable tag: 2026.5.7
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.5.7 ###
+* Fix: Move translators comment to line directly above esc_html__() call in podcast settings (MissingTranslatorsComment)
+* Fix: Add PrefixAllGlobals phpcs:ignore to $spotify_url and $apple_podcasts_url in sermon single template
+
 ### 2026.5.6 ###
 * New: Add Apple Podcasts Episode Link field to Sermon Files metabox
 * New: Display a branded Listen on Apple Podcasts button below the audio player on the sermon single page when an Apple Podcasts link is provided; outputs nothing when the field is left blank

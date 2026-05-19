@@ -251,8 +251,8 @@ class SM_Settings_Podcast extends SM_Settings_Page { // phpcs:ignore WordPress.N
 			</p>
 			<p>
 				<?php
-				// translators: %s: Podcast Validator link.
 				echo wp_sprintf(
+					// translators: %s: Podcast Validator link.
 					esc_html__( 'Validate your feed with %s before submitting to directories.', 'sermon-manager-revival' ),
 					'<a href="' . esc_url( 'https://podcastpage.io/podcast-validator/?url=' . rawurlencode( $feed_url ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Podcast Validator', 'sermon-manager-revival' ) . '</a>'
 				); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
