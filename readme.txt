@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.5
+Stable tag: 2026.5.6
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.5.6 ###
+* New: Add Apple Podcasts Episode Link field to Sermon Files metabox
+* New: Display a branded Listen on Apple Podcasts button below the audio player on the sermon single page when an Apple Podcasts link is provided; outputs nothing when the field is left blank
+* Change: Refactor Spotify and Apple Podcasts button CSS to share common pill-button rules
+
 ### 2026.5.5 ###
 * Feature: Modernize podcast feature — remove dead integrations, add Spotify and Podcasting 2.0 support
 * Remove: FeedBurner references from podcast settings (service is dead)

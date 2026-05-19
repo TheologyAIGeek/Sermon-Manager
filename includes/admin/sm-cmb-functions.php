@@ -126,6 +126,12 @@ function wpfc_sermon_metaboxes() {
 		'type' => 'text_url',
 	) );
 	$sermon_files_meta->add_field( array(
+		'name' => esc_html__( 'Apple Podcasts Episode Link', 'sermon-manager-revival' ),
+		'desc' => esc_html__( 'Paste the Apple Podcasts episode URL to display a "Listen on Apple Podcasts" button near the audio player. Leave blank to hide.', 'sermon-manager-revival' ),
+		'id'   => 'sermon_apple_podcasts_link',
+		'type' => 'text_url',
+	) );
+	$sermon_files_meta->add_field( array(
 		'name' => esc_html__( 'Sermon Notes', 'sermon-manager-revival' ),
 		'desc' => esc_html__( 'Upload a pdf file or enter an URL.', 'sermon-manager-revival' ),
 		'id'   => 'sermon_notes',

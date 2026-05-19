@@ -146,18 +146,18 @@
     margin-top: 24px;
   }
 
-  &-spotify-wrap {
+  &-spotify-wrap,
+  &-apple-podcasts-wrap {
     display: flex;
     justify-content: center;
     margin-top: 12px;
   }
 
-  &-spotify-link {
+  &-spotify-link,
+  &-apple-podcasts-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: #191414;
-    color: #ffffff;
     padding: 8px 20px;
     border-radius: 500px;
     text-decoration: none;
@@ -166,17 +166,32 @@
     letter-spacing: 0.5px;
     transition: background-color 0.2s;
     box-shadow: none;
+    color: #ffffff;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+  }
+
+  &-spotify-link {
+    background-color: #191414;
 
     &:hover,
     &:focus {
       background-color: #1db954;
       color: #ffffff;
     }
+  }
 
-    svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
+  &-apple-podcasts-link {
+    background-color: #6a0dad;
+
+    &:hover,
+    &:focus {
+      background-color: #9333ea;
+      color: #ffffff;
     }
   }
 

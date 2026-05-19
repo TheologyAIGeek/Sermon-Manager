@@ -119,6 +119,21 @@ global $post;
 							</a>
 						</div>
 					<?php endif; ?>
+					<?php $apple_podcasts_url = get_wpfc_sermon_meta( 'sermon_apple_podcasts_link' ); ?>
+					<?php if ( $apple_podcasts_url ) : ?>
+						<div class="wpfc-sermon-single-apple-podcasts-wrap">
+							<a class="wpfc-sermon-single-apple-podcasts-link"
+									href="<?php echo esc_url( $apple_podcasts_url ); ?>"
+									target="_blank"
+									rel="noopener noreferrer"
+									title="<?php echo esc_attr__( 'Listen on Apple Podcasts', 'sermon-manager-revival' ); ?>">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<path fill="#ffffff" d="M12 2a3 3 0 013 3v6a3 3 0 01-6 0V5a3 3 0 013-3zm0 14a7 7 0 007-7h2a9 9 0 01-8 8.945V20h-2v-2.055A9 9 0 013 9h2a7 7 0 007 7zm0-9a1 1 0 011 1v3a1 1 0 01-2 0V8a1 1 0 011-1z"/>
+								</svg>
+								<?php echo esc_html__( 'Listen on Apple Podcasts', 'sermon-manager-revival' ); ?>
+							</a>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 
