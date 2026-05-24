@@ -2,7 +2,7 @@
 Contributors: wpforchurch, jasonmwestbrook, jlpurvis1982
 Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 2026.5.7
 License: GPLv2  
