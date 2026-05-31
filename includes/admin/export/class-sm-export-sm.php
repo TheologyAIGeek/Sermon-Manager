@@ -98,7 +98,7 @@ class SM_Export_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobal
 		 */
 		if ( ! function_exists( 'wxr_cdata' ) ) {
 			function wxr_cdata( $str ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
-				if ( wp_is_valid_utf8( $str ) == false ) {
+				if ( mb_check_encoding( $str, 'UTF-8' ) == false ) {
 					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
 
