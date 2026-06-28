@@ -108,6 +108,35 @@ function wpfc_sermon_metaboxes() {
 		'type' => 'text',
 	) );
 	$sermon_files_meta->add_field( array(
+		'name'    => esc_html__( 'Audio Source', 'sermon-manager-revival' ),
+		'desc'    => esc_html__( 'Choose which audio player to display for this sermon. Use Spotify or Apple Podcasts to embed a streaming player instead of hosting an MP3.', 'sermon-manager-revival' ),
+		'id'      => 'sermon_audio_source',
+		'type'    => 'select',
+		// No 'default' is set: CMB2 runs is_callable() on the default value, and
+		// 'file' collides with PHP's file() function, which would be mistaken for
+		// a callback and fatal. The first option ('file') is selected by default
+		// anyway, and wpfc_get_sermon_audio_source() treats an empty value as 'file'.
+		'options' => array(
+			'file'    => esc_html__( 'Uploaded file / URL', 'sermon-manager-revival' ),
+			'spotify' => esc_html__( 'Spotify', 'sermon-manager-revival' ),
+			'apple'   => esc_html__( 'Apple Podcasts', 'sermon-manager-revival' ),
+		),
+	) );
+	$sermon_files_meta->add_field( array(
+		'name' => esc_html__( 'Spotify Link', 'sermon-manager-revival' ),
+		// translators: %s an example Spotify URL, wrapped in <code>.
+		'desc' => wp_sprintf( esc_html__( 'Paste the Spotify episode or show link (e.g. %s). Used when Audio Source is set to Spotify.', 'sermon-manager-revival' ), '<code>https://open.spotify.com/episode/&hellip;</code>' ),
+		'id'   => 'sermon_audio_spotify',
+		'type' => 'text_url',
+	) );
+	$sermon_files_meta->add_field( array(
+		'name' => esc_html__( 'Apple Podcasts Link', 'sermon-manager-revival' ),
+		// translators: %s an example Apple Podcasts URL, wrapped in <code>.
+		'desc' => wp_sprintf( esc_html__( 'Paste the Apple Podcasts episode link (e.g. %s). Used when Audio Source is set to Apple Podcasts.', 'sermon-manager-revival' ), '<code>https://podcasts.apple.com/&hellip;</code>' ),
+		'id'   => 'sermon_audio_apple',
+		'type' => 'text_url',
+	) );
+	$sermon_files_meta->add_field( array(
 		'name' => esc_html__( 'Video Embed Code', 'sermon-manager-revival' ),
 		'desc' => esc_html__( 'Paste your embed code for Vimeo, Youtube, Facebook, or direct video file here', 'sermon-manager-revival' ),
 		'id'   => 'sermon_video',

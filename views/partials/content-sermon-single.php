@@ -85,24 +85,22 @@ global $post;
 					</div>
 				<?php endif; ?>
 
-				<?php if ( get_wpfc_sermon_meta( 'sermon_audio' ) || get_wpfc_sermon_meta( 'sermon_audio_id' ) ) : ?>
-					<?php
-					$sermon_audio_id     = get_wpfc_sermon_meta( 'sermon_audio_id' );
-					$sermon_audio_url_wp = $sermon_audio_id ? wp_get_attachment_url( intval( $sermon_audio_id ) ) : false;
-					$sermon_audio_url    = $sermon_audio_id && $sermon_audio_url_wp ? $sermon_audio_url_wp : get_wpfc_sermon_meta( 'sermon_audio' );
-					?>
-					<div class="wpfc-sermon-single-audio player-<?php echo esc_attr( strtolower( \SermonManager::getOption( 'player', 'plyr' ) ) ); ?>">
-						<?php echo wpfc_render_audio( $sermon_audio_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<a class="wpfc-sermon-single-audio-download"
-								href="<?php echo esc_url( $sermon_audio_url ); ?>"
-								download="<?php echo esc_attr( basename( $sermon_audio_url ) ); ?>"
-								title="<?php echo esc_attr__( 'Download Audio File', 'sermon-manager-revival' ); ?>">
-							<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
-									xmlns="http://www.w3.org/2000/svg">
-								<path d="M0 0h24v24H0z" fill="none"></path>
-								<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"></path>
-							</svg>
-						</a>
+				<?php $sermon_audio = wpfc_get_sermon_audio_source(); ?>
+				<?php if ( $sermon_audio['url'] ) : ?>
+					<div class="wpfc-sermon-single-audio player-<?php echo esc_attr( strtolower( \SermonManager::getOption( 'player', 'plyr' ) ) ); ?> source-<?php echo esc_attr( $sermon_audio['type'] ); ?>">
+						<?php echo wpfc_render_audio( $sermon_audio['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php if ( 'file' === $sermon_audio['type'] ) : ?>
+							<a class="wpfc-sermon-single-audio-download"
+									href="<?php echo esc_url( $sermon_audio['url'] ); ?>"
+									download="<?php echo esc_attr( basename( $sermon_audio['url'] ) ); ?>"
+									title="<?php echo esc_attr__( 'Download Audio File', 'sermon-manager-revival' ); ?>">
+								<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
+										xmlns="http://www.w3.org/2000/svg">
+									<path d="M0 0h24v24H0z" fill="none"></path>
+									<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"></path>
+								</svg>
+							</a>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 			</div>

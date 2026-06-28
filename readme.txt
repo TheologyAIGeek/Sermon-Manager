@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.5.2
+Stable tag: 2026.6.1
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,13 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.6.1 ###
+* New: Add per-sermon Audio Source option (Uploaded file/URL, Spotify, or Apple Podcasts) so sermons can use an embedded streaming player instead of a hosted MP3
+* New: Add Spotify Link and Apple Podcasts Link fields to the Sermon Files meta box; paste a normal share URL and the matching player is embedded automatically
+* New: Add wpfc_get_sermon_audio_source() and wpfc_get_audio_embed_html() helpers, plus sm_spotify_embed and sm_apple_embed filters for customizing embed output
+* Change: wpfc_render_audio() now outputs a Spotify or Apple Podcasts iframe when the audio source is a recognized streaming URL
+* Change: Hide the audio download link on single and archive views for streaming embeds (no downloadable file)
+
 ### 2026.5.2 ###
 * Security: Add $wpdb->prepare() placeholders to all raw SQL queries (SQL injection prevention)
 * Security: Add output escaping (esc_html, esc_attr, esc_url, wp_kses_post) throughout admin and frontend views

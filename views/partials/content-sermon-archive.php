@@ -75,11 +75,19 @@ if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_archi
 				</div>
 				<?php if ( \SermonManager::getOption( 'archive_meta' ) ) : ?>
 					<div class="wpfc-sermon-header-aside">
-						<?php if ( get_wpfc_sermon_meta( 'sermon_audio' ) ) : ?>
-							<a class="wpfc-sermon-att-audio dashicons dashicons-media-audio"
-									href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_audio' ) ); ?>"
-									download="<?php echo esc_attr( basename( get_wpfc_sermon_meta( 'sermon_audio' ) ) ); ?>"
-									title="Audio"></a>
+						<?php $archive_audio = wpfc_get_sermon_audio_source( $post ); ?>
+						<?php if ( $archive_audio['url'] ) : ?>
+							<?php if ( 'file' === $archive_audio['type'] ) : ?>
+								<a class="wpfc-sermon-att-audio dashicons dashicons-media-audio"
+										href="<?php echo esc_url( $archive_audio['url'] ); ?>"
+										download="<?php echo esc_attr( basename( $archive_audio['url'] ) ); ?>"
+										title="Audio"></a>
+							<?php else : ?>
+								<a class="wpfc-sermon-att-audio wpfc-sermon-att-audio-<?php echo esc_attr( $archive_audio['type'] ); ?> dashicons dashicons-media-audio"
+										href="<?php echo esc_url( $archive_audio['url'] ); ?>"
+										target="_blank" rel="noopener noreferrer"
+										title="Audio"></a>
+							<?php endif; ?>
 						<?php endif; ?>
 						<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) ) : ?>
 							<a class="wpfc-sermon-att-notes dashicons dashicons-media-document"

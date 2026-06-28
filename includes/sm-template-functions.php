@@ -356,12 +356,122 @@ function wpfc_render_video( $url = '', $seek = true ) {
 }
 
 /**
+ * Resolves the effective audio source for a sermon, based on its per-sermon
+ * "Audio Source" selection (uploaded file/URL, Spotify, or Apple Podcasts).
+ *
+ * @param int|WP_Post|null $post Sermon ID or object. Defaults to the current post.
+ *
+ * @return array {
+ *     @type string $type 'file', 'spotify', or 'apple'.
+ *     @type string $url  The resolved audio URL (empty string if none set).
+ * }
+ *
+ * @since 2.16.0
+ */
+function wpfc_get_sermon_audio_source( $post = null ) {
+	if ( null === $post ) {
+		global $post;
+	}
+
+	$post_id = is_object( $post ) ? $post->ID : intval( $post );
+
+	if ( ! $post_id ) {
+		return array( 'type' => 'file', 'url' => '' );
+	}
+
+	$type = get_post_meta( $post_id, 'sermon_audio_source', true );
+	$type = in_array( $type, array( 'spotify', 'apple' ), true ) ? $type : 'file';
+
+	switch ( $type ) {
+		case 'spotify':
+			$url = get_post_meta( $post_id, 'sermon_audio_spotify', true );
+			break;
+		case 'apple':
+			$url = get_post_meta( $post_id, 'sermon_audio_apple', true );
+			break;
+		default:
+			$sermon_audio_id     = get_post_meta( $post_id, 'sermon_audio_id', true );
+			$sermon_audio_url_wp = $sermon_audio_id ? wp_get_attachment_url( intval( $sermon_audio_id ) ) : false;
+			$url                 = $sermon_audio_id && $sermon_audio_url_wp ? $sermon_audio_url_wp : get_post_meta( $post_id, 'sermon_audio', true );
+			break;
+	}
+
+	return array(
+		'type' => $type,
+		'url'  => $url ? $url : '',
+	);
+}
+
+/**
+ * Converts a Spotify or Apple Podcasts share URL into player embed HTML.
+ *
+ * @param string $url The share URL pasted into the sermon settings.
+ *
+ * @return string|false Embed iframe HTML, or false if the URL is not a
+ *                      recognised Spotify or Apple Podcasts link.
+ *
+ * @since 2.16.0
+ */
+function wpfc_get_audio_embed_html( $url ) {
+	if ( ! is_string( $url ) || '' === $url ) {
+		return false;
+	}
+
+	// Spotify (episode, show, track, album, or playlist).
+	if ( preg_match( '#open\.spotify\.com/(?:embed/)?(episode|show|track|album|playlist)/([A-Za-z0-9]+)#i', $url, $m ) ) {
+		$src    = 'https://open.spotify.com/embed/' . strtolower( $m[1] ) . '/' . $m[2];
+		$height = ( 'show' === strtolower( $m[1] ) ) ? 232 : 152;
+
+		$output = sprintf(
+			'<iframe class="wpfc-sermon-player wpfc-sermon-player-spotify" src="%1$s" width="100%%" height="%2$d" style="border-radius:12px" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+			esc_url( $src ),
+			(int) $height
+		);
+
+		/**
+		 * Allows changing of the Spotify embed HTML.
+		 *
+		 * @param string $output Embed iframe HTML.
+		 * @param string $src    Spotify embed URL.
+		 * @param string $url    Original URL pasted by the user.
+		 *
+		 * @since 2.16.0
+		 */
+		return apply_filters( 'sm_spotify_embed', $output, $src, $url );
+	}
+
+	// Apple Podcasts.
+	if ( preg_match( '#(?:embed\.)?podcasts\.apple\.com/(\S+)#i', $url, $m ) ) {
+		$src = 'https://embed.podcasts.apple.com/' . $m[1];
+
+		$output = sprintf(
+			'<iframe class="wpfc-sermon-player wpfc-sermon-player-apple" src="%1$s" height="175" style="width:100%%;max-width:660px;overflow:hidden;border-radius:10px;" frameborder="0" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" loading="lazy"></iframe>',
+			esc_url( $src )
+		);
+
+		/**
+		 * Allows changing of the Apple Podcasts embed HTML.
+		 *
+		 * @param string $output Embed iframe HTML.
+		 * @param string $src    Apple Podcasts embed URL.
+		 * @param string $url    Original URL pasted by the user.
+		 *
+		 * @since 2.16.0
+		 */
+		return apply_filters( 'sm_apple_embed', $output, $src, $url );
+	}
+
+	return false;
+}
+
+/**
  * Renders the audio player.
  *
  * @param int|string $source The ID of the sermon, or alternatively, the URL or the attachment ID of the audio file.
  * @param int        $seek   Seek to specific second in audio file.
  *
  * @return string|false Audio player HTML or false if sermon has no audio.
+ * @since 2.16.0 Renders Spotify/Apple Podcasts embeds when the URL is one.
  * @since 2.15.15 The sermon can be used as first parameter
  *
  * @since 2.12.3 added $seek
@@ -380,11 +490,8 @@ function wpfc_render_audio( $source = '', $seek = null ) {
 
 		switch ( $object->post_type ) {
 			case 'wpfc_sermon':
-				$sermon_audio_id     = get_wpfc_sermon_meta( 'sermon_audio_id' );
-				$sermon_audio_url    = get_wpfc_sermon_meta( 'sermon_audio' );
-				$sermon_audio_url_wp = $sermon_audio_id ? wp_get_attachment_url( intval( $sermon_audio_id ) ) : false;
-
-				$source = $sermon_audio_id && $sermon_audio_url_wp ? $sermon_audio_url_wp : $sermon_audio_url;
+				$audio  = wpfc_get_sermon_audio_source( $object );
+				$source = $audio['url'];
 				break;
 			case 'attachment':
 				$source = wp_get_attachment_url( $object->ID );
@@ -395,6 +502,13 @@ function wpfc_render_audio( $source = '', $seek = null ) {
 	// Check if set.
 	if ( ! $source ) {
 		return false;
+	}
+
+	// Render a Spotify or Apple Podcasts embed if the source is one of those.
+	$embed = wpfc_get_audio_embed_html( $source );
+	if ( false !== $embed ) {
+		/** This filter is documented at the end of this function. */
+		return apply_filters( 'sm_audio_player', $embed, $source, $source_orig );
 	}
 
 	// Get the current player.
