@@ -39,13 +39,15 @@ class SM_Settings_General extends SM_Settings_Page {
 			array(
 				'title'   => __( 'Audio & Video Player', 'sermon-manager-revival' ),
 				'type'    => 'select',
-				'desc'    => __( 'Select which player to use for playing Sermons.', 'sermon-manager-revival' ),
+				'desc'    => __( 'Select which player to use for playing Sermons. Choosing Spotify or Apple Podcasts makes that the default audio source for new sermons (video and uploaded audio still play with Plyr); you can override the source per sermon.', 'sermon-manager-revival' ),
 				'id'      => 'player',
 				'options' => array(
 					'plyr'         => 'Plyr',
 					'mediaelement' => 'Mediaelement',
 					'WordPress'    => 'Old WordPress player',
 					'none'         => 'Browser HTML5',
+					'spotify'      => 'Spotify (embed)',
+					'apple'        => 'Apple Podcasts (embed)',
 				),
 				'default' => 'plyr',
 			),

@@ -75,20 +75,27 @@ if ( get_sermon_image_url() && ! \SermonManager::getOption( 'disable_image_archi
 				</div>
 				<?php if ( \SermonManager::getOption( 'archive_meta' ) ) : ?>
 					<div class="wpfc-sermon-header-aside">
-						<?php $archive_audio = wpfc_get_sermon_audio_source( $post ); ?>
-						<?php if ( $archive_audio['url'] ) : ?>
-							<?php if ( 'file' === $archive_audio['type'] ) : ?>
-								<a class="wpfc-sermon-att-audio dashicons dashicons-media-audio"
-										href="<?php echo esc_url( $archive_audio['url'] ); ?>"
-										download="<?php echo esc_attr( basename( $archive_audio['url'] ) ); ?>"
-										title="Audio"></a>
+						<?php
+						$archive_audio_links = wpfc_get_sermon_audio_links( $post );
+						$archive_link_icons  = array(
+							'download' => array( 'dashicons-media-audio', __( 'Download', 'sermon-manager-revival' ) ),
+							'spotify'  => array( 'dashicons-format-audio', __( 'Spotify', 'sermon-manager-revival' ) ),
+							'apple'    => array( 'dashicons-microphone', __( 'Apple Podcasts', 'sermon-manager-revival' ) ),
+						);
+						?>
+						<?php foreach ( $archive_audio_links as $link_type => $link_url ) : ?>
+							<?php if ( 'download' === $link_type ) : ?>
+								<a class="wpfc-sermon-att-audio dashicons <?php echo esc_attr( $archive_link_icons[ $link_type ][0] ); ?>"
+										href="<?php echo esc_url( $link_url ); ?>"
+										download="<?php echo esc_attr( basename( $link_url ) ); ?>"
+										title="<?php echo esc_attr( $archive_link_icons[ $link_type ][1] ); ?>"></a>
 							<?php else : ?>
-								<a class="wpfc-sermon-att-audio wpfc-sermon-att-audio-<?php echo esc_attr( $archive_audio['type'] ); ?> dashicons dashicons-media-audio"
-										href="<?php echo esc_url( $archive_audio['url'] ); ?>"
+								<a class="wpfc-sermon-att-audio wpfc-sermon-att-audio-<?php echo esc_attr( $link_type ); ?> dashicons <?php echo esc_attr( $archive_link_icons[ $link_type ][0] ); ?>"
+										href="<?php echo esc_url( $link_url ); ?>"
 										target="_blank" rel="noopener noreferrer"
-										title="Audio"></a>
+										title="<?php echo esc_attr( $archive_link_icons[ $link_type ][1] ); ?>"></a>
 							<?php endif; ?>
-						<?php endif; ?>
+						<?php endforeach; ?>
 						<?php if ( get_wpfc_sermon_meta( 'sermon_notes' ) ) : ?>
 							<a class="wpfc-sermon-att-notes dashicons dashicons-media-document"
 									href="<?php echo esc_url( get_wpfc_sermon_meta( 'sermon_notes' ) ); ?>"

@@ -82,10 +82,15 @@ Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issue
 
 ## Changelog ##
 ### 2026.6.1 ###
-* New: Add per-sermon Audio Source option (Uploaded file/URL, Spotify, or Apple Podcasts) so sermons can use an embedded streaming player instead of a hosted MP3
+* New: Add per-sermon Audio Source option (Site default, Uploaded file/URL, Spotify, or Apple Podcasts) so sermons can use an embedded streaming player instead of a hosted MP3
 * New: Add Spotify Link and Apple Podcasts Link fields to the Sermon Files meta box; paste a normal share URL and the matching player is embedded automatically
-* New: Add wpfc_get_sermon_audio_source() and wpfc_get_audio_embed_html() helpers, plus sm_spotify_embed and sm_apple_embed filters for customizing embed output
+* New: Add Spotify and Apple Podcasts options to the global Audio & Video Player setting, which set the default audio source for sermons left on "Site default"
+* New: Add wpfc_get_sermon_audio_links() helper that returns every populated audio link (Download, Spotify, Apple) for "listen on" rows, with the sm_sermon_audio_links filter
+* New: Add wpfc_get_sermon_audio_source(), wpfc_get_audio_embed_html(), wpfc_get_player_engine(), and wpfc_get_default_audio_source() helpers, plus sm_spotify_embed and sm_apple_embed filters
 * Change: wpfc_render_audio() now outputs a Spotify or Apple Podcasts iframe when the audio source is a recognized streaming URL
+* Change: Default archive template shows all populated audio links (Download, Spotify, Apple Podcasts) per sermon
+* Change: Video and uploaded-audio playback fall back to Plyr when the global player is set to Spotify or Apple Podcasts
+* Change: A selected streaming source with no link falls back to the uploaded file so a player still renders
 * Change: Hide the audio download link on single and archive views for streaming embeds (no downloadable file)
 
 ### 2026.5.2 ###

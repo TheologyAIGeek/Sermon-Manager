@@ -112,11 +112,13 @@ function wpfc_sermon_metaboxes() {
 		'desc'    => esc_html__( 'Choose which audio player to display for this sermon. Use Spotify or Apple Podcasts to embed a streaming player instead of hosting an MP3.', 'sermon-manager-revival' ),
 		'id'      => 'sermon_audio_source',
 		'type'    => 'select',
-		// No 'default' is set: CMB2 runs is_callable() on the default value, and
-		// 'file' collides with PHP's file() function, which would be mistaken for
-		// a callback and fatal. The first option ('file') is selected by default
-		// anyway, and wpfc_get_sermon_audio_source() treats an empty value as 'file'.
+		// No 'default' arg is set: CMB2 runs is_callable() on the default value, and
+		// a value like 'file' collides with PHP's file() function, which would be
+		// mistaken for a callback and fatal. An empty selection is treated as
+		// 'default' by wpfc_get_sermon_audio_source(), which follows the global
+		// "Audio & Video Player" setting.
 		'options' => array(
+			'default' => esc_html__( 'Site default', 'sermon-manager-revival' ),
 			'file'    => esc_html__( 'Uploaded file / URL', 'sermon-manager-revival' ),
 			'spotify' => esc_html__( 'Spotify', 'sermon-manager-revival' ),
 			'apple'   => esc_html__( 'Apple Podcasts', 'sermon-manager-revival' ),

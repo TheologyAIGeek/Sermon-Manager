@@ -87,7 +87,7 @@ global $post;
 
 				<?php $sermon_audio = wpfc_get_sermon_audio_source(); ?>
 				<?php if ( $sermon_audio['url'] ) : ?>
-					<div class="wpfc-sermon-single-audio player-<?php echo esc_attr( strtolower( \SermonManager::getOption( 'player', 'plyr' ) ) ); ?> source-<?php echo esc_attr( $sermon_audio['type'] ); ?>">
+					<div class="wpfc-sermon-single-audio player-<?php echo esc_attr( wpfc_get_player_engine() ); ?> source-<?php echo esc_attr( $sermon_audio['type'] ); ?>">
 						<?php echo wpfc_render_audio( $sermon_audio['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php if ( 'file' === $sermon_audio['type'] ) : ?>
 							<a class="wpfc-sermon-single-audio-download"
