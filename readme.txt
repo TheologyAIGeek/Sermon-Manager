@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2026.6.1
+Stable tag: 2026.6.2
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,7 +81,7 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
-### 2026.6.1 ###
+### 2026.6.2 ###
 * New: Add per-sermon Audio Source option (Site default, Uploaded file/URL, Spotify, or Apple Podcasts) so sermons can use an embedded streaming player instead of a hosted MP3
 * New: Add Spotify Link and Apple Podcasts Link fields to the Sermon Files meta box; paste a normal share URL and the matching player is embedded automatically
 * New: Add Spotify and Apple Podcasts options to the global Audio & Video Player setting, which set the default audio source for sermons left on "Site default"
