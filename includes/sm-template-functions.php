@@ -412,57 +412,6 @@ function wpfc_get_audio_url_for_type( $post_id, $type ) {
 }
 
 /**
- * Returns every populated audio link for a sermon, regardless of which source
- * is selected as the player. Useful for rendering "listen on" links (Download,
- * Spotify, Apple Podcasts) on archive and single views.
- *
- * @param int|WP_Post|null $post Sermon ID or object. Defaults to the current post.
- *
- * @return array Associative array keyed by type ('download', 'spotify',
- *               'apple') mapped to its URL. Only populated links are included.
- *
- * @since 2.16.0
- */
-function wpfc_get_sermon_audio_links( $post = null ) {
-	if ( null === $post ) {
-		global $post;
-	}
-
-	$post_id = is_object( $post ) ? $post->ID : intval( $post );
-
-	$links = array();
-
-	if ( ! $post_id ) {
-		return $links;
-	}
-
-	$file = wpfc_get_audio_url_for_type( $post_id, 'file' );
-	if ( '' !== $file ) {
-		$links['download'] = $file;
-	}
-
-	$spotify = (string) get_post_meta( $post_id, 'sermon_audio_spotify', true );
-	if ( '' !== $spotify ) {
-		$links['spotify'] = $spotify;
-	}
-
-	$apple = (string) get_post_meta( $post_id, 'sermon_audio_apple', true );
-	if ( '' !== $apple ) {
-		$links['apple'] = $apple;
-	}
-
-	/**
-	 * Filters the populated audio links for a sermon.
-	 *
-	 * @param array $links   Type => URL pairs (download, spotify, apple).
-	 * @param int   $post_id Sermon post ID.
-	 *
-	 * @since 2.16.0
-	 */
-	return apply_filters( 'sm_sermon_audio_links', $links, $post_id );
-}
-
-/**
  * Resolves the effective audio source for a sermon, based on its per-sermon
  * "Audio Source" selection (Site default, uploaded file/URL, Spotify, or Apple
  * Podcasts). An empty/"default" selection follows the global default source. If
