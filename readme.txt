@@ -88,6 +88,7 @@ Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issue
 * New: Add wpfc_get_sermon_audio_source(), wpfc_get_audio_embed_html(), wpfc_get_player_engine(), and wpfc_get_default_audio_source() helpers, plus sm_spotify_embed and sm_apple_embed filters
 * Change: wpfc_render_audio() now outputs a Spotify or Apple Podcasts iframe when the audio source is a recognized streaming URL
 * Change: Video and uploaded-audio playback fall back to Plyr when the global player is set to Spotify or Apple Podcasts
+* Fix: Load Plyr assets based on the resolved engine so uploaded audio/video keep the Plyr player (instead of a bare HTML5 player) when the global player is Spotify or Apple Podcasts
 * Change: A selected streaming source with no link falls back to the uploaded file so a player still renders
 * Change: Hide the audio download link on single and archive views for streaming embeds (no downloadable file)
 

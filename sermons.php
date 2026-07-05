@@ -327,7 +327,9 @@ class SermonManager { // phpcs:ignore
 		// Load top theme-specific styling, if there's any.
 		wp_enqueue_style( 'wpfc-sm-style-theme' );
 
-		switch ( SermonManager::getOption( 'player' ) ) {
+		// Use the resolved engine so a Spotify/Apple default (which is a source,
+		// not a playback engine) still loads Plyr for video and uploaded audio.
+		switch ( wpfc_get_player_engine() ) {
 			case 'mediaelement':
 				wp_enqueue_style( 'wp-mediaelement' );
 				wp_enqueue_script( 'wp-mediaelement' );
