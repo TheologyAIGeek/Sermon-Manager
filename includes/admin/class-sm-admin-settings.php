@@ -84,21 +84,21 @@ class SM_Admin_Settings {
 		self::get_settings_pages();
 
 		// Get current tab/section.
-		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( $_GET['tab'] );
-		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : '';
+		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only tab routing for display; the save action verifies its own nonce in self::save().
+		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 
 		// Save settings if data has been posted.
-		if ( ! empty( $_POST ) ) {
+		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Only triggers self::save(), which verifies the settings nonce before persisting.
 			self::save();
 		}
 
 		// Add any posted messages.
-		if ( ! empty( $_GET['sm_error'] ) ) {
-			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) );
+		if ( ! empty( $_GET['sm_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 		}
 
-		if ( ! empty( $_GET['sm_message'] ) ) {
-			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) );
+		if ( ! empty( $_GET['sm_message'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 		}
 
 		switch ( $current_tab ) {
@@ -145,14 +145,14 @@ class SM_Admin_Settings {
 	public static function save() {
 		global $current_tab, $wpdb;
 
-		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'sm-settings' ) ) {
+		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'sm-settings' ) ) {
 			wp_die( esc_html__( 'Action failed. Please refresh the page and retry.', 'sermon-manager-revival' ) );
 		}
 
 		/**
 		 * Flush rewrite rules on archive page slug change.
 		 */
-		if ( 'general' === $current_tab && SermonManager::getOption( 'archive_slug' ) !== $_POST['archive_slug'] ) {
+		if ( 'general' === $current_tab && SermonManager::getOption( 'archive_slug' ) !== ( isset( $_POST['archive_slug'] ) ? sanitize_title( wp_unslash( $_POST['archive_slug'] ) ) : '' ) ) {
 			flush_rewrite_rules( true );
 		}
 
@@ -789,7 +789,7 @@ class SM_Admin_Settings {
 	 */
 	public static function save_fields( $options, $data = null ) {
 		if ( is_null( $data ) ) {
-			$data = $_POST;
+			$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Called from self::save() after the settings nonce has been verified.
 		}
 		if ( empty( $data ) ) {
 			return false;

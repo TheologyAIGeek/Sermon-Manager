@@ -95,7 +95,7 @@ class SM_Install {
 	 */
 	public static function check_version() {
 		global $pagenow;
-
+ // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only plugin activation/version check.
 		if ( ! defined( 'IFRAME_REQUEST' ) && ( ( 'plugins.php' === $pagenow && isset( $_GET['activate'] ) && 'true' === $_GET['activate'] ) || SM_VERSION !== get_option( 'sm_version' ) ) ) {
 			self::_install();
 			do_action( 'sm_updated' );

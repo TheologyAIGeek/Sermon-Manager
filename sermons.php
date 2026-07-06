@@ -615,7 +615,7 @@ class SermonManager { // phpcs:ignore
 		// Temporary hook for importing until API is properly done.
 		add_action(
 			'admin_init',
-			function () {
+			function () { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only; check_admin_referer( sm-import ) runs before any import action.
 				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
 					if ( isset( $_GET['doimport'] ) ) {
 						if ( ! current_user_can( 'import' ) ) {
@@ -791,12 +791,12 @@ class SermonManager { // phpcs:ignore
 				if ( ! current_user_can( 'edit_post', $post_ID ) ) {
 					return;
 				}
-
+ // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
 				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) {
 					return;
 				}
-
-				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) );
+ // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
+				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
 				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) );
 
 				// Attempt to get remote file size.

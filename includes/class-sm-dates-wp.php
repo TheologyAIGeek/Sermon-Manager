@@ -141,7 +141,7 @@ class SM_Dates_WP extends SM_Dates {
 		}
 
 		$original_terms = $GLOBALS['sm_original_terms'];
-		$tax_input      = isset( $_POST['tax_input'] ) ? wp_unslash( $_POST['tax_input'] ) : array();
+		$tax_input      = isset( $_POST['tax_input'] ) ? map_deep( wp_unslash( $_POST['tax_input'] ), 'sanitize_text_field' ) : array();
 		$updated_terms  = $tax_input;
 
 		// Convert terms to term array of term IDs if it's not already that way.
@@ -304,6 +304,11 @@ class SM_Dates_WP extends SM_Dates {
 	 * @since 2.7
 	 */
 	public static function maybe_update_date( $post_ID, $post, $update ) {
+		// Verify WordPress post nonce before accessing POST data.
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'update-post_' . $post_ID ) ) {
+			return;
+		}
+
 		$update_date = false;
 		$auto        = false;
 

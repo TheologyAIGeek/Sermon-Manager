@@ -884,7 +884,7 @@ function sm_set_service_type( $post_ID ) {
 	$tax_input = isset( $_GET['tax_input'] ) ? array_map( 'absint', (array) $_GET['tax_input'] ) : array();
 
 	$get  = ! empty( $tax_input['wpfc_service_type'] );
-	$post = isset( $_POST['tax_input'] ) && isset( $_POST['tax_input']['wpfc_service_type'] ) && $_POST['tax_input']['wpfc_service_type'];
+	$post = ! empty( $_POST['tax_input']['wpfc_service_type'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Presence check only; the sermon save handler verifies the post nonce before persisting.
 
 	if ( $get || $post ) {
 		$field = $get ? $tax_input['wpfc_service_type'] : sanitize_text_field( wp_unslash( $_POST['tax_input']['wpfc_service_type'] ) );

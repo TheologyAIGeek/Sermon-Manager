@@ -820,7 +820,7 @@ function wpfc_get_term_dropdown( $taxonomy, $default = '' ) {
 		$terms = array_merge( $ordered_terms, $unordered_terms );
 	}
 
-	$current_slug = get_query_var( $taxonomy ) ?: ( isset( $_GET[ $taxonomy ] ) ? $_GET[ $taxonomy ] : '' );
+	$current_slug = get_query_var( $taxonomy ) ?: ( isset( $_GET[ $taxonomy ] ) ? sanitize_text_field( wp_unslash( $_GET[ $taxonomy ] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only archive filter display via query string.
 
 	foreach ( $terms as $term ) {
 		$html .= '<option value="' . $term->slug . '" ' . ( ( '' === $default ? $current_slug === $term->slug : $default === $term->slug ) ? 'selected' : '' ) . '>' . $term->name . '</option>';
