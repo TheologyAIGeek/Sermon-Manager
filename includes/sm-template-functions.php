@@ -308,7 +308,7 @@ function wpfc_render_video( $url = '', $seek = true ) {
 
 	$player = wpfc_get_player_engine();
 
-	if ( 'wordpress' === $player ) {
+	if ( 'wordpress' === $player ) { // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- Lowercase player-engine identifier, not the WordPress trademark.
 		$attr = array(
 			'src'     => $url,
 			'preload' => 'none',
@@ -362,7 +362,7 @@ function wpfc_render_video( $url = '', $seek = true ) {
  * (which act as the default audio *source*, not a playback engine). In those
  * cases we fall back to Plyr so video and MP3 playback keep working.
  *
- * @return string One of 'plyr', 'mediaelement', 'wordpress', or 'none'.
+ * @return string One of 'plyr', 'mediaelement', 'none', or the classic WP player slug.
  *
  * @since 2.16.0
  */

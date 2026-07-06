@@ -38,7 +38,7 @@ class SM_Export_SM {
 		if ( ! empty( $sitename ) ) {
 			$sitename .= '.';
 		}
-		$filename = $sitename . 'wordpress.' . gmdate( 'Y-m-d' ) . '.xml';
+		$filename = $sitename . 'wordpress.' . gmdate( 'Y-m-d' ) . '.xml'; // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- Mirrors WordPress core's WXR export filename convention.
 
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -74,7 +74,7 @@ class SM_Export_SM {
 			'wpfc_bible_book',
 			'wpfc_service_type',
 		);
-		$custom_terms      = (array) get_terms( $custom_taxonomies, array( 'get' => 'all' ) );
+		$custom_terms      = (array) get_terms( array( 'taxonomy' => $custom_taxonomies, 'get' => 'all' ) );
 
 		// put terms in order with no child going before its parent.
 		while ( $t = array_shift( $custom_terms ) ) {

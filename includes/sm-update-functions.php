@@ -308,8 +308,8 @@ function sm_update_2140_convert_bible_verse() {
 		$bible_passage_end   = get_post_meta( $id, 'bible_passages_end', true );
 
 		if ( $bible_passage_start && $bible_passage_end ) {
-			$bible_passage_start = unserialize( $bible_passage_start );
-			$bible_passage_end   = unserialize( $bible_passage_end );
+			$bible_passage_start = maybe_unserialize( $bible_passage_start );
+			$bible_passage_end   = maybe_unserialize( $bible_passage_end );
 			$bible_passage       = '';
 
 			/**

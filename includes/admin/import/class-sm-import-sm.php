@@ -321,7 +321,7 @@ class SM_Import_SM {
 		$line = '';
 
 		if ( ! $no_time ) {
-			$line .= "[${time}]";
+			$line .= "[{$time}]";
 		}
 
 		switch ( $severity ) {
@@ -1006,7 +1006,7 @@ class SM_Import_SM {
 		$file_name = basename( $url );
 
 		// get placeholder file in the upload dir with a unique, sanitized filename.
-		$upload = wp_upload_bits( $file_name, 0, '', $post['upload_date'] );
+		$upload = wp_upload_bits( $file_name, null, '', $post['upload_date'] );
 		if ( $upload['error'] ) {
 			return new WP_Error( 'upload_dir_error', $upload['error'] );
 		}

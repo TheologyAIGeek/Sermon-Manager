@@ -146,7 +146,7 @@ class SM_Import_SB {
 		$line = '';
 
 		if ( ! $no_time ) {
-			$line .= "[${time}]";
+			$line .= "[{$time}]";
 		}
 
 		switch ( $severity ) {
@@ -378,7 +378,7 @@ class SM_Import_SB {
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();
-			print_r( $options );
+			echo wp_json_encode( $options );
 
 			$this->log( 'Sermon Browser plugin options: <a onclick="jQuery(\'#sb-options\').toggle();" style="cursor:pointer;">Show data</a><div id="sb-options" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 0 );
 		}
@@ -392,7 +392,7 @@ class SM_Import_SB {
 
 		if ( SM_OB_ENABLED ) {
 			ob_start();
-			print_r( $sermons );
+			echo wp_json_encode( $sermons );
 
 			$this->log( 'Raw sermons data: <a onclick="jQuery(\'#sermon-data\').toggle();" style="cursor:pointer;">Show data</a><div id="sermon-data" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 0 );
 		}
@@ -421,7 +421,7 @@ class SM_Import_SB {
 
 				if ( 0 === $id || $id instanceof WP_Error ) {
 					// Skip if error.
-					$this->log( 'Sermon "' . $sermon->title . '" could not be imported. (error data: ' . serialize( $id ) . ')', 2 );
+					$this->log( 'Sermon "' . $sermon->title . '" could not be imported. (error data: ' . wp_json_encode( $id ) . ')', 2 );
 					continue;
 				} else {
 					$this->log( ' • Sermon "' . $sermon->title . '" imported. (ID: ' . $imported[ $sermon->id ]['new_id'] . ')', 255 );
@@ -443,7 +443,7 @@ class SM_Import_SB {
 
 			if ( SM_OB_ENABLED ) {
 				ob_start();
-				print_r( $stuff );
+				echo wp_json_encode( $stuff );
 
 				$this->log( 'Raw files data: <a onclick="jQuery(\'#files-data-' . $id . '\').toggle();" style="cursor:pointer;">Show data</a><div id="files-data-' . $id . '" style="background: #f1f1f1; padding: .5rem; border: 1px solid #ccc;display:none">' . ob_get_clean() . '</div>', 253 );
 			}
@@ -507,7 +507,7 @@ class SM_Import_SB {
 				} elseif ( 'code' === $item->type ) {
 					$this->log( 'Found video embed!', 253 );
 
-					update_post_meta( $id, 'sermon_video', base64_decode( $item->name ) );
+					update_post_meta( $id, 'sermon_video', base64_decode( $item->name ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Decodes a base64-encoded video embed stored in the import file.
 				}
 			}
 
