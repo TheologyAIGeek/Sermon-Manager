@@ -60,6 +60,7 @@ class SM_Export_SM {
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $where is built with $wpdb->prepare() above; $join is an empty static string.
 		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args );
 		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args );
 
@@ -296,11 +297,8 @@ class SM_Export_SM {
 
 			// is attachment url set?
 			if ( '' !== $attachment_url ) {
-				// prepare query.
-				$query = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url );
-
 				// get attachment id.
-				$attachment_id = $wpdb->get_var( $query );
+				$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url ) );
 			}
 
 			// return id.
@@ -439,7 +437,7 @@ class SM_Export_SM {
 					// fetch 20 posts at a time rather than loading the entire table into memory.
 					while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
 						$placeholders = implode( ',', array_fill( 0, count( $next_posts ), '%d' ) );
-						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $placeholders is a generated list of %d; values are passed through prepare().
 
 						// Begin Loop.
 						foreach ( $posts as $post ) {

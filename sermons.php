@@ -7,7 +7,7 @@
  * Author: Jerry Purvis
  * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 7.4
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -295,7 +295,9 @@ class SermonManager { // phpcs:ignore
 	 * @return void
 	 */
 	public static function load_translations() {
-		load_plugin_textdomain( 'sermon-manager-revival', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		// Translations are loaded automatically by WordPress for plugins hosted on
+		// WordPress.org (since WP 4.6), so a manual load_plugin_textdomain() call
+		// is no longer needed.
 	}
 
 	/**
@@ -855,7 +857,7 @@ class SermonManager { // phpcs:ignore
 			'sm_views_add_view',
 			function () {
 				if ( ! SermonManager::getOption( 'enable_views_count_logged_in', true ) ) {
-					if ( is_user_logged_in() && ( current_user_can( 'editor' ) || current_user_can( 'administrator' ) ) ) {
+					if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
 						return false;
 					}
 				}
