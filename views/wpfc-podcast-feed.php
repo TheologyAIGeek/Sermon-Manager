@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.DB.SlowDBQuery -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 /**
  * Used to display the RSS feed.
  *
