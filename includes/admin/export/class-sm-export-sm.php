@@ -38,7 +38,7 @@ class SM_Export_SM {
 		if ( ! empty( $sitename ) ) {
 			$sitename .= '.';
 		}
-		$filename = $sitename . 'wordpress.' . date( 'Y-m-d' ) . '.xml';
+		$filename = $sitename . 'wordpress.' . gmdate( 'Y-m-d' ) . '.xml';
 
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
@@ -98,7 +98,7 @@ class SM_Export_SM {
 		 */
 		if ( ! function_exists( 'wxr_cdata' ) ) {
 			function wxr_cdata( $str ) {
-				if ( seems_utf8( $str ) == false ) {
+				if ( ! mb_check_encoding( $str, 'UTF-8' ) ) {
 					$str = mb_convert_encoding( $str, 'UTF-8', 'ISO-8859-1' );
 				}
 

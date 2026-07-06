@@ -300,7 +300,7 @@ function sm_get_image_dimensions( $img_loc ) {
  * @since 2.10
  */
 function sm_get_png_dimensions( $img_loc ) {
-	$handle = fopen( $img_loc, 'rb' );
+	$handle = fopen( $img_loc, 'rb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Reads only the image header bytes from a possibly-remote URL; WP_Filesystem cannot do partial/streamed reads.
 
 	// Check if url is accessible or fail gracefully.
 	if ( false === $handle ) {
@@ -308,7 +308,7 @@ function sm_get_png_dimensions( $img_loc ) {
 	}
 
 	if ( ! feof( $handle ) ) {
-		$new_block = fread( $handle, 24 );
+		$new_block = fread( $handle, 24 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- Reads only the image header bytes; WP_Filesystem cannot do partial/streamed reads.
 		if ( "\x89" == $new_block[0] && "\x50" == $new_block[1] && "\x4E" == $new_block[2] && "\x47" == $new_block[3] && "\x0D" == $new_block[4] && "\x0A" == $new_block[5] && "\x1A" == $new_block[6] && "\x0A" == $new_block[7] ) {
 			if ( "\x49\x48\x44\x52" === $new_block[12] . $new_block[13] . $new_block[14] . $new_block[15] ) {
 				$width = unpack( 'H*', $new_block[16] . $new_block[17] . $new_block[18] . $new_block[19] );
@@ -336,7 +336,7 @@ function sm_get_png_dimensions( $img_loc ) {
  * @see   http://php.net/manual/en/function.getimagesize.php#88793
  */
 function sm_get_jpeg_dimensions( $img_loc ) {
-	$handle = fopen( $img_loc, 'rb' );
+	$handle = fopen( $img_loc, 'rb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Reads only the image header bytes from a possibly-remote URL; WP_Filesystem cannot do partial/streamed reads.
 
 	// Check if url is accessible or fail gracefully.
 	if ( false === $handle ) {
@@ -345,7 +345,7 @@ function sm_get_jpeg_dimensions( $img_loc ) {
 
 	$new_block = null;
 	if ( ! feof( $handle ) ) {
-		$new_block = fread( $handle, 32 );
+		$new_block = fread( $handle, 32 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- Reads only the image header bytes; WP_Filesystem cannot do partial/streamed reads.
 		$i         = 0;
 		if ( "\xFF" == $new_block[ $i ] && "\xD8" == $new_block[ $i + 1 ] && "\xFF" == $new_block[ $i + 2 ] && "\xE0" == $new_block[ $i + 3 ] ) {
 			$i += 4;
@@ -355,7 +355,7 @@ function sm_get_jpeg_dimensions( $img_loc ) {
 				$block_size = hexdec( $block_size[1] );
 				while ( ! feof( $handle ) ) {
 					$i         += $block_size;
-					$new_block .= fread( $handle, $block_size );
+					$new_block .= fread( $handle, $block_size ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread -- Reads only the image header bytes; WP_Filesystem cannot do partial/streamed reads.
 					if ( "\xFF" == $new_block[ $i ] ) {
 						// New block detected, check for SOF marker.
 						$sof_marker = array(

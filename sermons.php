@@ -197,17 +197,17 @@ class SermonManager { // phpcs:ignore
 			}
 
 			$content .= sm_get_taxonomy_field( 'wpfc_preacher', 'singular_name' ) . ': ';
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_preacher', '', ', ', '' ) );
 		}
 
 		if ( $has_series ) {
 			if ( $has_preachers ) {
 				$content .= ' | ';
 			}
-			$content .= strip_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
+			$content .= wp_strip_all_tags( get_the_term_list( $post->ID, 'wpfc_sermon_series', __( 'Series:', 'sermon-manager-revival' ) . ' ', ', ', '' ) );
 		}
 
-		$description = strip_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
+		$description = wp_strip_all_tags( trim( get_post_meta( $post->ID, 'sermon_description', true ) ) );
 
 		if ( '' !== $description ) {
 			$content .= ' | ' . $description;
@@ -572,7 +572,7 @@ class SermonManager { // phpcs:ignore
 			function ( $url, $attachment_id ) {
 				$db_url = get_post_meta( $attachment_id, '_wp_attached_file', true );
 
-				if ( $db_url && parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
+				if ( $db_url && wp_parse_url( $db_url, PHP_URL_SCHEME ) !== null ) {
 					return $db_url;
 				}
 
@@ -820,8 +820,8 @@ class SermonManager { // phpcs:ignore
 					return;
 				}
 
-				$parsed_audio_url   = parse_url( $audio_url, PHP_URL_HOST );
-				$parsed_website_url = parse_url( home_url(), PHP_URL_HOST );
+				$parsed_audio_url   = wp_parse_url( $audio_url, PHP_URL_HOST );
+				$parsed_website_url = wp_parse_url( home_url(), PHP_URL_HOST );
 
 				if ( $parsed_audio_url !== $parsed_website_url ) {
 					$audio_id = '';
@@ -834,7 +834,7 @@ class SermonManager { // phpcs:ignore
 
 					if ( $the_file ) {
 						if ( isset( $the_file['length'] ) ) {
-							$length                         = date( 'H:i:s', $the_file['length'] );
+							$length                         = gmdate( 'H:i:s', $the_file['length'] );
 							$_POST['_wpfc_sermon_duration'] = $length;
 							update_post_meta( $post_ID, '_wpfc_sermon_duration', $length );
 						}

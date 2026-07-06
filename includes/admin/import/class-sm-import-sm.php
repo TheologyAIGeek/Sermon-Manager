@@ -261,7 +261,7 @@ class SM_Import_SM {
 	 * Do the import
 	 */
 	public function import() {
-		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . date( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
+		$this->log( 'Init info:' . PHP_EOL . 'Sermon Manager ' . SM_VERSION . PHP_EOL . 'Release Date: ' . gmdate( 'Y-m-d', filemtime( SM_PLUGIN_FILE ) ), 255 );
 		if ( ! doing_action( 'admin_init' ) ) {
 			$this->log( 'Scheduling for `admin_init` action.', 0 );
 			add_action( 'admin_init', array( $this, __FUNCTION__ ) );
@@ -405,7 +405,15 @@ class SM_Import_SM {
 		xml_set_element_handler( $xml, 'tag_open', 'tag_close' );
 
 		$this->log( 'Parsing content.', 0 );
-		if ( ! xml_parse( $xml, file_get_contents( $file ), true ) ) {
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		WP_Filesystem();
+		global $wp_filesystem;
+		$file_contents = $wp_filesystem ? $wp_filesystem->get_contents( $file ) : '';
+
+		if ( ! xml_parse( $xml, $file_contents, true ) ) {
 			$current_line   = xml_get_current_line_number( $xml );
 			$current_column = xml_get_current_column_number( $xml );
 			$error_code     = xml_get_error_code( $xml );
@@ -1008,7 +1016,7 @@ class SM_Import_SM {
 
 		// request failed.
 		if ( is_wp_error( $response ) ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'sermon-manager-revival' ) );
 		}
@@ -1017,7 +1025,7 @@ class SM_Import_SM {
 
 		// make sure the fetch was successful.
 		if ( 200 !== (int) $response_code ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			// translators: %1$d: HTTP response code (e.g. 404). %2$s: HTTP status description (e.g. Not Found).
 			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'sermon-manager-revival' ), esc_html( $response_code ), get_status_header_desc( $response_code ) ) );
@@ -1035,20 +1043,20 @@ class SM_Import_SM {
 		$headers  = wp_remote_retrieve_headers( $response );
 
 		if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'sermon-manager-revival' ) );
 		}
 
 		if ( 0 == $filesize ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'sermon-manager-revival' ) );
 		}
 
 		$max_size = (int) $this->max_attachment_size();
 		if ( ! empty( $max_size ) && $filesize > $max_size ) {
-			@unlink( $upload['file'] );
+			wp_delete_file( $upload['file'] );
 
 			// translators: %s: Maximum allowed file size, e.g. "10 MB".
 			return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'sermon-manager-revival' ), size_format( $max_size ) ) );
