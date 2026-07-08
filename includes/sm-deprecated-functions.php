@@ -318,9 +318,9 @@ function render_sermon_image( $size ) {
 	// $size = any defined image size in WordPress.
 	if ( has_post_thumbnail() ) :
 		the_post_thumbnail( $size );
-	elseif ( apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) :
+	elseif ( apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) : // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 		// Get series image.
-		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 			'image_size'   => $size,
 			'taxonomy'     => 'wpfc_sermon_series',
 			'after'        => '',
@@ -328,9 +328,9 @@ function render_sermon_image( $size ) {
 			'before'       => '',
 			'before_image' => '',
 		) );
-	elseif ( ! has_post_thumbnail() && ! apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) :
+	elseif ( ! has_post_thumbnail() && ! apply_filters( 'sermon-images-list-the-terms', '', array( 'taxonomy' => 'wpfc_sermon_series' ) ) ) : // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 		// Get speaker image.
-		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print apply_filters( 'sermon-images-list-the-terms', '', array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 			'image_size'   => $size,
 			'taxonomy'     => 'wpfc_preacher',
 			'after'        => '',

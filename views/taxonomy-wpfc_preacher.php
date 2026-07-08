@@ -17,14 +17,14 @@ echo wp_kses_post( render_wpfc_sorting() );
 
 if ( have_posts() ) :
 
-	echo apply_filters( 'taxonomy-wpfc_preacher-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'taxonomy-wpfc_preacher-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 	while ( have_posts() ) :
 		the_post();
 		wpfc_sermon_excerpt_v2();
 	endwhile;
 
-	echo apply_filters( 'taxonomy-wpfc_preacher-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'taxonomy-wpfc_preacher-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 	echo '<div class="sm-pagination ast-pagination">';
 	sm_pagination();

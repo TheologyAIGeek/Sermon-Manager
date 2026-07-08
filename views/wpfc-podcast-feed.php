@@ -324,7 +324,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				$description_short = strlen( $description_short ) === 255 ? $description_short . '...' : $description_short;
 				$date_preached     = SM_Dates::get( 'D, d M Y H:i:s +0000', null, false, false );
 				$date_published    = get_the_date( 'D, d M Y H:i:s +0000', $post->ID );
-				$custom_enclosure  = apply_filters( 'wpfc-podcast-feed-custom-enclosure', '', $post->ID, $settings );
+				$custom_enclosure  = apply_filters( 'wpfc-podcast-feed-custom-enclosure', '', $post->ID, $settings ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 				// Fix for relative audio file URLs.
 				if ( substr( $audio, 0, 1 ) === '/' ) {
@@ -341,7 +341,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 				?>
 
 				<item>
-					<?php do_action( 'wpfc-podcast/feed-item-start' ); ?>
+					<?php do_action( 'wpfc-podcast/feed-item-start' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility. ?>
 
 					<title><?php the_title_rss(); ?></title>
 					<link><?php the_permalink_rss(); ?></link>
@@ -378,7 +378,7 @@ $cover_image_url  = $settings['itunes_cover_image'];
 						<itunes:keywords><?php echo esc_html( $topics ); ?></itunes:keywords>
 					<?php endif; ?>
 
-					<?php do_action( 'wpfc-podcast/feed-item-end' ); ?>
+					<?php do_action( 'wpfc-podcast/feed-item-end' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility. ?>
 				</item>
 			<?php
 			endwhile;
