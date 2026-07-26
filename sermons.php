@@ -3,11 +3,11 @@
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
  * Description: Add audio and video sermons, manage speakers, series, and more.
- * Version: 2026.5.4
+ * Version: 2026.6.1
  * Author: Jerry Purvis
  * Author URI: https://github.com/TheologyAIGeek
  * Requires at least: 6.0
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 7.4
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -327,7 +327,9 @@ class SermonManager { // phpcs:ignore
 		// Load top theme-specific styling, if there's any.
 		wp_enqueue_style( 'wpfc-sm-style-theme' );
 
-		switch ( SermonManager::getOption( 'player' ) ) {
+		// Use the resolved engine so a Spotify/Apple default (a source, not a
+		// playback engine) still loads Plyr for video and uploaded audio.
+		switch ( wpfc_get_player_engine() ) {
 			case 'mediaelement':
 				wp_enqueue_style( 'wp-mediaelement' );
 				wp_enqueue_script( 'wp-mediaelement' );
