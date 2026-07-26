@@ -1011,6 +1011,7 @@ class SM_Shortcodes {
 					$posts_in = intval( trim( $post_in ) );
 				}
 
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- User-supplied "exclude" shortcode attribute; the excluded set is small and author-controlled.
 				$query_args['post__not_in'] = (array) $posts_in;
 			}
 		}
