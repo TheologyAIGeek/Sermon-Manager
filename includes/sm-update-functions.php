@@ -1,6 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
-// phpcs:disable WordPress.DB.SlowDBQuery -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 /**
  * Functions used by database updater go here.
  *
@@ -21,7 +19,7 @@ function sm_update_28_revert_old_dates() {
 
 	global $wpdb;
 
-	foreach ( $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) ) as $sermon ) {
+	foreach ( $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) ) as $sermon ) {  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 		$date = get_post_meta( $sermon->ID, 'sermon_date_old', true );
 
 		if ( '' === get_post_meta( $sermon->ID, 'sermon_date', true ) && '' !== $date ) {
@@ -46,7 +44,7 @@ function sm_update_28_convert_dates_to_unix() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$date = get_post_meta( $sermon->ID, 'sermon_date', true );
@@ -73,7 +71,7 @@ function sm_update_28_fill_out_empty_dates() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s AND post_status NOT IN ('auto-draft', 'inherit')", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		if ( get_post_meta( $sermon->ID, 'sermon_date', true ) === '' ) {
@@ -185,7 +183,7 @@ function sm_update_211_render_content() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	$sermon_manager = \SermonManager::get_instance();
 
@@ -207,7 +205,7 @@ function sm_update_211_update_date_time() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_date FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$sermon_date = get_post_meta( $sermon->ID, 'sermon_date', true );
@@ -271,7 +269,7 @@ function sm_update_2130_fill_out_sermon_term_dates() {
 function sm_update_2130_remove_excerpts() {
 	$sermons = new WP_Query( array(
 		'post_type'      => 'wpfc_sermon',
-		'meta_key'       => 'sermon_date',
+		'meta_key'       => 'sermon_date',  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 		'meta_value_num' => time(),
 		'meta_compare'   => '<=',
 		'orderby'        => 'meta_value_num',
@@ -297,7 +295,7 @@ function sm_update_2140_convert_bible_verse() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$id = $sermon->ID;
@@ -372,7 +370,7 @@ function sm_update_2150_audio_file_ids() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$id = $sermon->ID;
@@ -401,7 +399,7 @@ function sm_update_2150_audio_duration_and_size() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$id = $sermon->ID;
@@ -447,7 +445,7 @@ function sm_update_21511_update_term_dates() {
 	global $wpdb;
 
 	// All sermons.
-	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );
+	$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 	foreach ( $sermons as $sermon ) {
 		$id = $sermon->ID;

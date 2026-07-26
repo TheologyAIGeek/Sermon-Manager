@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.SlowDBQuery -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 /**
  * Defines CPT and CPT related stuff.
  *
@@ -60,7 +59,8 @@ class SM_Admin_Post_Types {
 			2  => esc_html__( 'Custom field updated.', 'sermon-manager-revival' ),
 			3  => esc_html__( 'Custom field deleted.', 'sermon-manager-revival' ),
 			4  => esc_html__( 'Sermon updated.', 'sermon-manager-revival' ),
-			// translators: %s: Date and time of the revision. // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin notice referencing the revision query arg.
+			// translators: %s: Date and time of the revision.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin notice referencing the revision query arg.
 			5  => isset( $_GET['revision'] ) ? wp_sprintf( esc_html__( 'Sermon restored to revision from %s', 'sermon-manager-revival' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			// translators: %s: The URL to the sermon.
 			6  => wp_sprintf( esc_html__( 'Sermon published. %s', 'sermon-manager-revival' ), '<a href="' . esc_url( get_permalink( $post_ID ) ) . '">' . esc_html__( 'View sermon', 'sermon-manager-revival' ) . '</a>' ),
@@ -223,7 +223,7 @@ class SM_Admin_Post_Types {
 				switch ( $vars['orderby'] ) {
 					case 'preached':
 						$vars = array_merge( $vars, array(
-							'meta_key'       => 'sermon_date',
+							'meta_key'       => 'sermon_date',  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 							'orderby'        => 'meta_value_num',
 							'meta_value_num' => time(),
 							'meta_compare'   => '<=',
@@ -232,7 +232,7 @@ class SM_Admin_Post_Types {
 
 					case 'views':
 						$vars = array_merge( $vars, array(
-							'meta_key' => 'Views',
+							'meta_key' => 'Views',  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 							'orderby'  => 'meta_value_num',
 						) );
 						break;
@@ -273,7 +273,7 @@ class SM_Admin_Post_Types {
 
 		if ( 'wpfc_sermon' == $typenow ) {
 			if ( isset( $query->query_vars['wpfc_service_type'] ) ) {
-				$query->query_vars['tax_query'] = array(
+				$query->query_vars['tax_query'] = array(  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 					array(
 						'taxonomy' => 'wpfc_service_type',
 						'field'    => 'slug',

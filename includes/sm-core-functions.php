@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 /**
  * Core Functions.
  *
@@ -466,7 +465,7 @@ function sm_import_and_set_post_thumbnail( $image_url, $post_id = 0 ) {
 
 		preg_match( '/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $image_url, $matches );
 
-		$wpdb->insert( $wpdb->prefix . 'posts', array(
+		$wpdb->insert( $wpdb->prefix . 'posts', array(  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 			'post_author'       => get_current_user_id(),
 			'post_date'         => current_time( 'mysql' ),
 			'post_date_gmt'     => get_gmt_from_date( current_time( 'mysql' ) ),

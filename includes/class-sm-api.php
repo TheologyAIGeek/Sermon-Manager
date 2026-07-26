@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.SlowDBQuery -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 /**
  * API.
  *
@@ -92,7 +91,7 @@ class SM_API {
 	public function fix_ordering( $args ) {
 		if ( 'date' === $args['orderby'] ) {
 			$args['orderby']        = 'meta_value_num';
-			$args['meta_key']       = 'sermon_date';
+			$args['meta_key']       = 'sermon_date';  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 			$args['meta_value_num'] = time();
 			$args['meta_compare']   = '<=';
 		} elseif ( 'wpdate' === $args['orderby'] ) {

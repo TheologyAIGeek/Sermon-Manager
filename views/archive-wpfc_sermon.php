@@ -16,14 +16,14 @@ echo wp_kses_post( render_wpfc_sorting() );
 
 if ( have_posts() ) :
 
-	echo apply_filters( 'archive-wpfc_sermon-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
+	echo apply_filters( 'archive-wpfc_sermon-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 	while ( have_posts() ) :
 		the_post();
 		wpfc_sermon_excerpt_v2(); // You can edit the content of this function in `partials/content-sermon-archive.php`.
 	endwhile;
 
-	echo apply_filters( 'archive-wpfc_sermon-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
+	echo apply_filters( 'archive-wpfc_sermon-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 	echo '<div class="sm-pagination ast-pagination">';
 	sm_pagination();

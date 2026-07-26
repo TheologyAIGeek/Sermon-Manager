@@ -1,5 +1,4 @@
 <?php // phpcs:ignore
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 /**
  * Plugin Name: Sermon Manager Revival
  * Plugin URI: https://github.com/TheologyAIGeek/Sermon-Manager
@@ -233,7 +232,7 @@ class SermonManager { // phpcs:ignore
 			}
 		}
 
-		$wpdb->query(
+		$wpdb->query(  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 			$wpdb->prepare(
 				"UPDATE $wpdb->posts SET `post_content` = %s WHERE `ID` = %s",
 				array(
@@ -615,7 +614,8 @@ class SermonManager { // phpcs:ignore
 		// Temporary hook for importing until API is properly done.
 		add_action(
 			'admin_init',
-			function () { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only; check_admin_referer( sm-import ) runs before any import action.
+			function () {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Routing only; check_admin_referer( 'sm-import' ) runs before any import action.
 				if ( isset( $_GET['page'] ) && 'sm-import-export' === sanitize_key( $_GET['page'] ) ) {
 					if ( isset( $_GET['doimport'] ) ) {
 						if ( ! current_user_can( 'import' ) ) {
@@ -699,7 +699,7 @@ class SermonManager { // phpcs:ignore
 					global $wpdb;
 
 					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- No user input; table name cannot be parameterized.
-					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" );
+					$wpdb->query( "DELETE FROM {$wpdb->options} WHERE ( `option_name` LIKE '_transient_%' OR `option_name` LIKE 'transient_%')" );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 					?>
 					<div class="notice notice-success">
@@ -763,7 +763,7 @@ class SermonManager { // phpcs:ignore
 					$sm = SermonManager::get_instance();
 
 					// All sermons.
-					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) );
+					$sermons = $wpdb->get_results( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE `post_type` = %s", 'wpfc_sermon' ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 
 					foreach ( $sermons as $sermon ) {
 						$sermon_id = $sermon->ID;
@@ -771,7 +771,7 @@ class SermonManager { // phpcs:ignore
 						if ( 11 === $value ) {
 							$sm->render_sermon_into_content( $sermon_id, null, true );
 						} else {
-							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) );
+							$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET `post_content` = '' WHERE `ID` = %d", $sermon_id ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 						}
 					}
 
@@ -791,13 +791,15 @@ class SermonManager { // phpcs:ignore
 				if ( ! current_user_can( 'edit_post', $post_ID ) ) {
 					return;
 				}
- // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
+ // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
 				if ( ! isset( $_POST['sermon_audio_id'] ) && ! isset( $_POST['sermon_audio'] ) ) {
 					return;
 				}
- // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
-				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked.
+
+				// phpcs:disable WordPress.Security.NonceVerification.Missing -- Runs on save_post after WordPress verifies the edit-post nonce; capability re-checked above.
+				$audio_id  = absint( wp_unslash( $_POST['sermon_audio_id'] ?? 0 ) );
 				$audio_url = esc_url_raw( wp_unslash( $_POST['sermon_audio'] ?? '' ) );
+				// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 				// Attempt to get remote file size.
 				if ( $audio_url && ! $audio_id ) {

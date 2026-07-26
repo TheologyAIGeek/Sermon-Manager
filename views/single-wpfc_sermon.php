@@ -13,7 +13,7 @@ get_header(); ?>
 
 <?php
 
-echo apply_filters( 'single-wpfc_sermon-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
+echo apply_filters( 'single-wpfc_sermon-before-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 while ( have_posts() ) :
 	global $post;
@@ -26,13 +26,13 @@ while ( have_posts() ) :
 	}
 
 	if ( comments_open() || get_comments_number() ) :
-		if ( ! apply_filters( 'single-wpfc_sermon-disable-comments', false ) ) { // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
+		if ( ! apply_filters( 'single-wpfc_sermon-disable-comments', false ) ) { // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 			comments_template();
 		}
 	endif;
 endwhile;
 
-echo apply_filters( 'single-wpfc_sermon-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
+echo apply_filters( 'single-wpfc_sermon-after-sermons', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.ValidHookName.UseUnderscores -- Established public hook name kept for backward compatibility.
 
 ?>
 

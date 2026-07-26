@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 /**
  * Most of Sermon Manager Settings related functions.
  *
@@ -85,20 +84,20 @@ class SM_Admin_Settings {
 
 		// Get current tab/section.
 		$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only tab routing for display; the save action verifies its own nonce in self::save().
-		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 
 		// Save settings if data has been posted.
-		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Only triggers self::save(), which verifies the settings nonce before persisting.
+		if ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Only triggers self::save(), which verifies the settings nonce before persisting.
 			self::save();
 		}
 
 		// Add any posted messages.
-		if ( ! empty( $_GET['sm_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
-			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+		if ( ! empty( $_GET['sm_error'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+			self::add_error( sanitize_text_field( wp_unslash( $_GET['sm_error'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 		}
 
-		if ( ! empty( $_GET['sm_message'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
-			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+		if ( ! empty( $_GET['sm_message'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
+			self::add_message( sanitize_text_field( wp_unslash( $_GET['sm_message'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request data for admin display/routing; the settings save verifies its own nonce.
 		}
 
 		switch ( $current_tab ) {
@@ -173,7 +172,7 @@ class SM_Admin_Settings {
 			/* @noinspection SqlNoDataSourceInspection */
 
 			/* @noinspection SqlResolve */
-			$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_feed_%') OR `option_name` LIKE ('_transient_timeout_feed_%')" );
+			$wpdb->query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE ('_transient_feed_%') OR `option_name` LIKE ('_transient_timeout_feed_%')" );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 		}
 
 		do_action( 'sm_settings_saved' );
@@ -789,7 +788,7 @@ class SM_Admin_Settings {
 	 */
 	public static function save_fields( $options, $data = null ) {
 		if ( is_null( $data ) ) {
-			$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Called from self::save() after the settings nonce has been verified.
+			$data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Called from self::save() after the settings nonce has been verified.
 		}
 		if ( empty( $data ) ) {
 			return false;

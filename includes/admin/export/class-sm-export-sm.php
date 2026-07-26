@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 /**
  * Sermon Manager data export.
  *
@@ -61,8 +60,7 @@ class SM_Export_SM {
 		$join = '';
 
 		// Grab a snapshot of post IDs, just in case it changes during the export.
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $where is built with $wpdb->prepare() above; $join is an empty static string.
-		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args );
+		$post_ids         = apply_filters( 'export_post_ids', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" ), $args ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $where is built with $wpdb->prepare() above and $join is an empty static string; direct, uncacheable read for the exporter.
 		$post_type_export = apply_filters( 'export_post_type', 'wpfc_sermon', $args );
 
 		// Get the requested terms ready, empty unless posts filtered by category or all content.
@@ -248,7 +246,7 @@ class SM_Export_SM {
 			global $wpdb;
 
 			$authors = array();
-			$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft'" );
+			$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft'" );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 			foreach ( (array) $results as $result ) {
 				$authors[] = get_userdata( $result->post_author );
 			}
@@ -299,7 +297,7 @@ class SM_Export_SM {
 			// is attachment url set?
 			if ( '' !== $attachment_url ) {
 				// get attachment id.
-				$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url ) );
+				$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid=%s", $attachment_url ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 			}
 
 			// return id.
@@ -355,7 +353,7 @@ class SM_Export_SM {
 						<?php wxr_term_name( $t ); ?>
 						<?php wxr_term_description( $t ); ?>
 						<?php
-						$termmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d", $t->term_id ) );
+						$termmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d", $t->term_id ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 						foreach ( $termmeta as $meta ) :
 							/**
 							 * Filter whether to selectively skip post meta used for WXR exports.
@@ -407,8 +405,8 @@ class SM_Export_SM {
 						'sermon_bulletin',
 					);
 					foreach ( $post_ids as $post ) {
-						$postmeta   = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post ) );
-						$postobject = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post ) );
+						$postmeta   = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
+						$postobject = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 						$meta_value = array();
 						if ( $postobject[0]->post_type == $post_type_export ) {
 							foreach ( $postmeta as $meta ) {
@@ -438,7 +436,7 @@ class SM_Export_SM {
 					// fetch 20 posts at a time rather than loading the entire table into memory.
 					while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
 						$placeholders = implode( ',', array_fill( 0, count( $next_posts ), '%d' ) );
-						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $placeholders is a generated list of %d; values are passed through prepare().
+						$posts        = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID IN ($placeholders)", ...$next_posts ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $placeholders is a generated list of %d; values are passed through prepare().
 
 						// Begin Loop.
 						foreach ( $posts as $post ) {
@@ -494,7 +492,7 @@ class SM_Export_SM {
 									<wp:attachment_url><?php echo esc_url( wp_get_attachment_url( $post->ID ) ); ?></wp:attachment_url>
 								<?php endif; ?>
 								<?php
-								$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
+								$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 								foreach ( $postmeta as $meta ) :
 									/**
 									 * Filter whether to selectively skip post meta used for WXR exports.
@@ -518,7 +516,7 @@ class SM_Export_SM {
 									</wp:postmeta>
 								<?php endforeach; ?>
 								<?php
-								$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );
+								$comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 								foreach ( $comments as $c ) :
 									?>
 									<wp:comment>
@@ -535,7 +533,7 @@ class SM_Export_SM {
 										<wp:comment_parent><?php echo absint( $c->comment_parent ); ?></wp:comment_parent>
 										<wp:comment_user_id><?php echo absint( $c->user_id ); ?></wp:comment_user_id>
 										<?php
-										$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
+										$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, uncacheable DB access for bulk import/export/install/upgrade routines.
 										foreach ( $c_meta as $meta ) :
 											?>
 											<wp:commentmeta>

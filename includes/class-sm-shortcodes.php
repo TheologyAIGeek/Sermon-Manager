@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable WordPress.DB.SlowDBQuery -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 /**
  * Everything related to shortcodes.
  *
@@ -209,7 +208,7 @@ class SM_Shortcodes {
 
 		if ( 'date' === $query_args['orderby'] ) {
 			$query_args['orderby']        = 'meta_value_num';
-			$query_args['meta_key']       = 'sermon_date';
+			$query_args['meta_key']       = 'sermon_date';  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 			$query_args['meta_compare']   = '<=';
 			$query_args['meta_value_num'] = time();
 		}
@@ -473,8 +472,8 @@ class SM_Shortcodes {
 		// Order by most recent sermon.
 		if ( in_array( $args['term_args']['orderby'], array( 'sermon', 'date' ) ) ) {
 			$args['term_args']['orderby']      = 'meta_value_num';
-			$args['term_args']['meta_key']     = 'sermon_date';
-			$args['term_args']['meta_value']   = time();
+			$args['term_args']['meta_key']     = 'sermon_date';  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
+			$args['term_args']['meta_value']   = time();  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 			$args['term_args']['meta_compare'] = '<';
 		}
 
@@ -637,8 +636,8 @@ class SM_Shortcodes {
 			case 'date_preached':
 				$query_args += array(
 					'orderby'      => 'meta_value_num',
-					'meta_key'     => 'sermon_date',
-					'meta_value'   => time(),
+					'meta_key'     => 'sermon_date',  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
+					'meta_value'   => time(),  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 					'meta_compare' => '<=',
 				);
 				break;
@@ -699,7 +698,7 @@ class SM_Shortcodes {
 			}
 
 			if ( is_int( $service_type ) && term_exists( $service_type, 'wpfc_service_type' ) ) {
-				$args['tax_query'] = array(
+				$args['tax_query'] = array(  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 					'taxonomy' => 'wpfc_service_type',
 					'terms'    => $service_type,
 				);
@@ -880,7 +879,7 @@ class SM_Shortcodes {
 			case '':
 				$args['orderby'] = 'meta_value_num';
 
-				$query_args['meta_query'] = array(
+				$query_args['meta_query'] = array(  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 					array(
 						'key'     => 'sermon_date',
 						'value'   => time(),
@@ -913,7 +912,7 @@ class SM_Shortcodes {
 				}
 
 				// Reset the query.
-				$query_args['meta_query'] = array();
+				$query_args['meta_query'] = array();  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 
 				switch ( $date_arg ) {
 					case 'year':
@@ -948,7 +947,7 @@ class SM_Shortcodes {
 		// Add before and after parameters.
 		if ( 'meta_value_num' === $query_args['orderby'] && ( $args['before'] || $args['after'] ) ) {
 			if ( ! isset( $query_args['meta_query'] ) ) {
-				$query_args['meta_query'] = array();
+				$query_args['meta_query'] = array();  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 			}
 
 			if ( $args['before'] ) {
@@ -1043,7 +1042,7 @@ class SM_Shortcodes {
 					}
 				}
 
-				$query_args['tax_query'] = array(
+				$query_args['tax_query'] = array(  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 					array(
 						'taxonomy' => $this->convert_taxonomy_name( $args['filter_by'], false ),
 						'field'    => 'slug',
@@ -1054,9 +1053,9 @@ class SM_Shortcodes {
 		}
 
 		foreach ( array( 'wpfc_preacher', 'wpfc_sermon_series', 'wpfc_sermon_topics', 'wpfc_bible_book' ) as $filter ) {
-			if ( ! empty( $_GET[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public read-only archive filtering; no state change.
+			if ( ! empty( $_GET[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public read-only archive filtering; no state change.
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
-					$query_args['tax_query'] = array();
+					$query_args['tax_query'] = array();  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 				}
 
 				$query_args['tax_query'][0][] = array(
@@ -1068,9 +1067,9 @@ class SM_Shortcodes {
 				$query_args['tax_query']['custom'] = true;
 			}
 
-			if ( ! empty( $_POST[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public read-only archive filtering form; no state change.
+			if ( ! empty( $_POST[ $filter ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public read-only archive filtering form; no state change.
 				if ( empty( $query_args['tax_query']['custom'] ) || empty( $query_args['tax_query'] ) ) {
-					$query_args['tax_query'] = array();
+					$query_args['tax_query'] = array();  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Sermons are intentionally queried by meta and taxonomy; core plugin functionality.
 				}
 
 				$query_args['tax_query'][0][] = array(

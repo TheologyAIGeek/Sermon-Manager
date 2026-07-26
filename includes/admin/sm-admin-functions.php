@@ -38,8 +38,8 @@ function sm_get_screen_ids() {
 function wpfc_maybe_change_downloads_upload_dir() {
 	global $pagenow;
 
-	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Runs during WordPress core nonce-protected media upload.
-		$post_id = absint( wp_unslash( $_REQUEST['post_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Runs during WordPress core nonce-protected media upload.
+	if ( ! empty( $_REQUEST['post_id'] ) && ( 'async-upload.php' == $pagenow || 'media-upload.php' == $pagenow ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Runs during WordPress core nonce-protected media upload.
+		$post_id = absint( wp_unslash( $_REQUEST['post_id'] ?? 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Runs during WordPress core nonce-protected media upload.
 		if ( 'wpfc_sermon' == get_post_type( $post_id ) ) {
 			add_filter( 'upload_dir', 'wpfc_change_downloads_upload_dir' );
 		}
