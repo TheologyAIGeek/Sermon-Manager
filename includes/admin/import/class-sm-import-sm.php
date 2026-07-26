@@ -321,7 +321,7 @@ class SM_Import_SM { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobal
 		$line = '';
 
 		if ( ! $no_time ) {
-			$line .= "[${time}]";
+			$line .= "[{$time}]";
 		}
 
 		switch ( $severity ) {

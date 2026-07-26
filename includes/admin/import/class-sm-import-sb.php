@@ -146,7 +146,7 @@ class SM_Import_SB { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobal
 		$line = '';
 
 		if ( ! $no_time ) {
-			$line .= "[${time}]";
+			$line .= "[{$time}]";
 		}
 
 		switch ( $severity ) {

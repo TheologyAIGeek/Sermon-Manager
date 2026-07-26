@@ -29,13 +29,20 @@
 
     <rule ref="WordPress.WP.I18n">
         <properties>
-            <property name="text_domain" type="array" value="sermon-manager-for-wordpress" />
+            <property name="text_domain" type="array" value="sermon-manager-revival" />
         </properties>
     </rule>
 
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
             <property name="prefixes" type="array" value="sm,wpfc" />
+        </properties>
+    </rule>
+
+    <!-- Custom capabilities registered by SM_Roles via WP_Role::add_cap(). -->
+    <rule ref="WordPress.WP.Capabilities">
+        <properties>
+            <property name="custom_capabilities" type="array" value="manage_wpfc_sm_settings" />
         </properties>
     </rule>
 
@@ -49,5 +56,5 @@
     <!-- =========================== -->
     <!-- Configure PHPCompatibility. -->
     <!-- =========================== -->
-    <config name="testVersion" value="5.3-"/>
+    <config name="testVersion" value="7.4-"/>
 </ruleset>

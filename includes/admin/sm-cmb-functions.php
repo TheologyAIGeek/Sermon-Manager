@@ -121,9 +121,31 @@ function wpfc_sermon_metaboxes() {
 	) ) );
 	$sermon_files_meta->add_field( array(
 		'name' => esc_html__( 'Spotify Episode Link', 'sermon-manager-revival' ),
-		'desc' => esc_html__( 'Paste the Spotify episode URL to display a "Listen on Spotify" button near the audio player. Leave blank to hide.', 'sermon-manager-revival' ),
+		'desc' => esc_html__( 'Paste the Spotify episode URL to display a "Listen on Spotify" button near the audio player, and to use as the player when Audio Source is set to Spotify. Leave blank to hide.', 'sermon-manager-revival' ),
 		'id'   => 'sermon_spotify_link',
 		'type' => 'text_url',
+	) );
+	$sermon_files_meta->add_field( array(
+		'name' => esc_html__( 'Apple Podcasts Link', 'sermon-manager-revival' ),
+		'desc' => esc_html__( 'Paste the Apple Podcasts episode URL to use as the player when Audio Source is set to Apple Podcasts. Leave blank to hide.', 'sermon-manager-revival' ),
+		'id'   => 'sermon_apple_podcasts_link',
+		'type' => 'text_url',
+	) );
+	$sermon_files_meta->add_field( array(
+		'name'    => esc_html__( 'Audio Source', 'sermon-manager-revival' ),
+		'desc'    => esc_html__( 'Choose which player to display for this sermon. Spotify and Apple Podcasts embed a streaming player instead of using a hosted MP3.', 'sermon-manager-revival' ),
+		'id'      => 'sermon_audio_source',
+		'type'    => 'select',
+		// No 'default' argument: CMB2 runs is_callable() on the default value, and
+		// a value such as 'file' collides with PHP's file() function, which would
+		// be mistaken for a callback and cause a fatal error. An empty value is
+		// treated as "Site default" by wpfc_get_sermon_audio_source().
+		'options' => array(
+			'default' => esc_html__( 'Site default', 'sermon-manager-revival' ),
+			'file'    => esc_html__( 'Uploaded file / URL', 'sermon-manager-revival' ),
+			'spotify' => esc_html__( 'Spotify', 'sermon-manager-revival' ),
+			'apple'   => esc_html__( 'Apple Podcasts', 'sermon-manager-revival' ),
+		),
 	) );
 	$sermon_files_meta->add_field( array(
 		'name' => esc_html__( 'Sermon Notes', 'sermon-manager-revival' ),
