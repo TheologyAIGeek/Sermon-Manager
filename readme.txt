@@ -2,9 +2,9 @@
 Contributors: wpforchurch, jasonmwestbrook, jlpurvis1982
 Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2026.5.4
+Stable tag: 2026.6.1
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,20 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.6.1 ###
+* New: Add per-sermon Audio Source option (Site default, Uploaded file/URL, Spotify, or Apple Podcasts) so a sermon can use an embedded streaming player instead of a hosted MP3
+* New: Add an Apple Podcasts Link field; the existing Spotify Episode Link now also drives the Spotify embed player
+* New: Add Spotify and Apple Podcasts options to the global Audio & Video Player setting, which set the default source for sermons left on "Site default"
+* New: Add wpfc_get_sermon_audio_source(), wpfc_get_audio_embed_html(), wpfc_get_player_engine(), and wpfc_get_default_audio_source() helpers, plus the sm_spotify_embed and sm_apple_embed filters
+* Change: wpfc_render_audio() outputs a Spotify or Apple Podcasts iframe when the resolved source is a recognized streaming URL
+* Change: Video and uploaded-audio playback fall back to Plyr (assets included) when the global player is set to Spotify or Apple Podcasts
+* Change: A selected streaming source with no link falls back to the sermon's uploaded file, so a player is always rendered
+* Change: Hide the audio download link on the single sermon view for streaming embeds
+* Fix: Unparenthesized nested ternary in the podcast feed, which is a fatal error on PHP 8.0 and later
+* Fix: "${var}" string interpolation in the importers, deprecated in PHP 8.2 and removed in PHP 9
+* Dev: Correct phpcs.xml.dist (text domain, manage_wpfc_sm_settings custom capability, PHP 7.4 test version)
+* Compat: Tested up to WordPress 7.0
+
 ### 2026.5.4 ###
 * Fix: Resolve all remaining WordPress Plugin Check violations — zero errors across full plugin scan
 * Fix: Add proper WP output escaping (wp_kses_post, esc_html, wp_kses) to podcast feed and sermon wrapper templates replacing phpcs:ignore annotations that Plugin Check does not honor
