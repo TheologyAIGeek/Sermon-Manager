@@ -4,7 +4,7 @@ Tags: church, sermon, sermons, preaching, podcasting
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2026.6.2
+Stable tag: 2026.6.3
 License: GPLv2  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,21 @@ Go to Appearance → Menus. In the “Custom Links” box add `http://yourdomain
 Open an issue on [GitHub](https://github.com/TheologyAIGeek/Sermon-Manager/issues) — we welcome feedback and ideas.
 
 ## Changelog ##
+### 2026.6.3 ###
+* Compliance: Prepare for the WordPress.org plugin directory (Plugin Check clean)
+* Security: Add a post-nonce guard to the sermon date save handler; wrap $_GET/$_POST/$_REQUEST/$_SERVER reads in wp_unslash() + sanitization
+* Security: Inline $wpdb->prepare() for the exporter's attachment lookup
+* Fix: Unparenthesized nested ternary in the podcast feed (fatal error on PHP 8.0+)
+* Fix: "${var}" string interpolation deprecated in PHP 8.2 (removed in PHP 9)
+* Fix: Comment accidentally embedded in the transient-cleanup SQL and in a translators hint
+* Change: Replace discouraged/deprecated functions (date, strip_tags, parse_url, rand, unlink, wp_reset_query, seems_utf8, file_get_contents, print_r, unserialize)
+* Change: current_user_can( 'editor' | 'administrator' ) -> current_user_can( 'edit_others_posts' )
+* Change: Remove manual load_plugin_textdomain(); WordPress.org loads translations automatically
+* Change: Explicit $in_footer on registered/enqueued scripts
+* Change: Justify intentional direct DB, meta/tax query, and legacy hook-name usage with scoped phpcs:ignore comments
+* Dev: Update phpcs.xml.dist (text domain, custom capability, PHP 7.4 test version)
+* Compat: Tested up to WordPress 7.0
+
 ### 2026.6.2 ###
 * New: Add per-sermon Audio Source option (Site default, Uploaded file/URL, Spotify, or Apple Podcasts) so sermons can use an embedded streaming player instead of a hosted MP3
 * New: Add Spotify Link and Apple Podcasts Link fields to the Sermon Files meta box; paste a normal share URL and the matching player is embedded automatically
